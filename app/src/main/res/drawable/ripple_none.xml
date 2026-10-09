@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- No press highlight. Used on the whole-widget tap that opens the app. -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="#00000000" />

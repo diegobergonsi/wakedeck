@@ -11,6 +11,9 @@ interface DeviceDao {
     fun observeAll(): Flow<List<DeviceEntity>>
 
     @Query("SELECT * FROM devices WHERE id = :id")
+    fun observe(id: Long): Flow<DeviceEntity?>
+
+    @Query("SELECT * FROM devices WHERE id = :id")
     suspend fun get(id: Long): DeviceEntity?
 
     @Upsert

@@ -13,6 +13,8 @@ import javax.inject.Singleton
 class DeviceRepository @Inject constructor(private val dao: DeviceDao) {
     fun observeAll(): Flow<List<Device>> = dao.observeAll().map { list -> list.map { it.toDomain() } }
 
+    fun observe(id: Long): Flow<Device?> = dao.observe(id).map { it?.toDomain() }
+
     suspend fun get(id: Long): Device? = dao.get(id)?.toDomain()
 
     suspend fun save(device: Device) = dao.upsert(device.toEntity())
