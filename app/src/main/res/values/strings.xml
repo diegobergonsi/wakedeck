@@ -1,4 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">WakeDeck</string>
+    <string name="add_device">Add device</string>
+    <string name="edit_device">Edit device</string>
+    <string name="delete_device">Delete device</string>
+    <string name="delete">Delete</string>
+    <string name="delete_confirm">Delete \"%1$s\"? This cannot be undone.</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="wake">Wake</string>
+    <string name="empty_devices">No devices yet. Tap \"Add device\" to create one.</string>
+    <string name="broadcast_summary">%1$s : %2$d</string>
+    <string name="wake_sent">Magic packet sent to %1$s</string>
+    <string name="wake_failed">Could not send packet to %1$s</string>
+    <string name="field_name">Name</string>
+    <string name="field_mac">MAC address</string>
+    <string name="field_host">IP or hostname (optional)</string>
+    <string name="field_broadcast">Broadcast address</string>
+    <string name="field_port">UDP port</string>
+    <string name="field_os">Operating system</string>
+    <string name="field_status_port">Status check port (optional)</string>
+    <string name="os_windows">Windows</string>
+    <string name="os_linux">Linux</string>
+    <string name="hint_host">Used for online/offline checks</string>
+    <string name="hint_broadcast">Use your subnet broadcast (e.g. 192.168.1.255) to wake over a VPN</string>
+    <string name="hint_status_port">TCP port that is open when the machine is on</string>
+    <string name="error_name">Enter a name</string>
+    <string name="error_mac">Enter a valid MAC address (12 hex digits)</string>
+    <string name="error_broadcast">Enter a broadcast address</string>
+    <string name="error_port">Enter a port from 1 to 65535</string>
 </resources>

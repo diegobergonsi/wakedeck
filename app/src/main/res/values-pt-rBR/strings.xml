@@ -1,4 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">WakeDeck</string>
+    <string name="add_device">Adicionar dispositivo</string>
+    <string name="edit_device">Editar dispositivo</string>
+    <string name="delete_device">Excluir dispositivo</string>
+    <string name="delete">Excluir</string>
+    <string name="delete_confirm">Excluir \"%1$s\"? Isso não pode ser desfeito.</string>
+    <string name="cancel">Cancelar</string>
+    <string name="save">Salvar</string>
+    <string name="wake">Ligar</string>
+    <string name="empty_devices">Nenhum dispositivo ainda. Toque em \"Adicionar dispositivo\" para criar um.</string>
+    <string name="broadcast_summary">%1$s : %2$d</string>
+    <string name="wake_sent">Pacote mágico enviado para %1$s</string>
+    <string name="wake_failed">Não foi possível enviar o pacote para %1$s</string>
+    <string name="field_name">Nome</string>
+    <string name="field_mac">Endereço MAC</string>
+    <string name="field_host">IP ou nome do host (opcional)</string>
+    <string name="field_broadcast">Endereço de broadcast</string>
+    <string name="field_port">Porta UDP</string>
+    <string name="field_os">Sistema operacional</string>
+    <string name="field_status_port">Porta para verificar status (opcional)</string>
+    <string name="os_windows">Windows</string>
+    <string name="os_linux">Linux</string>
+    <string name="hint_host">Usado para verificar se está online ou offline</string>
+    <string name="hint_broadcast">Use o broadcast da sub-rede (ex.: 192.168.1.255) para ligar via VPN</string>
+    <string name="hint_status_port">Porta TCP aberta quando a máquina está ligada</string>
+    <string name="error_name">Informe um nome</string>
+    <string name="error_mac">Informe um endereço MAC válido (12 dígitos hexadecimais)</string>
+    <string name="error_broadcast">Informe um endereço de broadcast</string>
+    <string name="error_port">Informe uma porta de 1 a 65535</string>
 </resources>

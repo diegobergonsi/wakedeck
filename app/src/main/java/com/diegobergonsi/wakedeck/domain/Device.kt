@@ -1,0 +1,23 @@
+package com.diegobergonsi.wakedeck.domain
+
+enum class OsType { WINDOWS, LINUX }
+
+data class Device(
+    val id: Long = 0,
+    val name: String,
+    /** Canonical form: AA:BB:CC:DD:EE:FF */
+    val mac: String,
+    /** IP or hostname of the machine itself. Used for status checks. May be empty. */
+    val host: String = "",
+    /** Target of the magic packet. Editable so remote wake over VPN can use a subnet broadcast. */
+    val broadcastAddress: String = DEFAULT_BROADCAST,
+    val port: Int = DEFAULT_PORT,
+    val os: OsType = OsType.LINUX,
+    val statusPort: Int? = null,
+    val groupId: Long? = null,
+) {
+    companion object {
+        const val DEFAULT_BROADCAST = "255.255.255.255"
+        const val DEFAULT_PORT = 9
+    }
+}
