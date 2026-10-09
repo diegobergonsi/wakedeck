@@ -64,4 +64,18 @@
     <string name="size_compact">Compacto</string>
     <string name="widget_refresh">Atualizar estado</string>
     <string name="config_show_refresh">Mostrar botão de atualizar</string>
+    <string name="widget_list_name">Lista de dispositivos</string>
+    <string name="widget_list_desc">Vários dispositivos numa lista, cada um com o seu botão de ligar</string>
+    <string name="widget_grid_name">Grelha de dispositivos</string>
+    <string name="widget_grid_desc">Vários dispositivos em blocos, toque no bloco para ligar</string>
+    <string name="config_devices">Dispositivos</string>
+    <string name="config_density">Densidade</string>
+    <string name="density_compact">Compacta</string>
+    <string name="density_comfortable">Confortável</string>
+    <string name="config_row_style">Estilo das linhas</string>
+    <string name="row_detailed">Detalhado</string>
+    <string name="row_minimal">Mínimo</string>
+    <string name="config_columns">Colunas</string>
+    <string name="columns_auto">Automático</string>
+    <string name="config_label_hint_multi">Título apresentado no topo (opcional)</string>
 </resources>

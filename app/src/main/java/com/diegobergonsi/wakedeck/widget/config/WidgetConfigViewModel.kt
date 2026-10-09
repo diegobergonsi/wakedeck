@@ -1,5 +1,6 @@
 package com.diegobergonsi.wakedeck.widget.config
 
+import android.appwidget.AppWidgetManager
 import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -10,6 +11,7 @@ import com.diegobergonsi.wakedeck.data.DeviceRepository
 import com.diegobergonsi.wakedeck.data.widget.WidgetConfigStore
 import com.diegobergonsi.wakedeck.domain.Device
 import com.diegobergonsi.wakedeck.widget.WidgetDraft
+import com.diegobergonsi.wakedeck.widget.WidgetType
 import com.diegobergonsi.wakedeck.widget.WidgetUpdater
 import com.diegobergonsi.wakedeck.widget.work.StatusScheduler
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,11 +38,14 @@ class WidgetConfigViewModel @Inject constructor(
         private set
     var loaded by mutableStateOf(false)
         private set
+    var type by mutableStateOf(WidgetType.SINGLE)
+        private set
 
     fun start(id: Int) {
         if (started) return
         started = true
         widgetId = id
+        type = WidgetType.fromReceiverClass(AppWidgetManager.getInstance(context).getAppWidgetInfo(id)?.provider?.className)
         viewModelScope.launch {
             configStore.get(id)?.let { config = it }
             WidgetDraft.set(id, config)
@@ -54,6 +59,14 @@ class WidgetConfigViewModel @Inject constructor(
     }
 
     fun selectDevice(id: Long) = update { it.copy(deviceIds = listOf(id)) }
+
+    /** For list and grid widgets: add or remove one device, keeping the order of the device list. */
+    fun toggleDevice(id: Long) {
+        val chosen = config.deviceIds.toMutableSet().apply { if (!add(id)) remove(id) }
+        update { it.copy(deviceIds = devices.value.map { d -> d.id }.filter { it in chosen }) }
+    }
+
+    fun selectAllDevices() = update { it.copy(deviceIds = devices.value.map { d -> d.id }) }
 
     val canSave: Boolean get() = config.deviceIds.isNotEmpty()
 

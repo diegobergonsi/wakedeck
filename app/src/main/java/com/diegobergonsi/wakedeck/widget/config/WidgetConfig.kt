@@ -4,6 +4,10 @@ enum class WidgetThemeMode { MATERIAL_YOU, LIGHT, DARK }
 
 enum class TextSizeOption(val scale: Float) { SMALL(0.85f), MEDIUM(1f), LARGE(1.2f) }
 
+enum class DensityOption(val rowPaddingDp: Int) { COMPACT(3), COMFORTABLE(8) }
+
+enum class ListRowStyle { DETAILED, MINIMAL }
+
 enum class WidgetIcon { POWER, DESKTOP, LAPTOP, SERVER, TV, GAMEPAD, HOME, BOLT, CLOUD, ROUTER, STAR, CHIP }
 
 /**
@@ -25,9 +29,14 @@ data class WidgetConfig(
     /** Small refresh icon that re-checks the device status right away. */
     val showRefresh: Boolean = true,
     val textSize: TextSizeOption = TextSizeOption.MEDIUM,
+    val density: DensityOption = DensityOption.COMFORTABLE,
+    val rowStyle: ListRowStyle = ListRowStyle.DETAILED,
+    /** Grid columns, 0 = automatic from the widget width. */
+    val gridColumns: Int = 0,
 ) {
     companion object {
         const val DEFAULT_CORNER_RADIUS_DP = 24
         const val MAX_CORNER_RADIUS_DP = 40
+        const val MAX_GRID_COLUMNS = 4
     }
 }

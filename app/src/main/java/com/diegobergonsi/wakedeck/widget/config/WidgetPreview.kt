@@ -25,8 +25,13 @@ import androidx.glance.ExperimentalGlanceApi
 import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.runComposition
 import com.diegobergonsi.wakedeck.R
+import com.diegobergonsi.wakedeck.widget.DeviceGridWidget
+import com.diegobergonsi.wakedeck.widget.DeviceGridWidgetReceiver
+import com.diegobergonsi.wakedeck.widget.DeviceListWidget
+import com.diegobergonsi.wakedeck.widget.DeviceListWidgetReceiver
 import com.diegobergonsi.wakedeck.widget.SingleDeviceWidget
 import com.diegobergonsi.wakedeck.widget.SingleDeviceWidgetReceiver
+import com.diegobergonsi.wakedeck.widget.WidgetType
 import kotlinx.coroutines.flow.first
 
 /**
@@ -35,21 +40,26 @@ import kotlinx.coroutines.flow.first
  */
 @OptIn(ExperimentalGlanceApi::class)
 @Composable
-fun WidgetPreview(widgetId: Int, config: WidgetConfig, size: DpSize, modifier: Modifier = Modifier) {
+fun WidgetPreview(widgetId: Int, config: WidgetConfig, type: WidgetType, size: DpSize, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     var failed by remember { mutableStateOf(false) }
     val frame = remember { FrameLayout(context) }
 
-    LaunchedEffect(config, size) {
+    LaunchedEffect(config, size, type) {
         try {
             val glanceId = GlanceAppWidgetManager(context).getGlanceIdBy(widgetId)
-            val views = SingleDeviceWidget().runComposition(
+            val (widget, receiver) = when (type) {
+                WidgetType.SINGLE -> SingleDeviceWidget() to SingleDeviceWidgetReceiver::class.java
+                WidgetType.LIST -> DeviceListWidget() to DeviceListWidgetReceiver::class.java
+                WidgetType.GRID -> DeviceGridWidget() to DeviceGridWidgetReceiver::class.java
+            }
+            val views = widget.runComposition(
                 context,
                 glanceId,
                 Bundle(),
                 listOf(size),
                 null,
-                ComponentName(context, SingleDeviceWidgetReceiver::class.java),
+                ComponentName(context, receiver),
             ).first()
             frame.removeAllViews()
             frame.addView(views.apply(context, frame))

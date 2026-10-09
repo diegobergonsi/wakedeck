@@ -9,6 +9,8 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
+import com.diegobergonsi.wakedeck.widget.DeviceGridWidgetReceiver
+import com.diegobergonsi.wakedeck.widget.DeviceListWidgetReceiver
 import com.diegobergonsi.wakedeck.widget.SingleDeviceWidgetReceiver
 import java.util.concurrent.TimeUnit
 
@@ -18,7 +20,11 @@ object StatusScheduler {
     const val KEY_DEVICE_ID = "deviceId"
 
     /** Receivers of every widget type. Add new ones here. */
-    private val receivers = listOf(SingleDeviceWidgetReceiver::class.java)
+    private val receivers = listOf(
+        SingleDeviceWidgetReceiver::class.java,
+        DeviceListWidgetReceiver::class.java,
+        DeviceGridWidgetReceiver::class.java,
+    )
 
     fun ensurePeriodic(context: Context) {
         val request = PeriodicWorkRequestBuilder<StatusRefreshWorker>(15, TimeUnit.MINUTES).build()

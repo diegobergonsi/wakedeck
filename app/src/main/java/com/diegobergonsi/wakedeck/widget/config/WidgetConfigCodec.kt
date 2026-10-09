@@ -13,8 +13,11 @@ object WidgetConfigCodec {
     private const val SHOW_STATUS = "showStatus"
     private const val SHOW_REFRESH = "showRefresh"
     private const val TEXT_SIZE = "textSize"
+    private const val DENSITY = "density"
+    private const val ROW_STYLE = "rowStyle"
+    private const val GRID_COLUMNS = "gridColumns"
 
-    val fields = listOf(DEVICE_IDS, THEME, BACKGROUND, ACCENT, ALPHA, RADIUS, ICON, LABEL, SHOW_STATUS, SHOW_REFRESH, TEXT_SIZE)
+    val fields = listOf(DEVICE_IDS, THEME, BACKGROUND, ACCENT, ALPHA, RADIUS, ICON, LABEL, SHOW_STATUS, SHOW_REFRESH, TEXT_SIZE, DENSITY, ROW_STYLE, GRID_COLUMNS)
 
     fun encode(config: WidgetConfig): Map<String, String> = buildMap {
         put(DEVICE_IDS, config.deviceIds.joinToString(","))
@@ -28,6 +31,9 @@ object WidgetConfigCodec {
         put(SHOW_STATUS, config.showStatus.toString())
         put(SHOW_REFRESH, config.showRefresh.toString())
         put(TEXT_SIZE, config.textSize.name)
+        put(DENSITY, config.density.name)
+        put(ROW_STYLE, config.rowStyle.name)
+        put(GRID_COLUMNS, config.gridColumns.toString())
     }
 
     fun decode(map: Map<String, String>): WidgetConfig {
@@ -45,6 +51,9 @@ object WidgetConfigCodec {
             showStatus = map[SHOW_STATUS]?.toBooleanStrictOrNull() ?: d.showStatus,
             showRefresh = map[SHOW_REFRESH]?.toBooleanStrictOrNull() ?: d.showRefresh,
             textSize = enumOr(map[TEXT_SIZE], d.textSize),
+            density = enumOr(map[DENSITY], d.density),
+            rowStyle = enumOr(map[ROW_STYLE], d.rowStyle),
+            gridColumns = (map[GRID_COLUMNS]?.toIntOrNull() ?: d.gridColumns).coerceIn(0, WidgetConfig.MAX_GRID_COLUMNS),
         )
     }
 

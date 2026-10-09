@@ -7,5 +7,7 @@ import androidx.glance.appwidget.updateAll
 object WidgetUpdater {
     suspend fun updateAll(context: Context) {
         SingleDeviceWidget().updateAll(context)
+        DeviceListWidget().updateAll(context)
+        DeviceGridWidget().updateAll(context)
     }
 }

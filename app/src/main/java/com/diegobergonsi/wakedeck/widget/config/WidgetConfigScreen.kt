@@ -17,6 +17,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
@@ -45,6 +46,7 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.diegobergonsi.wakedeck.R
+import com.diegobergonsi.wakedeck.widget.WidgetType
 import com.diegobergonsi.wakedeck.widget.drawableRes
 import kotlin.math.roundToInt
 
@@ -53,11 +55,24 @@ private val Swatches = listOf(
     0xFF8E24AA, 0xFF00ACC1, 0xFF6D4C41, 0xFF546E7A, 0xFF212121, 0xFFFDD835,
 ).map { it.toInt() }
 
-private enum class PreviewSize(val size: DpSize, val label: Int) {
-    SMALL(DpSize(80.dp, 80.dp), R.string.size_small),
-    COMPACT(DpSize(130.dp, 70.dp), R.string.size_compact),
-    WIDE(DpSize(220.dp, 70.dp), R.string.size_medium),
-    LARGE(DpSize(220.dp, 150.dp), R.string.size_large),
+private class PreviewOption(val size: DpSize, val label: Int)
+
+private fun previewOptions(type: WidgetType): List<PreviewOption> = when (type) {
+    WidgetType.SINGLE -> listOf(
+        PreviewOption(DpSize(80.dp, 80.dp), R.string.size_small),
+        PreviewOption(DpSize(130.dp, 70.dp), R.string.size_compact),
+        PreviewOption(DpSize(220.dp, 70.dp), R.string.size_medium),
+        PreviewOption(DpSize(220.dp, 150.dp), R.string.size_large),
+    )
+    WidgetType.LIST -> listOf(
+        PreviewOption(DpSize(280.dp, 170.dp), R.string.size_medium),
+        PreviewOption(DpSize(200.dp, 260.dp), R.string.size_large),
+    )
+    WidgetType.GRID -> listOf(
+        PreviewOption(DpSize(190.dp, 90.dp), R.string.size_compact),
+        PreviewOption(DpSize(190.dp, 190.dp), R.string.size_medium),
+        PreviewOption(DpSize(300.dp, 200.dp), R.string.size_large),
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
@@ -70,11 +85,13 @@ fun WidgetConfigScreen(
 ) {
     val devices by viewModel.devices.collectAsStateWithLifecycle()
     val config = viewModel.config
-    var previewSize by remember { mutableStateOf(PreviewSize.WIDE) }
+    val type = viewModel.type
+    val options = remember(type) { previewOptions(type) }
+    var previewIndex by remember(type) { mutableStateOf(if (type == WidgetType.SINGLE) 2 else 0) }
 
     LaunchedEffect(devices, viewModel.loaded) {
         if (viewModel.loaded && viewModel.config.deviceIds.isEmpty() && devices.isNotEmpty()) {
-            viewModel.selectDevice(devices.first().id)
+            if (viewModel.type == WidgetType.SINGLE) viewModel.selectDevice(devices.first().id) else viewModel.selectAllDevices()
         }
     }
 
@@ -103,27 +120,30 @@ fun WidgetConfigScreen(
             Section(R.string.config_preview) {
                 Surface(color = MaterialTheme.colorScheme.surfaceVariant, shape = RoundedCornerShape(16.dp)) {
                     Box(Modifier.fillMaxWidth().padding(16.dp), contentAlignment = Alignment.Center) {
-                        WidgetPreview(widgetId, config, previewSize.size)
+                        WidgetPreview(widgetId, config, type, options[previewIndex.coerceAtMost(options.lastIndex)].size)
                     }
                 }
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    PreviewSize.entries.forEach { s ->
+                    options.forEachIndexed { index, option ->
                         FilterChip(
-                            selected = previewSize == s,
-                            onClick = { previewSize = s },
-                            label = { Text(stringResource(s.label)) },
+                            selected = previewIndex == index,
+                            onClick = { previewIndex = index },
+                            label = { Text(stringResource(option.label)) },
                         )
                     }
                 }
             }
 
-            Section(R.string.config_device) {
+            Section(if (type == WidgetType.SINGLE) R.string.config_device else R.string.config_devices) {
                 devices.forEach { device ->
-                    Row(
-                        Modifier.fillMaxWidth().clickable { viewModel.selectDevice(device.id) },
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        RadioButton(selected = config.deviceIds.firstOrNull() == device.id, onClick = { viewModel.selectDevice(device.id) })
+                    val selected = device.id in config.deviceIds
+                    val toggle = { if (type == WidgetType.SINGLE) viewModel.selectDevice(device.id) else viewModel.toggleDevice(device.id) }
+                    Row(Modifier.fillMaxWidth().clickable { toggle() }, verticalAlignment = Alignment.CenterVertically) {
+                        if (type == WidgetType.SINGLE) {
+                            RadioButton(selected = selected, onClick = { toggle() })
+                        } else {
+                            Checkbox(checked = selected, onCheckedChange = { toggle() })
+                        }
                         Text(device.name)
                     }
                 }
@@ -180,7 +200,7 @@ fun WidgetConfigScreen(
                 )
             }
 
-            Section(R.string.config_icon) {
+            if (type != WidgetType.LIST) Section(R.string.config_icon) {
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     WidgetIcon.entries.forEach { icon ->
                         val selected = config.icon == icon
@@ -204,7 +224,9 @@ fun WidgetConfigScreen(
                 value = config.label,
                 onValueChange = { v -> viewModel.update { it.copy(label = v) } },
                 label = { Text(stringResource(R.string.config_label)) },
-                supportingText = { Text(stringResource(R.string.config_label_hint)) },
+                supportingText = {
+                    Text(stringResource(if (type == WidgetType.SINGLE) R.string.config_label_hint else R.string.config_label_hint_multi))
+                },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
             )
@@ -217,6 +239,50 @@ fun WidgetConfigScreen(
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 Text(stringResource(R.string.config_show_refresh), Modifier.weight(1f))
                 Switch(checked = config.showRefresh, onCheckedChange = { v -> viewModel.update { it.copy(showRefresh = v) } })
+            }
+
+            if (type != WidgetType.SINGLE) {
+                Section(R.string.config_density) {
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        DensityOption.entries.forEach { option ->
+                            FilterChip(
+                                selected = config.density == option,
+                                onClick = { viewModel.update { it.copy(density = option) } },
+                                label = {
+                                    Text(stringResource(if (option == DensityOption.COMPACT) R.string.density_compact else R.string.density_comfortable))
+                                },
+                            )
+                        }
+                    }
+                }
+            }
+            if (type == WidgetType.LIST) {
+                Section(R.string.config_row_style) {
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        ListRowStyle.entries.forEach { option ->
+                            FilterChip(
+                                selected = config.rowStyle == option,
+                                onClick = { viewModel.update { it.copy(rowStyle = option) } },
+                                label = {
+                                    Text(stringResource(if (option == ListRowStyle.DETAILED) R.string.row_detailed else R.string.row_minimal))
+                                },
+                            )
+                        }
+                    }
+                }
+            }
+            if (type == WidgetType.GRID) {
+                Section(R.string.config_columns) {
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        (0..WidgetConfig.MAX_GRID_COLUMNS).forEach { n ->
+                            FilterChip(
+                                selected = config.gridColumns == n,
+                                onClick = { viewModel.update { it.copy(gridColumns = n) } },
+                                label = { Text(if (n == 0) stringResource(R.string.columns_auto) else n.toString()) },
+                            )
+                        }
+                    }
+                }
             }
 
             Section(R.string.config_text_size) {

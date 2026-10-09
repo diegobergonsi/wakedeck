@@ -1,5 +1,7 @@
 package com.diegobergonsi.wakedeck.widget
 
+import com.diegobergonsi.wakedeck.widget.config.DensityOption
+import com.diegobergonsi.wakedeck.widget.config.ListRowStyle
 import com.diegobergonsi.wakedeck.widget.config.TextSizeOption
 import com.diegobergonsi.wakedeck.widget.config.WidgetConfig
 import com.diegobergonsi.wakedeck.widget.config.WidgetConfigCodec
@@ -24,6 +26,9 @@ class WidgetConfigCodecTest {
             showStatus = false,
             showRefresh = false,
             textSize = TextSizeOption.LARGE,
+            density = DensityOption.COMPACT,
+            rowStyle = ListRowStyle.MINIMAL,
+            gridColumns = 3,
         )
         assertEquals(config, WidgetConfigCodec.decode(WidgetConfigCodec.encode(config)))
     }
@@ -46,6 +51,9 @@ class WidgetConfigCodecTest {
                 "showStatus" to "maybe",
                 "showRefresh" to "perhaps",
                 "textSize" to "HUGE",
+                "density" to "TIGHT",
+                "rowStyle" to "FANCY",
+                "gridColumns" to "many",
             ),
         )
         assertEquals(listOf(1L, 5L), decoded.deviceIds)
@@ -57,13 +65,17 @@ class WidgetConfigCodecTest {
         assertEquals(true, decoded.showStatus)
         assertEquals(true, decoded.showRefresh)
         assertEquals(TextSizeOption.MEDIUM, decoded.textSize)
+        assertEquals(DensityOption.COMFORTABLE, decoded.density)
+        assertEquals(ListRowStyle.DETAILED, decoded.rowStyle)
+        assertEquals(0, decoded.gridColumns)
     }
 
     @Test
     fun outOfRangeNumbersAreClamped() {
-        val decoded = WidgetConfigCodec.decode(mapOf("alpha" to "7", "radius" to "999"))
+        val decoded = WidgetConfigCodec.decode(mapOf("alpha" to "7", "radius" to "999", "gridColumns" to "99"))
         assertEquals(1f, decoded.backgroundAlpha)
         assertEquals(WidgetConfig.MAX_CORNER_RADIUS_DP, decoded.cornerRadiusDp)
+        assertEquals(WidgetConfig.MAX_GRID_COLUMNS, decoded.gridColumns)
         assertEquals(0f, WidgetConfigCodec.decode(mapOf("alpha" to "-3")).backgroundAlpha)
     }
 

@@ -176,7 +176,7 @@ fun SingleDeviceContent(state: SingleWidgetState) {
     }
 }
 
-private class WakeButtonSpec(
+internal class WakeButtonSpec(
     val deviceId: Long,
     val feedback: WakeFeedback,
     val palette: WidgetPalette,
@@ -184,7 +184,7 @@ private class WakeButtonSpec(
 )
 
 @Composable
-private fun buttonColor(spec: WakeButtonSpec) = when (spec.feedback) {
+internal fun buttonColor(spec: WakeButtonSpec) = when (spec.feedback) {
     WakeFeedback.SENT -> spec.palette.online
     WakeFeedback.FAILED -> spec.palette.offline
     WakeFeedback.NONE -> spec.palette.accent
@@ -210,7 +210,7 @@ private fun IconOnlyLayout(spec: WakeButtonSpec) {
 }
 
 @Composable
-private fun WakeButton(spec: WakeButtonSpec, modifier: GlanceModifier = GlanceModifier) {
+internal fun WakeButton(spec: WakeButtonSpec, modifier: GlanceModifier = GlanceModifier) {
     val context = LocalContext.current
     val label = when (spec.feedback) {
         WakeFeedback.SENT -> R.string.widget_sent
@@ -261,7 +261,7 @@ private fun NameAndStatus(name: String, state: SingleWidgetState, palette: Widge
 }
 
 @Composable
-private fun StatusLine(
+internal fun StatusLine(
     status: DeviceStatus,
     palette: WidgetPalette,
     scale: Float,
@@ -366,19 +366,5 @@ private fun CompactLayout(
 }
 
 @Composable
-private fun RefreshButton(deviceId: Long, palette: WidgetPalette, config: WidgetConfig) {
-    if (!config.showRefresh) return
-    Box(
-        GlanceModifier
-            .size(36.dp)
-            .clickable(actionRunCallback<RefreshAction>(actionParametersOf(DeviceIdKey to deviceId)), R.drawable.ripple_circle),
-        contentAlignment = Alignment.Center,
-    ) {
-        Image(
-            provider = ImageProvider(R.drawable.ic_widget_refresh),
-            contentDescription = LocalContext.current.getString(R.string.widget_refresh),
-            modifier = GlanceModifier.size(20.dp),
-            colorFilter = ColorFilter.tint(palette.subtext),
-        )
-    }
-}
+private fun RefreshButton(deviceId: Long, palette: WidgetPalette, config: WidgetConfig) =
+    RefreshIconButton(actionParametersOf(DeviceIdKey to deviceId), palette, config)

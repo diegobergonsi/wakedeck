@@ -64,4 +64,18 @@
     <string name="size_compact">Compact</string>
     <string name="widget_refresh">Refresh status</string>
     <string name="config_show_refresh">Show refresh button</string>
+    <string name="widget_list_name">Device list</string>
+    <string name="widget_list_desc">Several devices in a list, each with its own Wake button</string>
+    <string name="widget_grid_name">Device grid</string>
+    <string name="widget_grid_desc">Several devices as tiles, tap a tile to wake it</string>
+    <string name="config_devices">Devices</string>
+    <string name="config_density">Density</string>
+    <string name="density_compact">Compact</string>
+    <string name="density_comfortable">Comfortable</string>
+    <string name="config_row_style">Row style</string>
+    <string name="row_detailed">Detailed</string>
+    <string name="row_minimal">Minimal</string>
+    <string name="config_columns">Columns</string>
+    <string name="columns_auto">Auto</string>
+    <string name="config_label_hint_multi">Title shown at the top (optional)</string>
 </resources>
