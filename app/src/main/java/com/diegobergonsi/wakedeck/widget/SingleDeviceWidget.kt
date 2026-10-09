@@ -2,6 +2,8 @@ package com.diegobergonsi.wakedeck.widget
 
 import android.content.Context
 import android.content.Intent
+import android.text.format.DateUtils
+import java.text.DateFormat
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -53,7 +55,8 @@ import kotlinx.coroutines.flow.flowOf
 
 // Layout tiers. Glance picks the largest of these that fits the real widget size.
 private val Small = DpSize(60.dp, 60.dp) // icon button only
-private val Compact = DpSize(110.dp, 60.dp) // icon button + name + status (a 2x1 slot)
+private val Compact = DpSize(110.dp, 60.dp) // icon button + name + status
+private val CompactPlus = DpSize(150.dp, 60.dp) // same, plus the refresh icon
 private val Wide = DpSize(200.dp, 60.dp) // icon + name + status + "Wake" button
 private val Tall = DpSize(110.dp, 130.dp) // column
 private val Large = DpSize(200.dp, 130.dp) // column, more room
@@ -64,10 +67,11 @@ data class SingleWidgetState(
     val device: Device?,
     val status: DeviceStatus,
     val feedback: WakeFeedback,
+    val checkedAtMs: Long? = null,
 )
 
 class SingleDeviceWidget : GlanceAppWidget() {
-    override val sizeMode = SizeMode.Responsive(setOf(Small, Compact, Wide, Tall, Large))
+    override val sizeMode = SizeMode.Responsive(setOf(Small, Compact, CompactPlus, Wide, Tall, Large))
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         val widgetId = GlanceAppWidgetManager(context).getAppWidgetId(id)
@@ -101,12 +105,13 @@ class SingleDeviceWidget : GlanceAppWidget() {
                         entry.deviceRepository().observe(deviceId),
                         entry.statusStore().statusFlow(deviceId),
                         entry.statusStore().wakeFlow(deviceId),
-                    ) { device, status, wake ->
+                    ) { device, snapshot, wake ->
                         SingleWidgetState(
                             config,
                             device,
-                            status ?: DeviceStatus.CHECKING,
+                            snapshot?.status ?: DeviceStatus.CHECKING,
                             wake?.feedbackAt(System.currentTimeMillis()) ?: WakeFeedback.NONE,
+                            snapshot?.checkedAtMs,
                         )
                     }
                 }
@@ -117,10 +122,10 @@ class SingleDeviceWidget : GlanceAppWidget() {
             val entry = context.widgetEntryPoint()
             val config = WidgetDraft.get(widgetId) ?: entry.configStore().get(widgetId)
             val device = config?.deviceIds?.firstOrNull()?.let { entry.deviceRepository().get(it) }
-            val status = device?.let { entry.statusStore().status(it.id) } ?: DeviceStatus.CHECKING
+            val snapshot = device?.let { entry.statusStore().status(it.id) }
             val feedback = device?.let { entry.statusStore().lastWake(it.id)?.feedbackAt(System.currentTimeMillis()) }
                 ?: WakeFeedback.NONE
-            return SingleWidgetState(config, device, status, feedback)
+            return SingleWidgetState(config, device, snapshot?.status ?: DeviceStatus.CHECKING, feedback, snapshot?.checkedAtMs)
         }
     }
 }
@@ -164,7 +169,7 @@ fun SingleDeviceContent(state: SingleWidgetState) {
             when {
                 iconOnly -> IconOnlyLayout(button)
                 size.height >= Tall.height -> ColumnLayout(name, state, button, palette, scale)
-                size.width < Wide.width -> CompactLayout(name, state, button, palette, scale)
+                size.width < Wide.width -> CompactLayout(name, state, button, palette, scale, withRefresh = size.width >= CompactPlus.width)
                 else -> RowLayout(name, state, button, palette, scale)
             }
         }
@@ -250,13 +255,19 @@ private fun NameAndStatus(name: String, state: SingleWidgetState, palette: Widge
         }
         if (config.showStatus) {
             Spacer(GlanceModifier.height(4.dp))
-            StatusLine(state.status, palette, scale)
+            StatusLine(state.status, palette, scale, checkedAtMs = state.checkedAtMs)
         }
     }
 }
 
 @Composable
-private fun StatusLine(status: DeviceStatus, palette: WidgetPalette, scale: Float, iconColumn: Boolean = true) {
+private fun StatusLine(
+    status: DeviceStatus,
+    palette: WidgetPalette,
+    scale: Float,
+    iconColumn: Boolean = true,
+    checkedAtMs: Long? = null,
+) {
     val context = LocalContext.current
     val (color, label) = when (status) {
         DeviceStatus.ONLINE -> palette.online to R.string.status_online
@@ -273,7 +284,12 @@ private fun StatusLine(status: DeviceStatus, palette: WidgetPalette, scale: Floa
             Box(dot) {}
         }
         Spacer(GlanceModifier.width(6.dp))
-        Text(context.getString(label), style = TextStyle(color = palette.subtext, fontSize = (12 * scale).sp))
+        // Clock time, not "x min ago": a widget cannot tick, so a relative age would freeze and mislead.
+        val checked = checkedAtMs
+            ?.takeIf { status == DeviceStatus.ONLINE || status == DeviceStatus.OFFLINE }
+            ?.let { DateUtils.formatSameDayTime(it, System.currentTimeMillis(), DateFormat.SHORT, DateFormat.SHORT) }
+        val text = if (checked != null) "${context.getString(label)} · $checked" else context.getString(label)
+        Text(text, maxLines = 1, style = TextStyle(color = palette.subtext, fontSize = (12 * scale).sp))
     }
 }
 
@@ -301,7 +317,14 @@ private fun ColumnLayout(name: String, state: SingleWidgetState, button: WakeBut
 
 /** For a 2x1 slot: the icon is the Wake button, name and status sit next to it. */
 @Composable
-private fun CompactLayout(name: String, state: SingleWidgetState, button: WakeButtonSpec, palette: WidgetPalette, scale: Float) {
+private fun CompactLayout(
+    name: String,
+    state: SingleWidgetState,
+    button: WakeButtonSpec,
+    palette: WidgetPalette,
+    scale: Float,
+    withRefresh: Boolean,
+) {
     val config = state.config ?: return
     val context = LocalContext.current
     Row(GlanceModifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically) {
@@ -338,6 +361,7 @@ private fun CompactLayout(name: String, state: SingleWidgetState, button: WakeBu
                 WakeFeedback.NONE -> if (config.showStatus) StatusLine(state.status, palette, scale, iconColumn = false)
             }
         }
+        if (withRefresh) RefreshButton(button.deviceId, palette, config)
     }
 }
 

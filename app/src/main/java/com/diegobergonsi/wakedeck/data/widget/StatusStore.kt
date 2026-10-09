@@ -16,6 +16,9 @@ import javax.inject.Singleton
 
 private val Context.statusDataStore by preferencesDataStore("status_cache")
 
+/** A cached status and when it was checked (null for values written by older builds). */
+data class StatusSnapshot(val status: DeviceStatus, val checkedAtMs: Long?)
+
 /** Last known device status and last wake result. Widgets only read this; workers and wake taps write it. */
 @Singleton
 class StatusStore @Inject constructor(@ApplicationContext private val context: Context) {
@@ -24,15 +27,20 @@ class StatusStore @Inject constructor(@ApplicationContext private val context: C
     private fun statusKey(id: Long) = stringPreferencesKey("status.$id")
     private fun wakeKey(id: Long) = stringPreferencesKey("wake.$id")
 
-    suspend fun setStatus(id: Long, status: DeviceStatus) {
-        store.edit { it[statusKey(id)] = status.name }
+    suspend fun setStatus(id: Long, status: DeviceStatus, nowMs: Long = System.currentTimeMillis()) {
+        store.edit { it[statusKey(id)] = "${status.name}|$nowMs" }
     }
 
-    suspend fun status(id: Long): DeviceStatus? =
-        store.data.first()[statusKey(id)]?.let { name -> DeviceStatus.entries.firstOrNull { it.name == name } }
+    suspend fun status(id: Long): StatusSnapshot? = parseStatus(store.data.first()[statusKey(id)])
 
-    fun statusFlow(id: Long): Flow<DeviceStatus?> = store.data
-        .map { prefs -> prefs[statusKey(id)]?.let { name -> DeviceStatus.entries.firstOrNull { it.name == name } } }
+    private fun parseStatus(raw: String?): StatusSnapshot? {
+        val parts = raw?.split('|') ?: return null
+        val status = DeviceStatus.entries.firstOrNull { it.name == parts[0] } ?: return null
+        return StatusSnapshot(status, parts.getOrNull(1)?.toLongOrNull())
+    }
+
+    fun statusFlow(id: Long): Flow<StatusSnapshot?> = store.data
+        .map { prefs -> parseStatus(prefs[statusKey(id)]) }
         .distinctUntilChanged()
 
     fun wakeFlow(id: Long): Flow<WakeRecord?> = store.data.map { prefs -> parseWake(prefs[wakeKey(id)]) }.distinctUntilChanged()
