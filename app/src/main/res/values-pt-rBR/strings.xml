@@ -78,4 +78,27 @@
     <string name="config_columns">Colunas</string>
     <string name="columns_auto">Automático</string>
     <string name="config_label_hint_multi">Título exibido no topo (opcional)</string>
+    <string name="config_advanced_show">Mostrar opções avançadas</string>
+    <string name="config_advanced_hide">Ocultar opções avançadas</string>
+    <string name="config_color_online">Cor do ponto online</string>
+    <string name="config_color_offline">Cor do ponto offline</string>
+    <string name="config_color_sent">Cor após tocar em Ligar</string>
+    <string name="config_border">Borda</string>
+    <string name="border_none">Nenhuma</string>
+    <string name="config_border_color">Cor da borda</string>
+    <string name="config_hex">Cor personalizada (#RRGGBB)</string>
+    <string name="status_stale">Desconhecido</string>
+    <string name="icon_power">Ligar</string>
+    <string name="icon_desktop">Desktop</string>
+    <string name="icon_laptop">Notebook</string>
+    <string name="icon_server">Servidor</string>
+    <string name="icon_tv">TV</string>
+    <string name="icon_gamepad">Console de jogos</string>
+    <string name="icon_home">Casa</string>
+    <string name="icon_bolt">Raio</string>
+    <string name="icon_cloud">Nuvem</string>
+    <string name="icon_router">Roteador</string>
+    <string name="icon_star">Estrela</string>
+    <string name="icon_chip">Chip</string>
+    <string name="color_default">Padrão</string>
 </resources>

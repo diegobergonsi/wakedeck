@@ -5,6 +5,7 @@ import android.content.Intent
 import android.text.format.DateUtils
 import java.text.DateFormat
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
@@ -84,6 +85,12 @@ class SingleDeviceWidget : GlanceAppWidget() {
         }
     }
 
+    override suspend fun providePreview(context: Context, widgetCategory: Int) {
+        provideContent {
+            CompositionLocalProvider(LocalSize provides DpSize(220.dp, 70.dp)) { SingleDeviceContent(SampleWidgetStates.single()) }
+        }
+    }
+
     override suspend fun onDelete(context: Context, glanceId: GlanceId) {
         super.onDelete(context, glanceId)
         val widgetId = GlanceAppWidgetManager(context).getAppWidgetId(glanceId)
@@ -94,8 +101,7 @@ class SingleDeviceWidget : GlanceAppWidget() {
         @OptIn(ExperimentalCoroutinesApi::class)
         fun stateFlow(context: Context, widgetId: Int): Flow<SingleWidgetState> {
             val entry = context.widgetEntryPoint()
-            val draft = WidgetDraft.get(widgetId)
-            val configs = if (draft != null) flowOf(draft) else entry.configStore().flow(widgetId)
+            val configs = combine(WidgetDraft.flow(widgetId), entry.configStore().flow(widgetId)) { draft, stored -> draft ?: stored }
             return configs.flatMapLatest { config ->
                 val deviceId = config?.deviceIds?.firstOrNull()
                 if (deviceId == null) {
@@ -109,7 +115,7 @@ class SingleDeviceWidget : GlanceAppWidget() {
                         SingleWidgetState(
                             config,
                             device,
-                            snapshot?.status ?: DeviceStatus.CHECKING,
+                            snapshot?.effective(System.currentTimeMillis()) ?: DeviceStatus.CHECKING,
                             wake?.feedbackAt(System.currentTimeMillis()) ?: WakeFeedback.NONE,
                             snapshot?.checkedAtMs,
                         )
@@ -125,7 +131,7 @@ class SingleDeviceWidget : GlanceAppWidget() {
             val snapshot = device?.let { entry.statusStore().status(it.id) }
             val feedback = device?.let { entry.statusStore().lastWake(it.id)?.feedbackAt(System.currentTimeMillis()) }
                 ?: WakeFeedback.NONE
-            return SingleWidgetState(config, device, snapshot?.status ?: DeviceStatus.CHECKING, feedback, snapshot?.checkedAtMs)
+            return SingleWidgetState(config, device, snapshot?.effective(System.currentTimeMillis()) ?: DeviceStatus.CHECKING, feedback, snapshot?.checkedAtMs)
         }
     }
 }
@@ -165,12 +171,15 @@ fun SingleDeviceContent(state: SingleWidgetState) {
         val name = config.label.ifBlank { device.name }
         val button = WakeButtonSpec(device.id, state.feedback, palette, config)
 
-        Box(root.padding(if (iconOnly) 4.dp else 8.dp), contentAlignment = Alignment.Center) {
-            when {
-                iconOnly -> IconOnlyLayout(button)
-                size.height >= Tall.height -> ColumnLayout(name, state, button, palette, scale)
-                size.width < Wide.width -> CompactLayout(name, state, button, palette, scale, withRefresh = size.width >= CompactPlus.width)
-                else -> RowLayout(name, state, button, palette, scale)
+        Box(root) {
+            if (!iconOnly) BorderOverlay(config, palette)
+            Box(GlanceModifier.fillMaxSize().padding(if (iconOnly) 4.dp else 8.dp), contentAlignment = Alignment.Center) {
+                when {
+                    iconOnly -> IconOnlyLayout(button)
+                    size.height >= Tall.height -> ColumnLayout(name, state, button, palette, scale)
+                    size.width < Wide.width -> CompactLayout(name, state, button, palette, scale, withRefresh = size.width >= CompactPlus.width)
+                    else -> RowLayout(name, state, button, palette, scale)
+                }
             }
         }
     }
@@ -185,7 +194,7 @@ internal class WakeButtonSpec(
 
 @Composable
 internal fun buttonColor(spec: WakeButtonSpec) = when (spec.feedback) {
-    WakeFeedback.SENT -> spec.palette.online
+    WakeFeedback.SENT -> spec.palette.sent
     WakeFeedback.FAILED -> spec.palette.offline
     WakeFeedback.NONE -> spec.palette.accent
 }
@@ -274,6 +283,7 @@ internal fun StatusLine(
         DeviceStatus.OFFLINE -> palette.offline to R.string.status_offline
         DeviceStatus.CHECKING -> palette.neutral to R.string.status_checking
         DeviceStatus.UNAVAILABLE -> palette.neutral to R.string.status_no_host
+        DeviceStatus.STALE -> palette.neutral to R.string.status_stale
     }
     // Same two columns as the name row: the dot is centered under the icon, the text starts under the name.
     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -286,7 +296,7 @@ internal fun StatusLine(
         Spacer(GlanceModifier.width(6.dp))
         // Clock time, not "x min ago": a widget cannot tick, so a relative age would freeze and mislead.
         val checked = checkedAtMs
-            ?.takeIf { status == DeviceStatus.ONLINE || status == DeviceStatus.OFFLINE }
+            ?.takeIf { status == DeviceStatus.ONLINE || status == DeviceStatus.OFFLINE || status == DeviceStatus.STALE }
             ?.let { DateUtils.formatSameDayTime(it, System.currentTimeMillis(), DateFormat.SHORT, DateFormat.SHORT) }
         val text = if (checked != null) "${context.getString(label)} · $checked" else context.getString(label)
         Text(text, maxLines = 1, style = TextStyle(color = palette.subtext, fontSize = (12 * scale).sp))

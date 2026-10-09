@@ -55,7 +55,7 @@ fun StatusDot(status: DeviceStatus, palette: WidgetPalette) {
     val color = when (status) {
         DeviceStatus.ONLINE -> palette.online
         DeviceStatus.OFFLINE -> palette.offline
-        DeviceStatus.CHECKING, DeviceStatus.UNAVAILABLE -> palette.neutral
+        DeviceStatus.CHECKING, DeviceStatus.UNAVAILABLE, DeviceStatus.STALE -> palette.neutral
     }
     Box(GlanceModifier.size(10.dp).dotBackground(color)) {}
 }

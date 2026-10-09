@@ -21,6 +21,8 @@ class WidgetPalette(
     val online: ColorProvider,
     val offline: ColorProvider,
     val neutral: ColorProvider,
+    val sent: ColorProvider,
+    val border: ColorProvider,
 )
 
 private val OnlineGreen = Color(0xFF2E9E4F)
@@ -53,9 +55,11 @@ fun widgetPalette(config: WidgetConfig): WidgetPalette {
         subtext = subtext,
         accent = customAccent?.let { ColorProvider(it) } ?: theme.primary,
         onAccent = customAccent?.let { contrastOn(it) } ?: theme.onPrimary,
-        online = ColorProvider(OnlineGreen),
-        offline = ColorProvider(OfflineRed),
+        online = ColorProvider(config.onlineColor?.let { Color(it) } ?: OnlineGreen),
+        offline = ColorProvider(config.offlineColor?.let { Color(it) } ?: OfflineRed),
         neutral = theme.outline,
+        sent = ColorProvider(config.sentColor?.let { Color(it) } ?: config.onlineColor?.let { Color(it) } ?: OnlineGreen),
+        border = config.borderColor?.let { ColorProvider(Color(it)) } ?: theme.outline,
     )
 }
 

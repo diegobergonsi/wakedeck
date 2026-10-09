@@ -7,4 +7,6 @@ enum class DeviceStatus {
     OFFLINE,
     /** No host set, so nothing to check. */
     UNAVAILABLE,
+    /** Last known status is too old to trust (widgets only). */
+    STALE,
 }

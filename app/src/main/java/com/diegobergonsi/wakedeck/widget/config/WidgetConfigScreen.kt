@@ -48,11 +48,17 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.diegobergonsi.wakedeck.R
 import com.diegobergonsi.wakedeck.widget.WidgetType
 import com.diegobergonsi.wakedeck.widget.drawableRes
+import com.diegobergonsi.wakedeck.widget.labelRes
 import kotlin.math.roundToInt
 
 private val Swatches = listOf(
     0xFF000000, 0xFFFFFFFF, 0xFF1E88E5, 0xFF43A047, 0xFFE53935, 0xFFFB8C00,
     0xFF8E24AA, 0xFF00ACC1, 0xFF6D4C41, 0xFF546E7A, 0xFF212121, 0xFFFDD835,
+).map { it.toInt() }
+
+/** Short palette for the status and sent colors, where black and white make no sense. */
+private val StateSwatches = listOf(
+    0xFF2E9E4F, 0xFFD64545, 0xFF1E88E5, 0xFFFB8C00, 0xFF8E24AA, 0xFFFDD835,
 ).map { it.toInt() }
 
 private class PreviewOption(val size: DpSize, val label: Int)
@@ -87,6 +93,7 @@ fun WidgetConfigScreen(
     val config = viewModel.config
     val type = viewModel.type
     val options = remember(type) { previewOptions(type) }
+    var advancedOpen by remember { mutableStateOf(false) }
     var previewIndex by remember(type) { mutableStateOf(if (type == WidgetType.SINGLE) 2 else 0) }
 
     LaunchedEffect(devices, viewModel.loaded) {
@@ -214,7 +221,7 @@ fun WidgetConfigScreen(
                                 .clickable { viewModel.update { it.copy(icon = icon) } },
                             contentAlignment = Alignment.Center,
                         ) {
-                            Icon(painterResource(icon.drawableRes()), contentDescription = null, Modifier.size(24.dp))
+                            Icon(painterResource(icon.drawableRes()), contentDescription = stringResource(icon.labelRes()), Modifier.size(24.dp))
                         }
                     }
                 }
@@ -306,6 +313,36 @@ fun WidgetConfigScreen(
                     }
                 }
             }
+            TextButton(onClick = { advancedOpen = !advancedOpen }) {
+                Text(stringResource(if (advancedOpen) R.string.config_advanced_hide else R.string.config_advanced_show))
+            }
+            if (advancedOpen) {
+                Section(R.string.config_color_online) {
+                    ColorPicker(config.onlineColor, StateSwatches, R.string.color_default) { c -> viewModel.update { it.copy(onlineColor = c) } }
+                }
+                Section(R.string.config_color_offline) {
+                    ColorPicker(config.offlineColor, StateSwatches, R.string.color_default) { c -> viewModel.update { it.copy(offlineColor = c) } }
+                }
+                Section(R.string.config_color_sent) {
+                    ColorPicker(config.sentColor, StateSwatches, R.string.color_default) { c -> viewModel.update { it.copy(sentColor = c) } }
+                }
+                Section(R.string.config_border) {
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        (0..WidgetConfig.MAX_BORDER_WIDTH_DP).forEach { w ->
+                            FilterChip(
+                                selected = config.borderWidthDp == w,
+                                onClick = { viewModel.update { it.copy(borderWidthDp = w) } },
+                                label = { Text(if (w == 0) stringResource(R.string.border_none) else "$w dp") },
+                            )
+                        }
+                    }
+                }
+                if (config.borderWidthDp > 0) {
+                    Section(R.string.config_border_color) {
+                        ColorPicker(config.borderColor) { c -> viewModel.update { it.copy(borderColor = c) } }
+                    }
+                }
+            }
             Box(Modifier.size(24.dp))
         }
     }
@@ -321,14 +358,20 @@ private fun Section(title: Int, content: @Composable () -> Unit) {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun ColorPicker(selected: Int?, onPick: (Int?) -> Unit) {
+private fun ColorPicker(
+    selected: Int?,
+    swatches: List<Int> = Swatches,
+    defaultLabel: Int = R.string.color_theme_default,
+    onPick: (Int?) -> Unit,
+) {
+    val swatchSize = if (swatches.size <= 6) 32.dp else 36.dp
     FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        FilterChip(selected = selected == null, onClick = { onPick(null) }, label = { Text(stringResource(R.string.color_theme_default)) })
-        Swatches.forEach { argb ->
+        FilterChip(selected = selected == null, onClick = { onPick(null) }, label = { Text(stringResource(defaultLabel)) })
+        swatches.forEach { argb ->
             val isSelected = selected == argb
             Box(
                 Modifier
-                    .size(36.dp)
+                    .size(swatchSize)
                     .background(Color(argb), CircleShape)
                     .border(
                         BorderStroke(if (isSelected) 3.dp else 1.dp, if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline),
@@ -338,4 +381,22 @@ private fun ColorPicker(selected: Int?, onPick: (Int?) -> Unit) {
             )
         }
     }
+    HexField(selected, onPick)
+}
+
+/** Free color input. Only a complete `#RRGGBB` value changes the color, so half-typed text is harmless. */
+@Composable
+private fun HexField(selected: Int?, onPick: (Int?) -> Unit) {
+    var text by remember(selected) { mutableStateOf(selected?.let { ColorHex.format(it) } ?: "") }
+    OutlinedTextField(
+        value = text,
+        onValueChange = { value ->
+            text = value
+            ColorHex.parse(value)?.let { onPick(it) }
+        },
+        label = { Text(stringResource(R.string.config_hex)) },
+        isError = text.isNotBlank() && ColorHex.parse(text) == null,
+        singleLine = true,
+        modifier = Modifier.fillMaxWidth(0.7f),
+    )
 }

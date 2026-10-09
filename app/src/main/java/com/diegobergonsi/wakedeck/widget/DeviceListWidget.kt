@@ -3,9 +3,11 @@ package com.diegobergonsi.wakedeck.widget
 import android.content.Context
 import android.content.Intent
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.GlanceId
@@ -49,10 +51,19 @@ class DeviceListWidget : GlanceAppWidget() {
         val initial = MultiWidgetStates.load(context, widgetId)
         val live = MultiWidgetStates.flow(context, widgetId)
         // Scrolling collections cannot render inside the config screen's preview, so it gets a plain layout.
-        val preview = WidgetDraft.get(widgetId) != null
+        val draftFlow = WidgetDraft.flow(widgetId)
         provideContent {
             val state by live.collectAsState(initial)
-            DeviceListContent(state, preview)
+            val draft by draftFlow.collectAsState()
+            DeviceListContent(state, preview = draft != null)
+        }
+    }
+
+    override suspend fun providePreview(context: Context, widgetCategory: Int) {
+        provideContent {
+            CompositionLocalProvider(LocalSize provides DpSize(300.dp, 190.dp)) {
+                DeviceListContent(SampleWidgetStates.multi(), preview = true)
+            }
         }
     }
 
@@ -76,9 +87,10 @@ fun DeviceListContent(state: MultiWidgetState, preview: Boolean = false) {
             GlanceModifier
                 .fillMaxSize()
                 .roundedBackground(config.cornerRadiusDp, palette.background)
-                .clickable(openApp, R.drawable.ripple_none)
-                .padding(8.dp),
+                .clickable(openApp, R.drawable.ripple_none),
         ) {
+            BorderOverlay(config, palette)
+            Box(GlanceModifier.fillMaxSize().padding(8.dp)) {
             if (state.config == null || state.rows.isEmpty()) {
                 Box(GlanceModifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Text(
@@ -107,6 +119,7 @@ fun DeviceListContent(state: MultiWidgetState, preview: Boolean = false) {
                         }
                     }
                 }
+            }
             }
         }
     }

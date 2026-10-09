@@ -33,10 +33,18 @@ data class WidgetConfig(
     val rowStyle: ListRowStyle = ListRowStyle.DETAILED,
     /** Grid columns, 0 = automatic from the widget width. */
     val gridColumns: Int = 0,
+    /** Colors for the status dot and button states. Null = built-in default. */
+    val onlineColor: Int? = null,
+    val offlineColor: Int? = null,
+    val sentColor: Int? = null,
+    /** 0 = no border. */
+    val borderWidthDp: Int = 0,
+    val borderColor: Int? = null,
 ) {
     companion object {
         const val DEFAULT_CORNER_RADIUS_DP = 24
         const val MAX_CORNER_RADIUS_DP = 40
         const val MAX_GRID_COLUMNS = 4
+        const val MAX_BORDER_WIDTH_DP = 4
     }
 }

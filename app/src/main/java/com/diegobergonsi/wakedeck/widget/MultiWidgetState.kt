@@ -29,8 +29,7 @@ object MultiWidgetStates {
     @OptIn(ExperimentalCoroutinesApi::class)
     fun flow(context: Context, widgetId: Int): Flow<MultiWidgetState> {
         val entry = context.widgetEntryPoint()
-        val draft = WidgetDraft.get(widgetId)
-        val configs = if (draft != null) flowOf(draft) else entry.configStore().flow(widgetId)
+        val configs = combine(WidgetDraft.flow(widgetId), entry.configStore().flow(widgetId)) { draft, stored -> draft ?: stored }
         return configs.flatMapLatest { config ->
             val ids = config?.deviceIds.orEmpty()
             if (ids.isEmpty()) {
@@ -45,7 +44,7 @@ object MultiWidgetStates {
                         device?.let {
                             DeviceRowState(
                                 it,
-                                snapshot?.status ?: DeviceStatus.CHECKING,
+                                snapshot?.effective(System.currentTimeMillis()) ?: DeviceStatus.CHECKING,
                                 snapshot?.checkedAtMs,
                                 wake?.feedbackAt(System.currentTimeMillis()) ?: WakeFeedback.NONE,
                             )

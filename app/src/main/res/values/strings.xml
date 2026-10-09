@@ -78,4 +78,27 @@
     <string name="config_columns">Columns</string>
     <string name="columns_auto">Auto</string>
     <string name="config_label_hint_multi">Title shown at the top (optional)</string>
+    <string name="config_advanced_show">Show advanced options</string>
+    <string name="config_advanced_hide">Hide advanced options</string>
+    <string name="config_color_online">Online dot color</string>
+    <string name="config_color_offline">Offline dot color</string>
+    <string name="config_color_sent">Color after tapping Wake</string>
+    <string name="config_border">Border</string>
+    <string name="border_none">None</string>
+    <string name="config_border_color">Border color</string>
+    <string name="config_hex">Custom color (#RRGGBB)</string>
+    <string name="status_stale">Unknown</string>
+    <string name="icon_power">Power</string>
+    <string name="icon_desktop">Desktop</string>
+    <string name="icon_laptop">Laptop</string>
+    <string name="icon_server">Server</string>
+    <string name="icon_tv">TV</string>
+    <string name="icon_gamepad">Game console</string>
+    <string name="icon_home">Home</string>
+    <string name="icon_bolt">Lightning</string>
+    <string name="icon_cloud">Cloud</string>
+    <string name="icon_router">Router</string>
+    <string name="icon_star">Star</string>
+    <string name="icon_chip">Chip</string>
+    <string name="color_default">Default</string>
 </resources>

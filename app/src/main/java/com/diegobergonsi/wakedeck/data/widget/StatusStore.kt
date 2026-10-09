@@ -17,7 +17,18 @@ import javax.inject.Singleton
 private val Context.statusDataStore by preferencesDataStore("status_cache")
 
 /** A cached status and when it was checked (null for values written by older builds). */
-data class StatusSnapshot(val status: DeviceStatus, val checkedAtMs: Long?)
+data class StatusSnapshot(val status: DeviceStatus, val checkedAtMs: Long?) {
+    /** ONLINE/OFFLINE older than [STALE_AFTER_MS] become STALE, so an old green or red is not shown as current. */
+    fun effective(nowMs: Long): DeviceStatus {
+        val checked = checkedAtMs ?: return status
+        val known = status == DeviceStatus.ONLINE || status == DeviceStatus.OFFLINE
+        return if (known && nowMs - checked > STALE_AFTER_MS) DeviceStatus.STALE else status
+    }
+
+    companion object {
+        const val STALE_AFTER_MS = 45 * 60 * 1000L
+    }
+}
 
 /** Last known device status and last wake result. Widgets only read this; workers and wake taps write it. */
 @Singleton

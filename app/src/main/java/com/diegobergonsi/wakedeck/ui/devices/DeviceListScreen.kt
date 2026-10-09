@@ -137,6 +137,7 @@ private fun StatusIndicator(status: DeviceStatus, modifier: Modifier = Modifier)
         DeviceStatus.OFFLINE -> StatusRed to R.string.status_offline
         DeviceStatus.CHECKING -> MaterialTheme.colorScheme.outline to R.string.status_checking
         DeviceStatus.UNAVAILABLE -> MaterialTheme.colorScheme.outline to R.string.status_no_host
+        DeviceStatus.STALE -> MaterialTheme.colorScheme.outline to R.string.status_stale
     }
     Row(modifier, verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         Box(Modifier.size(10.dp).background(color, CircleShape))

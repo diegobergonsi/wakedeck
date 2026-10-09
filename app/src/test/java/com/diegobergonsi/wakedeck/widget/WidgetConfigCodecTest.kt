@@ -29,6 +29,11 @@ class WidgetConfigCodecTest {
             density = DensityOption.COMPACT,
             rowStyle = ListRowStyle.MINIMAL,
             gridColumns = 3,
+            onlineColor = 0xFF00AA00.toInt(),
+            offlineColor = 0xFFAA0000.toInt(),
+            sentColor = 0xFF0000AA.toInt(),
+            borderWidthDp = 2,
+            borderColor = 0xFFCCCCCC.toInt(),
         )
         assertEquals(config, WidgetConfigCodec.decode(WidgetConfigCodec.encode(config)))
     }
@@ -72,10 +77,11 @@ class WidgetConfigCodecTest {
 
     @Test
     fun outOfRangeNumbersAreClamped() {
-        val decoded = WidgetConfigCodec.decode(mapOf("alpha" to "7", "radius" to "999", "gridColumns" to "99"))
+        val decoded = WidgetConfigCodec.decode(mapOf("alpha" to "7", "radius" to "999", "gridColumns" to "99", "borderWidth" to "50"))
         assertEquals(1f, decoded.backgroundAlpha)
         assertEquals(WidgetConfig.MAX_CORNER_RADIUS_DP, decoded.cornerRadiusDp)
         assertEquals(WidgetConfig.MAX_GRID_COLUMNS, decoded.gridColumns)
+        assertEquals(WidgetConfig.MAX_BORDER_WIDTH_DP, decoded.borderWidthDp)
         assertEquals(0f, WidgetConfigCodec.decode(mapOf("alpha" to "-3")).backgroundAlpha)
     }
 
@@ -84,5 +90,7 @@ class WidgetConfigCodecTest {
         val encoded = WidgetConfigCodec.encode(WidgetConfig())
         assertNull(encoded["background"])
         assertNull(encoded["accent"])
+        assertNull(encoded["onlineColor"])
+        assertNull(encoded["borderColor"])
     }
 }
