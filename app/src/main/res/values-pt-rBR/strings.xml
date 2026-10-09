@@ -22,11 +22,15 @@
     <string name="field_status_port">Porta para verificar status (opcional)</string>
     <string name="os_windows">Windows</string>
     <string name="os_linux">Linux</string>
-    <string name="hint_host">Usado para verificar se está online ou offline</string>
+    <string name="hint_host">Necessário para verificar se está online ou offline</string>
     <string name="hint_broadcast">Use o broadcast da sub-rede (ex.: 192.168.1.255) para ligar via VPN</string>
-    <string name="hint_status_port">Porta TCP aberta quando a máquina está ligada</string>
+    <string name="hint_status_port">Porta TCP a testar, ex.: 22 para SSH. Deixe vazio para usar ping</string>
     <string name="error_name">Informe um nome</string>
     <string name="error_mac">Informe um endereço MAC válido (12 dígitos hexadecimais)</string>
     <string name="error_broadcast">Informe um endereço de broadcast</string>
     <string name="error_port">Informe uma porta de 1 a 65535</string>
+    <string name="status_online">Online</string>
+    <string name="status_offline">Offline</string>
+    <string name="status_checking">Verificando…</string>
+    <string name="status_no_host">Sem host definido</string>
 </resources>

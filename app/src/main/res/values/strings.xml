@@ -22,11 +22,15 @@
     <string name="field_status_port">Status check port (optional)</string>
     <string name="os_windows">Windows</string>
     <string name="os_linux">Linux</string>
-    <string name="hint_host">Used for online/offline checks</string>
+    <string name="hint_host">Needed for online/offline checks</string>
     <string name="hint_broadcast">Use your subnet broadcast (e.g. 192.168.1.255) to wake over a VPN</string>
-    <string name="hint_status_port">TCP port that is open when the machine is on</string>
+    <string name="hint_status_port">TCP port to test, e.g. 22 for SSH. Leave empty to use ping</string>
     <string name="error_name">Enter a name</string>
     <string name="error_mac">Enter a valid MAC address (12 hex digits)</string>
     <string name="error_broadcast">Enter a broadcast address</string>
     <string name="error_port">Enter a port from 1 to 65535</string>
+    <string name="status_online">Online</string>
+    <string name="status_offline">Offline</string>
+    <string name="status_checking">Checking…</string>
+    <string name="status_no_host">No host set</string>
 </resources>
