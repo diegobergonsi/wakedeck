@@ -6,6 +6,7 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.Icons
 import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material3.DropdownMenu
@@ -14,6 +15,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.foundation.clickable
+import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -141,6 +143,13 @@ fun DeviceListScreen(
             ExtendedFloatingActionButton(onClick = onAdd) { Text(stringResource(R.string.add_device)) }
         },
     ) { padding ->
+        Box(Modifier.fillMaxSize()) {
+        Image(
+            painterResource(R.drawable.bg_power_ring),
+            contentDescription = null,
+            modifier = Modifier.align(if (hasDevices) Alignment.BottomCenter else Alignment.Center).padding(padding).size(if (hasDevices) 300.dp else 340.dp),
+            alpha = if (hasDevices) 0.10f else 0.22f,
+        )
         if (!hasDevices) {
             Column(
                 Modifier.fillMaxSize().padding(padding).padding(32.dp),
@@ -190,6 +199,7 @@ fun DeviceListScreen(
                 }
             }
             }
+        }
         }
     }
 }
