@@ -10,6 +10,7 @@ import com.diegobergonsi.wakedeck.data.DeviceRepository
 import androidx.annotation.StringRes
 import com.diegobergonsi.wakedeck.R
 import com.diegobergonsi.wakedeck.data.GroupRepository
+import com.diegobergonsi.wakedeck.domain.BroadcastAddress
 import com.diegobergonsi.wakedeck.domain.Device
 import com.diegobergonsi.wakedeck.domain.Group
 import com.diegobergonsi.wakedeck.ssh.FingerprintResult
@@ -111,7 +112,7 @@ class DeviceEditViewModel @Inject constructor(
         val errors = buildSet {
             if (f.name.isBlank()) add(FormError.NAME)
             if (MagicPacket.parseMac(f.mac) == null) add(FormError.MAC)
-            if (f.broadcast.isBlank() || f.broadcast.any { it.isWhitespace() }) add(FormError.BROADCAST)
+            if (!BroadcastAddress.isValid(f.broadcast)) add(FormError.BROADCAST)
             if (f.port.toIntOrNull() !in 1..65535) add(FormError.PORT)
             if (f.statusPort.isNotBlank() && f.statusPort.toIntOrNull() !in 1..65535) add(FormError.STATUS_PORT)
             if (f.sshUser.any { it.isWhitespace() }) add(FormError.SSH_USER)

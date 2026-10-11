@@ -2,7 +2,6 @@ package com.diegobergonsi.wakedeck.ui.devices
 
 import android.content.Context
 import android.net.Uri
-import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.diegobergonsi.wakedeck.R
@@ -10,6 +9,7 @@ import com.diegobergonsi.wakedeck.data.DeviceRepository
 import com.diegobergonsi.wakedeck.data.GroupRepository
 import com.diegobergonsi.wakedeck.data.WakeCoordinator
 import com.diegobergonsi.wakedeck.data.WakeOutcome
+import com.diegobergonsi.wakedeck.data.messageRes
 import com.diegobergonsi.wakedeck.data.transfer.ImportOutcome
 import com.diegobergonsi.wakedeck.data.transfer.TransferRepository
 import com.diegobergonsi.wakedeck.domain.Device
@@ -34,7 +34,13 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 /** A message for the snackbar: a string resource with its arguments. Kept as data so the ViewModel has no UI text. */
-data class UiMessage(@StringRes val res: Int, val args: List<Any> = emptyList())
+data class UiMessage(
+    /** A string resource, or a plurals resource when [quantity] is set. */
+    val res: Int,
+    val args: List<Any> = emptyList(),
+    /** When set, [res] is a plurals resource and this number picks the form. */
+    val quantity: Int? = null,
+)
 
 /** One block on the main screen. [group] is null for devices without a group. */
 data class DeviceSection(val group: Group?, val devices: List<Device>)
@@ -71,9 +77,7 @@ class DeviceListViewModel @Inject constructor(
     fun wake(device: Device) {
         viewModelScope.launch {
             val result = coordinator.wake(device.id)
-            messageChannel.send(
-                UiMessage(if (result.outcome == WakeOutcome.SENT) R.string.wake_sent else R.string.wake_failed, listOf(device.name)),
-            )
+            messageChannel.send(UiMessage(result.messageRes(), listOf(device.name)))
             if (result.outcome != WakeOutcome.NOT_FOUND) coordinator.clearFeedbackLater(device.id)
         }
     }
@@ -84,7 +88,7 @@ class DeviceListViewModel @Inject constructor(
             val sent = section.devices.count { d ->
                 (coordinator.wake(d.id).outcome == WakeOutcome.SENT).also { coordinator.clearFeedbackLater(d.id) }
             }
-            messageChannel.send(UiMessage(R.string.wake_all_result, listOf(sent, section.devices.size)))
+            messageChannel.send(UiMessage(R.plurals.wake_all_result, listOf(sent, section.devices.size), quantity = section.devices.size))
         }
     }
 
@@ -95,7 +99,7 @@ class DeviceListViewModel @Inject constructor(
                     val (text, count) = transfer.export()
                     context.contentResolver.openOutputStream(uri, "wt")?.use { it.write(text.toByteArray()) }
                         ?: error("cannot write")
-                    UiMessage(R.string.export_done, listOf(count))
+                    UiMessage(R.plurals.export_done, listOf(count), quantity = count)
                 }.getOrElse { UiMessage(R.string.export_failed) }
             }
             messageChannel.send(message)

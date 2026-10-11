@@ -34,6 +34,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -94,7 +95,7 @@ fun WidgetConfigScreen(
     val type = viewModel.type
     val options = remember(type) { previewOptions(type) }
     var advancedOpen by remember { mutableStateOf(false) }
-    var previewIndex by remember(type) { mutableStateOf(if (type == WidgetType.SINGLE) 2 else 0) }
+    var previewIndex by remember(type) { mutableIntStateOf(if (type == WidgetType.SINGLE) 2 else 0) }
 
     LaunchedEffect(devices, viewModel.loaded) {
         if (viewModel.loaded && viewModel.config.deviceIds.isEmpty() && devices.isNotEmpty()) {

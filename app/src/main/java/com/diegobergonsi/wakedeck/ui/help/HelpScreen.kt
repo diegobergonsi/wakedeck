@@ -3,6 +3,8 @@ package com.diegobergonsi.wakedeck.ui.help
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
+import android.provider.Settings
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -122,10 +124,21 @@ fun HelpScreen(onBack: () -> Unit, openSection: String? = null, viewModel: HelpV
 
             Section(R.string.help_s3, open == "remote", { open = if (open == "remote") "" else "remote" }) {
                 Body(R.string.help_remote)
+                Body(R.string.help_remote_errors)
             }
             Section(R.string.help_s4, open == "phone", { open = if (open == "phone") "" else "phone" }) {
+                val ctx = LocalContext.current
                 Body(R.string.help_phone_notif)
+                TextButton(onClick = {
+                    ctx.startActivity(
+                        Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                            .putExtra(Settings.EXTRA_APP_PACKAGE, ctx.packageName),
+                    )
+                }) { Text(stringResource(R.string.help_open_notif_settings)) }
                 Body(R.string.help_phone_batt)
+                TextButton(onClick = { ctx.startActivity(Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)) }) {
+                    Text(stringResource(R.string.help_open_battery_settings))
+                }
             }
             Text("", Modifier.padding(bottom = 24.dp))
         }

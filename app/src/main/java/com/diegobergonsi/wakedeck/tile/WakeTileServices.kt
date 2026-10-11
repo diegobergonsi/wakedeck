@@ -1,5 +1,6 @@
 package com.diegobergonsi.wakedeck.tile
 
+import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.Intent
 import android.graphics.drawable.Icon
@@ -95,6 +96,8 @@ abstract class WakeTileService(private val slot: Int) : TileService() {
         tile.updateTile()
     }
 
+    // The Intent overload is only the fallback below API 34, where the PendingIntent one does not exist.
+    @SuppressLint("StartActivityAndCollapseDeprecated")
     private fun openSettings() {
         val intent = Intent(this, TileConfigActivity::class.java)
             .putExtra(TileConfigActivity.EXTRA_SLOT, slot)

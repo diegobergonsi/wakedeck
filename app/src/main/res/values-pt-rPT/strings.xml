@@ -13,6 +13,8 @@
     <string name="broadcast_summary">%1$s : %2$d</string>
     <string name="wake_sent">Pacote mágico enviado para %1$s</string>
     <string name="wake_failed">Não foi possível enviar o pacote para %1$s</string>
+    <string name="wake_failed_no_network">Não foi possível enviar para %1$s: sem ligação de rede ou VPN</string>
+    <string name="wake_failed_bad_address">Não foi possível enviar para %1$s: endereço de broadcast não encontrado</string>
     <string name="field_name">Nome</string>
     <string name="field_mac">Endereço MAC</string>
     <string name="field_host">IP ou nome do anfitrião (opcional)</string>
@@ -162,17 +164,26 @@
     <string name="group_delete_title">Eliminar “%1$s”?</string>
     <string name="group_delete_text">Os dispositivos deste grupo são mantidos e ficam sem grupo.</string>
     <string name="wake_all">Ligar todos</string>
-    <string name="wake_all_result">Enviado para %1$d de %2$d dispositivos</string>
+    <plurals name="wake_all_result">
+        <item quantity="one">Enviado para %1$d de %2$d dispositivo</item>
+        <item quantity="many">Enviado para %1$d de %2$d de dispositivos</item>
+        <item quantity="other">Enviado para %1$d de %2$d dispositivos</item>
+    </plurals>
     <string name="group_other">Outros</string>
     <string name="field_group">Grupo</string>
     <string name="group_none">Sem grupo</string>
     <string name="group_new">Novo grupo</string>
-    <string name="export_done">%1$d dispositivos exportados</string>
+    <plurals name="export_done">
+        <item quantity="one">%1$d dispositivo exportado</item>
+        <item quantity="many">%1$d de dispositivos exportados</item>
+        <item quantity="other">%1$d dispositivos exportados</item>
+    </plurals>
     <string name="export_failed">Não foi possível exportar os dispositivos</string>
-    <string name="import_done">%1$d adicionados, %2$d já guardados ignorados, %3$d inutilizáveis</string>
+    <string name="import_done">Importação concluída. Adicionados: %1$d. Já guardados: %2$d. Inutilizáveis: %3$d.</string>
     <string name="import_failed">Não foi possível importar: este não é um ficheiro da WakeDeck</string>
     <plurals name="group_device_count">
         <item quantity="one">%1$d dispositivo</item>
+        <item quantity="many">%1$d de dispositivos</item>
         <item quantity="other">%1$d dispositivos</item>
     </plurals>
     <string name="help_title">Ajuda</string>
@@ -209,6 +220,9 @@
     <string name="help_s4">4. Dicas do telemóvel (Honor / MagicOS)</string>
     <string name="help_phone_notif">A mensagem depois de tocar num atalho do ícone precisa que as notificações da WakeDeck estejam permitidas (Definições \u2192 Apps \u2192 WakeDeck \u2192 Notificações). Sem isso o MagicOS esconde a mensagem, mas o PC liga na mesma.</string>
     <string name="help_phone_batt">Os widgets atualizam o estado em segundo plano e o MagicOS pode impedir isso para poupar bateria. Permita que a WakeDeck corra em segundo plano (Definições \u2192 Bateria, retire a WakeDeck da otimização de bateria). O botão de atualizar do widget funciona sempre.</string>
+    <string name="help_open_notif_settings">Abrir definições de notificações</string>
+    <string name="help_open_battery_settings">Abrir definições de bateria</string>
+    <string name="help_remote_errors">Problemas à distância: \u201csem ligação de rede ou VPN\u201d significa que o telemóvel não tem rota para esse endereço, por isso ligue primeiro a VPN. \u201cEndereço de broadcast não encontrado\u201d significa que o nome ou endereço do dispositivo não pôde ser resolvido. Uma VPN também pode aceitar o pacote e nunca o entregar: a app não consegue saber, porque o pacote mágico não tem resposta. Confirme se o PC liga e veja o estado dele na lista.</string>
     <string name="help_copy">Copiar</string>
     <string name="help_copied">Copiado</string>
     <string name="help_ssh_link">Como configurar isto no PC</string>

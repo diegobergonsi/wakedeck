@@ -13,6 +13,8 @@
     <string name="broadcast_summary">%1$s : %2$d</string>
     <string name="wake_sent">Magic packet sent to %1$s</string>
     <string name="wake_failed">Could not send packet to %1$s</string>
+    <string name="wake_failed_no_network">Could not send to %1$s: no network or VPN connection</string>
+    <string name="wake_failed_bad_address">Could not send to %1$s: broadcast address not found</string>
     <string name="field_name">Name</string>
     <string name="field_mac">MAC address</string>
     <string name="field_host">IP or hostname (optional)</string>
@@ -162,14 +164,20 @@
     <string name="group_delete_title">Delete “%1$s”?</string>
     <string name="group_delete_text">The devices in this group are kept and become ungrouped.</string>
     <string name="wake_all">Wake all</string>
-    <string name="wake_all_result">Sent to %1$d of %2$d devices</string>
+    <plurals name="wake_all_result">
+        <item quantity="one">Sent to %1$d of %2$d device</item>
+        <item quantity="other">Sent to %1$d of %2$d devices</item>
+    </plurals>
     <string name="group_other">Other</string>
     <string name="field_group">Group</string>
     <string name="group_none">No group</string>
     <string name="group_new">New group</string>
-    <string name="export_done">Exported %1$d devices</string>
+    <plurals name="export_done">
+        <item quantity="one">Exported %1$d device</item>
+        <item quantity="other">Exported %1$d devices</item>
+    </plurals>
     <string name="export_failed">Could not export the devices</string>
-    <string name="import_done">Added %1$d, skipped %2$d already saved, %3$d unusable</string>
+    <string name="import_done">Import finished. Added: %1$d. Already saved: %2$d. Unusable: %3$d.</string>
     <string name="import_failed">Could not import: this is not a WakeDeck file</string>
     <plurals name="group_device_count">
         <item quantity="one">%1$d device</item>
@@ -209,6 +217,9 @@
     <string name="help_s4">4. Phone tips (Honor / MagicOS)</string>
     <string name="help_phone_notif">The message after tapping a launcher shortcut needs notifications allowed for WakeDeck (Settings \u2192 Apps \u2192 WakeDeck \u2192 Notifications). Without it MagicOS hides the message, but the wake still works.</string>
     <string name="help_phone_batt">Widgets refresh the status in the background and MagicOS may stop that to save battery. Allow WakeDeck to run in the background (Settings \u2192 Battery, exclude WakeDeck from battery optimization). The refresh button on a widget always works.</string>
+    <string name="help_open_notif_settings">Open notification settings</string>
+    <string name="help_open_battery_settings">Open battery settings</string>
+    <string name="help_remote_errors">Remote problems: \u201cno network or VPN connection\u201d means the phone has no route to that address, so connect the VPN first. \u201cBroadcast address not found\u201d means the name or address in the device cannot be resolved. A VPN may also accept the packet but never deliver it: the app cannot tell, because a magic packet has no reply. Check that the PC turns on, and look at its status in the list.</string>
     <string name="help_copy">Copy</string>
     <string name="help_copied">Copied</string>
     <string name="help_ssh_link">How to set this up on the PC</string>

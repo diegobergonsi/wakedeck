@@ -6,6 +6,7 @@ import android.widget.Toast
 import com.diegobergonsi.wakedeck.R
 import com.diegobergonsi.wakedeck.data.WakeCoordinator
 import com.diegobergonsi.wakedeck.data.WakeOutcome
+import com.diegobergonsi.wakedeck.data.messageRes
 import com.diegobergonsi.wakedeck.di.ApplicationScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -28,8 +29,7 @@ class WakeShortcutActivity : ComponentActivity() {
         scope.launch {
             val result = coordinator.wake(deviceId)
             val message = when (result.outcome) {
-                WakeOutcome.SENT -> appContext.getString(R.string.wake_sent, result.deviceName)
-                WakeOutcome.FAILED -> appContext.getString(R.string.wake_failed, result.deviceName)
+                WakeOutcome.SENT, WakeOutcome.FAILED -> appContext.getString(result.messageRes(), result.deviceName)
                 WakeOutcome.NOT_FOUND -> appContext.getString(R.string.widget_device_missing)
             }
             withContext(Dispatchers.Main) { Toast.makeText(appContext, message, Toast.LENGTH_SHORT).show() }
