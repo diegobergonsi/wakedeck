@@ -28,10 +28,11 @@ class GroupsViewModel @Inject constructor(
         groupList.map { g -> GroupRow(g, all.count { it.groupId == g.id }) }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
 
-    /** Blank names are ignored. Names are trimmed. */
+    /** Blank names and names that another group already uses (ignoring case) are ignored. Names are trimmed. */
     fun save(id: Long, name: String) {
         val clean = name.trim()
         if (clean.isEmpty()) return
+        if (rows.value.any { it.group.id != id && it.group.name.equals(clean, ignoreCase = true) }) return
         viewModelScope.launch { groups.save(Group(id, clean)) }
     }
 
