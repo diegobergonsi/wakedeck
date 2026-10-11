@@ -116,3 +116,11 @@ nav a[aria-current="page"] { color: #fff; text-decoration: underline; text-decor
 
 .support { padding-top: 8px; }
 .support .sub { margin-bottom: 24px; }
+
+/* Donation buttons: warm amber so they stand out from the navy page */
+.btn.donate { background: var(--amber); color: var(--navy-900); }
+.btn.donate:hover { background: #fff; color: var(--navy-900); }
+.nav-donate { padding: 8px 16px; font-size: 14px; order: 5; white-space: nowrap; }
+.support .btn.donate { margin-top: 4px; }
+@media (max-width: 860px) { .nav-donate { display: none; } }
+@media (max-width: 480px) { .lang summary span { display: none; } .lang summary { padding: 8px 10px; } }

@@ -610,26 +610,26 @@ PRIVACY = {
 
 # ---------------------------------------------------------------- support (tip) section
 SUPPORT = {
-    "en": ("Support WakeDeck", "WakeDeck is free and has no ads. If it saves you time and you want to chip in, a tip helps cover the Play Store fee and the domain.", "Leave a tip"),
-    "pt-br": ("Apoie o WakeDeck", "O WakeDeck é gratuito e não tem anúncios. Se ele poupa o seu tempo e você quer ajudar, uma gorjeta ajuda a cobrir a taxa da Play Store e o domínio.", "Deixar uma gorjeta"),
-    "pt-pt": ("Apoie a WakeDeck", "A WakeDeck é gratuita e não tem anúncios. Se lhe poupa tempo e quiser ajudar, uma gorjeta ajuda a cobrir a taxa da Play Store e o domínio.", "Deixar uma gorjeta"),
-    "fr": ("Soutenir WakeDeck", "WakeDeck est gratuit et sans publicité. S’il vous fait gagner du temps et que vous souhaitez contribuer, un pourboire aide à couvrir les frais du Play Store et le nom de domaine.", "Laisser un pourboire"),
-    "de": ("WakeDeck unterstützen", "WakeDeck ist kostenlos und werbefrei. Wenn es dir Zeit spart und du etwas beitragen möchtest, hilft ein Trinkgeld, die Play-Store-Gebühr und die Domain zu decken.", "Trinkgeld geben"),
-    "es": ("Apoya WakeDeck", "WakeDeck es gratis y no tiene anuncios. Si te ahorra tiempo y quieres colaborar, una propina ayuda a cubrir la tarifa de Play Store y el dominio.", "Dejar una propina"),
-    "zh": ("支持 WakeDeck", "WakeDeck 免费且没有广告。如果它为你节省了时间，你也想表示支持，一笔打赏能帮助支付 Play 商店费用和域名费用。", "打赏"),
-    "ja": ("WakeDeck を応援", "WakeDeck は無料で、広告もありません。お役に立てて、応援したいと思っていただけたら、チップが Play ストアの手数料とドメイン代の足しになります。", "チップを贈る"),
+    "en": ("Support WakeDeck", "WakeDeck is free and has no ads. If it saves you time and you want to chip in, a donation helps cover the Play Store fee and the domain.", "Make a donation"),
+    "pt-br": ("Apoie o WakeDeck", "O WakeDeck é gratuito e não tem anúncios. Se ele poupa o seu tempo e você quer ajudar, uma doação ajuda a cobrir a taxa da Play Store e o domínio.", "Fazer uma doação"),
+    "pt-pt": ("Apoie a WakeDeck", "A WakeDeck é gratuita e não tem anúncios. Se lhe poupa tempo e quiser ajudar, um donativo ajuda a cobrir a taxa da Play Store e o domínio.", "Fazer um donativo"),
+    "fr": ("Soutenir WakeDeck", "WakeDeck est gratuit et sans publicité. S’il vous fait gagner du temps et que vous souhaitez contribuer, un don aide à couvrir les frais du Play Store et le nom de domaine.", "Faire un don"),
+    "de": ("WakeDeck unterstützen", "WakeDeck ist kostenlos und werbefrei. Wenn es dir Zeit spart und du etwas beitragen möchtest, hilft eine Spende, die Play-Store-Gebühr und die Domain zu decken.", "Spenden"),
+    "es": ("Apoya WakeDeck", "WakeDeck es gratis y no tiene anuncios. Si te ahorra tiempo y quieres colaborar, una donación ayuda a cubrir la tarifa de Play Store y el dominio.", "Hacer una donación"),
+    "zh": ("支持 WakeDeck", "WakeDeck 免费且没有广告。如果它为你节省了时间，你也想表示支持，一笔捐赠能帮助支付 Play 商店费用和域名费用。", "捐赠"),
+    "ja": ("WakeDeck を応援", "WakeDeck は無料で、広告もありません。お役に立てて、応援したいと思っていただけたら、寄付が Play ストアの手数料とドメイン代の足しになります。", "寄付する"),
 }
 
 # One privacy block per language, shown after "Third parties".
 TIPS_BLOCK = {
-    "en": ("Tips", "The support button on this website opens Ko-fi, a third-party site with its own privacy policy. The app has no donation feature. Ko-fi and its payment providers handle any tip, and the developer sees only what Ko-fi shows for it, such as the name and message you choose to give."),
-    "pt-br": ("Gorjetas", "O botão de apoio deste site abre o Ko-fi, um site de terceiros com a própria política de privacidade. O app não tem recurso de doação. O Ko-fi e os seus provedores de pagamento cuidam de qualquer gorjeta, e o desenvolvedor vê apenas o que o Ko-fi mostra, como o nome e a mensagem que você decidir informar."),
-    "pt-pt": ("Gorjetas", "O botão de apoio deste sítio abre o Ko-fi, um sítio de terceiros com a sua própria política de privacidade. A aplicação não tem funcionalidade de donativos. O Ko-fi e os seus fornecedores de pagamento tratam de qualquer gorjeta, e o programador vê apenas o que o Ko-fi mostra, como o nome e a mensagem que decidir indicar."),
-    "fr": ("Pourboires", "Le bouton de soutien de ce site ouvre Ko-fi, un site tiers doté de sa propre politique de confidentialité. L’application n’a aucune fonction de don. Ko-fi et ses prestataires de paiement gèrent tout pourboire, et le développeur ne voit que ce que Ko-fi lui indique, comme le nom et le message que vous choisissez de donner."),
-    "de": ("Trinkgelder", "Die Unterstützen-Schaltfläche auf dieser Website öffnet Ko-fi, eine Seite eines Drittanbieters mit eigener Datenschutzerklärung. Die App hat keine Spendenfunktion. Ko-fi und dessen Zahlungsdienstleister wickeln jedes Trinkgeld ab, und der Entwickler sieht nur, was Ko-fi dazu anzeigt, etwa den Namen und die Nachricht, die du angibst."),
-    "es": ("Propinas", "El botón de apoyo de este sitio abre Ko-fi, un sitio de terceros con su propia política de privacidad. La app no tiene función de donaciones. Ko-fi y sus proveedores de pago gestionan cualquier propina, y el desarrollador solo ve lo que Ko-fi muestra, como el nombre y el mensaje que decidas indicar."),
-    "zh": ("打赏", "本网站上的支持按钮会打开 Ko-fi，这是一个有自己隐私政策的第三方网站。应用本身没有捐赠功能。任何打赏均由 Ko-fi 及其支付服务商处理，开发者只能看到 Ko-fi 显示的信息，例如你选择提供的姓名和留言。"),
-    "ja": ("チップ", "このウェブサイトの応援ボタンは、独自のプライバシーポリシーを持つ第三者サイト Ko-fi を開きます。アプリ自体に寄付機能はありません。チップの処理は Ko-fi とその決済事業者が行い、開発者に見えるのは、あなたが入力した名前やメッセージなど Ko-fi が表示する情報のみです。"),
+    "en": ("Donations", "The donation button on this website opens Ko-fi, a third-party site with its own privacy policy. The app has no donation feature. Ko-fi and its payment providers handle any donation, and the developer sees only what Ko-fi shows for it, such as the name and message you choose to give."),
+    "pt-br": ("Doações", "O botão de doação deste site abre o Ko-fi, um site de terceiros com a própria política de privacidade. O app não tem recurso de doação. O Ko-fi e os seus provedores de pagamento cuidam de qualquer doação, e o desenvolvedor vê apenas o que o Ko-fi mostra, como o nome e a mensagem que você decidir informar."),
+    "pt-pt": ("Donativos", "O botão de donativo deste sítio abre o Ko-fi, um sítio de terceiros com a sua própria política de privacidade. A aplicação não tem funcionalidade de donativos. O Ko-fi e os seus fornecedores de pagamento tratam de qualquer donativo, e o programador vê apenas o que o Ko-fi mostra, como o nome e a mensagem que decidir indicar."),
+    "fr": ("Dons", "Le bouton de don de ce site ouvre Ko-fi, un site tiers doté de sa propre politique de confidentialité. L’application n’a aucune fonction de don. Ko-fi et ses prestataires de paiement gèrent tout don, et le développeur ne voit que ce que Ko-fi lui indique, comme le nom et le message que vous choisissez de donner."),
+    "de": ("Spenden", "Die Spenden-Schaltfläche auf dieser Website öffnet Ko-fi, eine Seite eines Drittanbieters mit eigener Datenschutzerklärung. Die App hat keine Spendenfunktion. Ko-fi und dessen Zahlungsdienstleister wickeln jede Spende ab, und der Entwickler sieht nur, was Ko-fi dazu anzeigt, etwa den Namen und die Nachricht, die du angibst."),
+    "es": ("Donaciones", "El botón de donación de este sitio abre Ko-fi, un sitio de terceros con su propia política de privacidad. La app no tiene función de donaciones. Ko-fi y sus proveedores de pago gestionan cualquier donación, y el desarrollador solo ve lo que Ko-fi muestra, como el nombre y el mensaje que decidas indicar."),
+    "zh": ("捐赠", "本网站上的捐赠按钮会打开 Ko-fi，这是一个有自己隐私政策的第三方网站。应用本身没有捐赠功能。任何捐赠均由 Ko-fi 及其支付服务商处理，开发者只能看到 Ko-fi 显示的信息，例如你选择提供的姓名和留言。"),
+    "ja": ("寄付", "このウェブサイトの寄付ボタンは、独自のプライバシーポリシーを持つ第三者サイト Ko-fi を開きます。アプリ自体に寄付機能はありません。寄付の処理は Ko-fi とその決済事業者が行い、開発者に見えるのは、あなたが入力した名前やメッセージなど Ko-fi が表示する情報のみです。"),
 }
 
 
@@ -685,6 +685,7 @@ def header(t, folder, page):
   <div class="wrap">
     <a class="brand" href="{b}" aria-label="WakeDeck"><b>Wake</b><span>Deck</span></a>
     <nav aria-label="Main">
+      <a class="btn donate nav-donate" href="{KOFI}" rel="noopener noreferrer">{SUPPORT[folder or "en"][2]}</a>
       <a class="opt" href="{b}#features">{t["features"]}</a>
       <a class="opt" href="{b}#how">{t["how"]}</a>
       <a href="{b}privacy"{cur_priv}>{t["privacy"]}</a>
@@ -732,6 +733,7 @@ def build_index(folder, code):
       <p class="lead">{t["lead"]}</p>
       <div class="actions">
         <span class="btn primary" aria-disabled="true">{t["play"]}</span>
+        <a class="btn donate" href="{KOFI}" rel="noopener noreferrer">{SUPPORT[folder or "en"][2]}</a>
       </div>
       <p class="soon">{t["soon"]}</p>
     </div>
@@ -774,7 +776,7 @@ def build_index(folder, code):
   <section class="wrap support" aria-labelledby="support-h">
     <h2 id="support-h">{SUPPORT[folder or "en"][0]}</h2>
     <p class="sub">{SUPPORT[folder or "en"][1]}</p>
-    <a class="btn ghost" href="{KOFI}" rel="noopener noreferrer">{SUPPORT[folder or "en"][2]}</a>
+    <a class="btn donate" href="{KOFI}" rel="noopener noreferrer">{SUPPORT[folder or "en"][2]}</a>
   </section>
 </main>
 """ + footer(t, folder)
