@@ -66,4 +66,6 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
 
     testImplementation(libs.junit)
+    // Real org.json for JVM unit tests (Android's own copy is only a stub there). Test-only, not in the app.
+    testImplementation(libs.orgjson)
 }

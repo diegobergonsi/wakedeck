@@ -1,6 +1,13 @@
 package com.diegobergonsi.wakedeck.ui.devices
 
 import androidx.compose.foundation.background
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,6 +22,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -50,9 +62,19 @@ fun DeviceListScreen(
     onAdd: () -> Unit,
     onEdit: (Long) -> Unit,
     onOpenSshKey: () -> Unit,
+    onOpenGroups: () -> Unit,
+    onOpenHelp: () -> Unit,
     viewModel: DeviceListViewModel = hiltViewModel(),
 ) {
-    val devices by viewModel.devices.collectAsStateWithLifecycle()
+    val sections by viewModel.sections.collectAsStateWithLifecycle()
+    val hasDevices = sections.isNotEmpty()
+    var menuOpen by remember { mutableStateOf(false) }
+    val exportLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
+        uri?.let(viewModel::exportTo)
+    }
+    val importLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+        uri?.let(viewModel::importFrom)
+    }
     val statuses by viewModel.statuses.collectAsStateWithLifecycle()
     val lifecycleOwner = LocalLifecycleOwner.current
     val snackbar = remember { SnackbarHostState() }
@@ -63,13 +85,9 @@ fun DeviceListScreen(
     }
 
     LaunchedEffect(viewModel) {
-        viewModel.events.collect { event ->
-            val message = when (event) {
-                is WakeEvent.Sent -> context.getString(R.string.wake_sent, event.deviceName)
-                is WakeEvent.Failed -> context.getString(R.string.wake_failed, event.deviceName)
-            }
+        viewModel.messages.collect { m ->
             snackbar.currentSnackbarData?.dismiss()
-            snackbar.showSnackbar(message)
+            snackbar.showSnackbar(context.getString(m.res, *m.args.toTypedArray()))
         }
     }
 
@@ -77,7 +95,19 @@ fun DeviceListScreen(
         topBar = {
             CenterAlignedTopAppBar(
                 title = { Text(stringResource(R.string.app_name)) },
-                actions = { TextButton(onClick = onOpenSshKey) { Text(stringResource(R.string.menu_ssh_key)) } },
+                actions = {
+                    val moreLabel = stringResource(R.string.menu_more)
+                    IconButton(onClick = { menuOpen = true }) {
+                        Text("\u22EE", fontSize = 26.sp, fontWeight = FontWeight.Bold, modifier = Modifier.semantics { contentDescription = moreLabel })
+                    }
+                    DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
+                        MenuItem(R.string.menu_groups) { menuOpen = false; onOpenGroups() }
+                        MenuItem(R.string.menu_import) { menuOpen = false; importLauncher.launch(arrayOf("application/json", "text/*", "application/octet-stream")) }
+                        MenuItem(R.string.menu_export) { menuOpen = false; exportLauncher.launch("wakedeck-devices.json") }
+                        MenuItem(R.string.menu_ssh_key) { menuOpen = false; onOpenSshKey() }
+                        MenuItem(R.string.menu_help) { menuOpen = false; onOpenHelp() }
+                    }
+                },
             )
         },
         snackbarHost = { SnackbarHost(snackbar) },
@@ -85,7 +115,7 @@ fun DeviceListScreen(
             ExtendedFloatingActionButton(onClick = onAdd) { Text(stringResource(R.string.add_device)) }
         },
     ) { padding ->
-        if (devices.isEmpty()) {
+        if (!hasDevices) {
             Box(Modifier.fillMaxSize().padding(padding).padding(32.dp), contentAlignment = Alignment.Center) {
                 Text(
                     stringResource(R.string.empty_devices),
@@ -99,8 +129,33 @@ fun DeviceListScreen(
                 contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 96.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                items(devices, key = { it.id }) { device ->
-                    DeviceCard(device, statusOf(device, statuses), onWake = { viewModel.wake(device) }, onEdit = { onEdit(device.id) })
+                val hasGroups = sections.any { it.group != null }
+                sections.forEach { section ->
+                    if (section.group != null) {
+                        item(key = "group-${section.group.id}") {
+                            GroupCard(
+                                section,
+                                statusOf = { statusOf(it, statuses) },
+                                onWake = viewModel::wake,
+                                onWakeAll = { viewModel.wakeAll(section) },
+                                onEdit = onEdit,
+                            )
+                        }
+                    } else {
+                        if (hasGroups) {
+                            item(key = "other-label") {
+                                Text(
+                                    stringResource(R.string.group_other),
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    modifier = Modifier.padding(start = 4.dp, top = 8.dp),
+                                )
+                            }
+                        }
+                        items(section.devices, key = { it.id }) { device ->
+                            DeviceCard(device, statusOf(device, statuses), onWake = { viewModel.wake(device) }, onEdit = { onEdit(device.id) })
+                        }
+                    }
                 }
             }
         }
@@ -109,27 +164,56 @@ fun DeviceListScreen(
 
 @Composable
 private fun DeviceCard(device: Device, status: DeviceStatus, onWake: () -> Unit, onEdit: () -> Unit) {
-    Card(Modifier.fillMaxWidth().clickable(onClick = onEdit)) {
-        Row(
-            Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            Column(Modifier.weight(1f)) {
-                Text(device.name, style = MaterialTheme.typography.titleMedium)
-                Text(
-                    device.mac,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-                Text(
-                    stringResource(R.string.broadcast_summary, device.broadcastAddress, device.port),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-                StatusIndicator(status, Modifier.padding(top = 6.dp))
-            }
-            Button(onClick = onWake) { Text(stringResource(R.string.wake)) }
+    Card(Modifier.fillMaxWidth()) { DeviceRowContent(device, status, onWake, onEdit) }
+}
+
+/** The device line itself, without a background, so it works both in a card and inside a group container. */
+@Composable
+private fun DeviceRowContent(device: Device, status: DeviceStatus, onWake: () -> Unit, onEdit: () -> Unit) {
+    Row(
+        Modifier.fillMaxWidth().clickable(onClick = onEdit).padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        Column(Modifier.weight(1f)) {
+            Text(device.name, style = MaterialTheme.typography.titleMedium)
+            Text(
+                device.mac,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Text(
+                stringResource(R.string.broadcast_summary, device.broadcastAddress, device.port),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            StatusIndicator(status, Modifier.padding(top = 6.dp))
+        }
+        Button(onClick = onWake) { Text(stringResource(R.string.wake)) }
+    }
+}
+
+/** One group as a single container: name and Wake all on top, its devices below, thin lines between them. */
+@Composable
+private fun GroupCard(
+    section: DeviceSection,
+    statusOf: (Device) -> DeviceStatus,
+    onWake: (Device) -> Unit,
+    onWakeAll: () -> Unit,
+    onEdit: (Long) -> Unit,
+) {
+    Card(Modifier.fillMaxWidth()) {
+        Row(Modifier.padding(start = 16.dp, end = 8.dp, top = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                section.group?.name.orEmpty(),
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.weight(1f),
+            )
+            TextButton(onClick = onWakeAll) { Text(stringResource(R.string.wake_all)) }
+        }
+        section.devices.forEachIndexed { index, device ->
+            HorizontalDivider(Modifier.padding(horizontal = 16.dp), color = MaterialTheme.colorScheme.outlineVariant)
+            DeviceRowContent(device, statusOf(device), onWake = { onWake(device) }, onEdit = { onEdit(device.id) })
         }
     }
 }
@@ -158,3 +242,9 @@ private fun StatusIndicator(status: DeviceStatus, modifier: Modifier = Modifier)
 
 private val StatusGreen = Color(0xFF2E9E4F)
 private val StatusRed = Color(0xFFD64545)
+
+@Composable
+private fun MenuItem(label: Int, onClick: () -> Unit) {
+    DropdownMenuItem(text = { Text(stringResource(label)) }, onClick = onClick)
+}
+

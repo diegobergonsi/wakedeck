@@ -9,6 +9,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.AssistChip
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.diegobergonsi.wakedeck.ui.groups.NameDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
@@ -35,9 +40,9 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.diegobergonsi.wakedeck.R
 import com.diegobergonsi.wakedeck.domain.OsType
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
-fun DeviceEditScreen(onDone: () -> Unit, viewModel: DeviceEditViewModel = hiltViewModel()) {
+fun DeviceEditScreen(onDone: () -> Unit, onOpenSshHelp: () -> Unit, viewModel: DeviceEditViewModel = hiltViewModel()) {
     val form = viewModel.form
     var confirmDelete by remember { mutableStateOf(false) }
 
@@ -108,6 +113,31 @@ fun DeviceEditScreen(onDone: () -> Unit, viewModel: DeviceEditViewModel = hiltVi
                 number = true,
             ) { v -> viewModel.update { it.copy(statusPort = v) } }
 
+            val groups by viewModel.groups.collectAsStateWithLifecycle()
+            var newGroupDialog by remember { mutableStateOf(false) }
+            Text(stringResource(R.string.field_group), style = MaterialTheme.typography.labelLarge)
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                FilterChip(
+                    selected = form.groupId == null,
+                    onClick = { viewModel.update { it.copy(groupId = null) } },
+                    label = { Text(stringResource(R.string.group_none)) },
+                )
+                groups.forEach { g ->
+                    FilterChip(
+                        selected = form.groupId == g.id,
+                        onClick = { viewModel.update { it.copy(groupId = g.id) } },
+                        label = { Text(g.name) },
+                    )
+                }
+                AssistChip(onClick = { newGroupDialog = true }, label = { Text(stringResource(R.string.group_new)) })
+            }
+            if (newGroupDialog) {
+                NameDialog(R.string.group_new, "", onDismiss = { newGroupDialog = false }) { name ->
+                    viewModel.createGroup(name)
+                    newGroupDialog = false
+                }
+            }
+
             Text(stringResource(R.string.section_ssh), style = MaterialTheme.typography.titleSmall)
             Field(
                 label = R.string.field_ssh_user,
@@ -123,6 +153,7 @@ fun DeviceEditScreen(onDone: () -> Unit, viewModel: DeviceEditViewModel = hiltVi
                 errorText = R.string.error_port,
                 number = true,
             ) { v -> viewModel.update { it.copy(sshPort = v) } }
+            TextButton(onClick = onOpenSshHelp) { Text(stringResource(R.string.help_ssh_link)) }
             if (viewModel.canShutDown) {
                 OutlinedButton(
                     onClick = viewModel::requestShutdown,

@@ -19,5 +19,9 @@ class DeviceRepository @Inject constructor(private val dao: DeviceDao) {
 
     suspend fun save(device: Device) = dao.upsert(device.toEntity())
 
+    suspend fun setGroup(ids: List<Long>, groupId: Long?) {
+        if (ids.isNotEmpty()) dao.setGroup(ids, groupId)
+    }
+
     suspend fun delete(id: Long) = dao.delete(id)
 }

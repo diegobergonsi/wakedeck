@@ -19,6 +19,9 @@ interface DeviceDao {
     @Upsert
     suspend fun upsert(device: DeviceEntity)
 
+    @Query("UPDATE devices SET groupId = :groupId WHERE id IN (:ids)")
+    suspend fun setGroup(ids: List<Long>, groupId: Long?)
+
     @Query("DELETE FROM devices WHERE id = :id")
     suspend fun delete(id: Long)
 }

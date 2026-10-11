@@ -45,7 +45,7 @@ fun SshKeyScreen(onBack: () -> Unit, viewModel: SshKeyViewModel = hiltViewModel(
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(R.string.ssh_key_title)) },
-                navigationIcon = { TextButton(onClick = onBack) { Text(stringResource(R.string.cancel)) } },
+                navigationIcon = { TextButton(onClick = onBack) { Text(stringResource(R.string.back)) } },
             )
         },
     ) { padding ->

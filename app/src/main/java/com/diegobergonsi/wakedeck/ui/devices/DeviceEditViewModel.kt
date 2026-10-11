@@ -9,13 +9,18 @@ import androidx.lifecycle.viewModelScope
 import com.diegobergonsi.wakedeck.data.DeviceRepository
 import androidx.annotation.StringRes
 import com.diegobergonsi.wakedeck.R
+import com.diegobergonsi.wakedeck.data.GroupRepository
 import com.diegobergonsi.wakedeck.domain.Device
+import com.diegobergonsi.wakedeck.domain.Group
 import com.diegobergonsi.wakedeck.ssh.FingerprintResult
 import com.diegobergonsi.wakedeck.ssh.SshShutdown
 import com.diegobergonsi.wakedeck.ssh.ShutdownResult
 import com.diegobergonsi.wakedeck.domain.MagicPacket
 import com.diegobergonsi.wakedeck.domain.OsType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,6 +35,7 @@ data class DeviceForm(
     val os: OsType = OsType.LINUX,
     val statusPort: String = "",
     val showInLauncher: Boolean = false,
+    val groupId: Long? = null,
     val sshUser: String = "",
     val sshPort: String = Device.DEFAULT_SSH_PORT.toString(),
     val errors: Set<FormError> = emptySet(),
@@ -52,9 +58,12 @@ class DeviceEditViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val repository: DeviceRepository,
     private val ssh: SshShutdown,
+    private val groupRepository: GroupRepository,
 ) : ViewModel() {
+    val groups: StateFlow<List<Group>> = groupRepository.observeAll()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
+
     private val deviceId: Long = savedStateHandle.get<Long>("deviceId") ?: NEW_DEVICE_ID
-    private var groupId: Long? = null
     private var sshHostKey: String = ""
 
     val isNew: Boolean get() = deviceId == NEW_DEVICE_ID
@@ -73,7 +82,6 @@ class DeviceEditViewModel @Inject constructor(
                 if (device == null) {
                     finished = true
                 } else {
-                    groupId = device.groupId
                     sshHostKey = device.sshHostKey
                     form = DeviceForm(
                         name = device.name,
@@ -84,6 +92,7 @@ class DeviceEditViewModel @Inject constructor(
                         os = device.os,
                         statusPort = device.statusPort?.toString().orEmpty(),
                         showInLauncher = device.showInLauncher,
+                        groupId = device.groupId,
                         sshUser = device.sshUser,
                         sshPort = device.sshPort.toString(),
                     )
@@ -121,12 +130,23 @@ class DeviceEditViewModel @Inject constructor(
             port = f.port.toInt(),
             os = f.os,
             statusPort = f.statusPort.toIntOrNull(),
-            groupId = groupId,
+            groupId = f.groupId,
             showInLauncher = f.showInLauncher,
             sshUser = f.sshUser.trim(),
             sshPort = f.sshPort.toInt(),
             sshHostKey = sshHostKey,
         )
+    }
+
+    /** Creates a group from the edit screen and selects it for this device. */
+    fun createGroup(name: String) {
+        val clean = name.trim()
+        if (clean.isEmpty()) return
+        viewModelScope.launch {
+            val existing = groupRepository.getAll().firstOrNull { it.name.equals(clean, ignoreCase = true) }
+            val id = existing?.id ?: groupRepository.save(Group(name = clean))
+            update { it.copy(groupId = id) }
+        }
     }
 
     fun save() {

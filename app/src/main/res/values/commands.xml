@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Shell commands shown in the Help screen. Never translated. %1$s is the app's SSH public key line. -->
+<resources>
+    <string name="cmd_linux_list_ifaces" translatable="false">ip -br link</string>
+    <string name="cmd_linux_check_wol" translatable="false">sudo ethtool &lt;iface&gt; | grep Wake-on</string>
+    <string name="cmd_linux_set_wol" translatable="false">sudo ethtool -s &lt;iface&gt; wol g</string>
+    <string name="cmd_linux_persist_wol" translatable="false">sudo nmcli connection modify \"&lt;connection&gt;\" 802-3-ethernet.wake-on-lan magic</string>
+    <string name="cmd_win_ipconfig" translatable="false">ipconfig /all</string>
+    <string name="cmd_linux_install_ssh" translatable="false">sudo apt install openssh-server &amp;&amp; sudo systemctl enable --now ssh</string>
+    <string name="cmd_linux_enable_sshd" translatable="false">sudo systemctl enable --now sshd</string>
+    <string name="cmd_linux_add_key" translatable="false">mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; echo \'%1$s\' &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys</string>
+    <string name="cmd_linux_sudoers" translatable="false">sudo visudo -f /etc/sudoers.d/wakedeck</string>
+    <string name="cmd_linux_sudoers_line" translatable="false">youruser ALL=(ALL) NOPASSWD: /usr/bin/shutdown</string>
+    <string name="cmd_linux_hostkey" translatable="false">ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub</string>
+    <string name="cmd_win_install_ssh" translatable="false">Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0; Start-Service sshd; Set-Service -Name sshd -StartupType Automatic</string>
+    <string name="cmd_win_add_admin_key" translatable="false">Add-Content -Force -Path \"$env:ProgramData\\ssh\\administrators_authorized_keys\" -Value \'%1$s\'</string>
+    <string name="cmd_win_lock_admin_keys" translatable="false">icacls.exe \"$env:ProgramData\\ssh\\administrators_authorized_keys\" /inheritance:r /grant \"Administrators:F\" /grant \"SYSTEM:F\"</string>
+    <string name="cmd_win_hostkey" translatable="false">ssh-keygen -lf $env:ProgramData\\ssh\\ssh_host_ecdsa_key.pub</string>
+</resources>
