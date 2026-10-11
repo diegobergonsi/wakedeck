@@ -20,7 +20,7 @@ The translations have not been reviewed by native speakers yet.
 
 ## Privacy
 
-WakeDeck has no ads, no analytics and no telemetry. Device data stays on your phone. The app only talks to the devices you add, on your local network or through your own VPN. The full policy is at [wakedeck.app/privacy](https://wakedeck.app/privacy) (source: [docs/privacy.md](docs/privacy.md)).
+WakeDeck has no ads, no analytics and no telemetry. Device data stays on your phone. The app only talks to the devices you add, on your local network or through your own VPN. The full policy is at [wakedeck.app/privacy](https://wakedeck.app/privacy) (source: [docs/privacy.html](docs/privacy.html)).
 
 Permissions: `INTERNET`, `ACCESS_NETWORK_STATE` and `POST_NOTIFICATIONS`. The last one is declared only because MagicOS hides toasts from apps that cannot post notifications. WakeDeck never posts a notification.
 
