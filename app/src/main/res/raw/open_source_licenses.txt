@@ -37,9 +37,9 @@ THIRD-PARTY SOFTWARE
    License: MIT License
 
 
-============================================================
+==============================
 APACHE LICENSE 2.0 (items 1 to 6)
-============================================================
+==============================
 
                                  Apache License
                            Version 2.0, January 2004
@@ -243,9 +243,9 @@ APACHE LICENSE 2.0 (items 1 to 6)
    See the License for the specific language governing permissions and
    limitations under the License.
 
-============================================================
+==============================
 BOUNCY CASTLE LICENSE (item 7)
-============================================================
+==============================
 
 Copyright (c) 2000 - 2026 The Legion of the Bouncy Castle Inc. (https://www.bouncycastle.org)
 
@@ -255,9 +255,9 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-============================================================
+==============================
 MIT LICENSE (item 8)
-============================================================
+==============================
 
 Copyright (c) 2004-2022 QOS.ch Sarl (Switzerland)
 

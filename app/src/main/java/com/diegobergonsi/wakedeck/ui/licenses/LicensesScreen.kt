@@ -26,12 +26,22 @@ import androidx.compose.ui.unit.dp
 import com.diegobergonsi.wakedeck.R
 import com.diegobergonsi.wakedeck.ui.contentSidePadding
 
+private const val DIVIDER = "===="
+
 /** The third-party notices the libraries' licenses ask for. The text lives in res/raw/open_source_licenses.txt. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LicensesScreen(onBack: () -> Unit) {
     val context = LocalContext.current
-    val notices = remember { context.resources.openRawResource(R.raw.open_source_licenses).bufferedReader().use { it.readText() } }
+    val (summary, licenseTexts) = remember {
+        val raw = context.resources.openRawResource(R.raw.open_source_licenses).bufferedReader().use { it.readText() }
+        // The license texts have hard line breaks meant for wide screens. Join each paragraph so it wraps to the phone.
+        val split = raw.indexOf(DIVIDER)
+        raw.substring(0, split).trim() to raw.substring(split).trim().split("\n\n").joinToString("\n\n") { p ->
+            // Keep divider and title lines as they are; only join ordinary paragraphs.
+            if (p.startsWith(DIVIDER)) p else p.lines().joinToString(" ") { it.trim() }
+        }
+    }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -47,7 +57,8 @@ fun LicensesScreen(onBack: () -> Unit) {
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Text(stringResource(R.string.licenses_intro), style = MaterialTheme.typography.bodyMedium)
-            Text(notices, style = MaterialTheme.typography.bodySmall, fontFamily = FontFamily.Monospace)
+            Text(summary, style = MaterialTheme.typography.bodySmall, fontFamily = FontFamily.Monospace)
+            Text(licenseTexts, style = MaterialTheme.typography.bodySmall)
             Spacer(Modifier.height(24.dp))
         }
     }
