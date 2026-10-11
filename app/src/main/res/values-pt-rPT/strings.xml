@@ -8,6 +8,10 @@
     <string name="delete_confirm">Eliminar \"%1$s\"? Esta ação não pode ser anulada.</string>
     <string name="cancel">Cancelar</string>
     <string name="save">Guardar</string>
+    <string name="discard_title">Descartar alterações?</string>
+    <string name="discard_text">As suas edições a este dispositivo não foram guardadas.</string>
+    <string name="discard_confirm">Descartar</string>
+    <string name="discard_keep">Continuar a editar</string>
     <string name="wake">Ligar</string>
     <string name="empty_devices">Ainda não há dispositivos. Toque em \"Adicionar dispositivo\" para criar um.</string>
     <string name="empty_devices_prereq">O seu PC precisa de ter o Wake-on-LAN ativado primeiro.</string>

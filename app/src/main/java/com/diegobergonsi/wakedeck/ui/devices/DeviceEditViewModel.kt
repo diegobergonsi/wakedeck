@@ -71,6 +71,10 @@ class DeviceEditViewModel @Inject constructor(
 
     var form by mutableStateOf(DeviceForm())
         private set
+
+    /** The form as it was opened, to tell whether the user changed anything. */
+    private var initialForm = DeviceForm()
+    val isDirty: Boolean get() = form.copy(errors = emptySet()) != initialForm
     var finished by mutableStateOf(false)
         private set
 
@@ -88,7 +92,7 @@ class DeviceEditViewModel @Inject constructor(
                     finished = true
                 } else {
                     sshHostKey = device.sshHostKey
-                    form = DeviceForm(
+                    val opened = DeviceForm(
                         name = device.name,
                         mac = device.mac,
                         host = device.host,
@@ -101,6 +105,8 @@ class DeviceEditViewModel @Inject constructor(
                         sshUser = device.sshUser,
                         sshPort = device.sshPort.toString(),
                     )
+                    initialForm = opened
+                    form = opened
                     loaded = true
                 }
             }

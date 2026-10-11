@@ -8,6 +8,10 @@
     <string name="delete_confirm">删除“%1$s”？此操作无法撤销。</string>
     <string name="cancel">取消</string>
     <string name="save">保存</string>
+    <string name="discard_title">放弃更改？</string>
+    <string name="discard_text">您对此设备的修改尚未保存。</string>
+    <string name="discard_confirm">放弃</string>
+    <string name="discard_keep">继续编辑</string>
     <string name="wake">唤醒</string>
     <string name="empty_devices">还没有设备。点按“添加设备”来创建一个。</string>
     <string name="empty_devices_prereq">你的电脑需要先开启 Wake-on-LAN。</string>

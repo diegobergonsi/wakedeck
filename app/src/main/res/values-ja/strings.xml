@@ -8,6 +8,10 @@
     <string name="delete_confirm">「%1$s」を削除しますか？この操作は元に戻せません。</string>
     <string name="cancel">キャンセル</string>
     <string name="save">保存</string>
+    <string name="discard_title">変更を破棄しますか？</string>
+    <string name="discard_text">このデバイスの編集内容は保存されていません。</string>
+    <string name="discard_confirm">破棄</string>
+    <string name="discard_keep">編集を続ける</string>
     <string name="wake">起動</string>
     <string name="empty_devices">デバイスがまだありません。「デバイスを追加」をタップして作成してください。</string>
     <string name="empty_devices_prereq">先に PC で Wake-on-LAN を有効にしてください。</string>

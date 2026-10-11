@@ -8,6 +8,10 @@
     <string name="delete_confirm">Supprimer « %1$s » ? Cette action est irréversible.</string>
     <string name="cancel">Annuler</string>
     <string name="save">Enregistrer</string>
+    <string name="discard_title">Abandonner les modifications ?</string>
+    <string name="discard_text">Vos modifications de cet appareil n’ont pas été enregistrées.</string>
+    <string name="discard_confirm">Abandonner</string>
+    <string name="discard_keep">Continuer à modifier</string>
     <string name="wake">Allumer</string>
     <string name="empty_devices">Aucun appareil pour l’instant. Touchez « Ajouter un appareil » pour en créer un.</string>
     <string name="empty_devices_prereq">Votre PC doit d’abord avoir le Wake-on-LAN activé.</string>

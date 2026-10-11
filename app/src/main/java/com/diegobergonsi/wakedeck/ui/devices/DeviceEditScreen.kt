@@ -3,6 +3,8 @@ package com.diegobergonsi.wakedeck.ui.devices
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import com.diegobergonsi.wakedeck.ui.contentSidePadding
 import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.activity.compose.BackHandler
+import com.diegobergonsi.wakedeck.domain.FieldInput
 import androidx.compose.foundation.clickable
 import androidx.compose.ui.semantics.Role
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -57,8 +59,21 @@ import com.diegobergonsi.wakedeck.domain.OsType
 fun DeviceEditScreen(onDone: () -> Unit, onOpenSshHelp: () -> Unit, viewModel: DeviceEditViewModel = hiltViewModel()) {
     val form = viewModel.form
     var confirmDelete by remember { mutableStateOf(false) }
+    var confirmDiscard by remember { mutableStateOf(false) }
+    val leave = { if (viewModel.isDirty) confirmDiscard = true else onDone() }
+    BackHandler(onBack = leave)
 
     LaunchedEffect(viewModel.finished) { if (viewModel.finished) onDone() }
+
+    if (confirmDiscard) {
+        AlertDialog(
+            onDismissRequest = { confirmDiscard = false },
+            title = { Text(stringResource(R.string.discard_title)) },
+            text = { Text(stringResource(R.string.discard_text)) },
+            confirmButton = { TextButton(onClick = onDone) { Text(stringResource(R.string.discard_confirm)) } },
+            dismissButton = { TextButton(onClick = { confirmDiscard = false }) { Text(stringResource(R.string.discard_keep)) } },
+        )
+    }
 
     Scaffold(
         topBar = {
@@ -67,7 +82,7 @@ fun DeviceEditScreen(onDone: () -> Unit, onOpenSshHelp: () -> Unit, viewModel: D
                     Text(stringResource(if (viewModel.isNew) R.string.add_device else R.string.edit_device))
                 },
                 navigationIcon = {
-                    IconButton(onClick = onDone) { Icon(Icons.Default.Close, contentDescription = stringResource(R.string.cancel)) }
+                    IconButton(onClick = leave) { Icon(Icons.Default.Close, contentDescription = stringResource(R.string.cancel)) }
                 },
                 actions = { TextButton(onClick = viewModel::save) { Text(stringResource(R.string.save)) } },
             )
@@ -88,9 +103,9 @@ fun DeviceEditScreen(onDone: () -> Unit, onOpenSshHelp: () -> Unit, viewModel: D
                 value = form.mac,
                 error = FormError.MAC in form.errors,
                 errorText = R.string.error_mac,
-            ) { v -> viewModel.update { it.copy(mac = v) } }
+            ) { v -> viewModel.update { it.copy(mac = FieldInput.mac(v)) } }
             Field(label = R.string.field_host, value = form.host, supporting = R.string.hint_host) { v ->
-                viewModel.update { it.copy(host = v.take(Device.MAX_HOST)) }
+                viewModel.update { it.copy(host = FieldInput.host(v)) }
             }
             Field(
                 label = R.string.field_broadcast,
@@ -98,7 +113,7 @@ fun DeviceEditScreen(onDone: () -> Unit, onOpenSshHelp: () -> Unit, viewModel: D
                 error = FormError.BROADCAST in form.errors,
                 errorText = R.string.error_broadcast,
                 supporting = R.string.hint_broadcast,
-            ) { v -> viewModel.update { it.copy(broadcast = v) } }
+            ) { v -> viewModel.update { it.copy(broadcast = FieldInput.host(v)) } }
             val hasErrors = form.errors.isNotEmpty()
             var moreOpen by remember(viewModel.loaded) {
                 mutableStateOf(
@@ -118,7 +133,7 @@ fun DeviceEditScreen(onDone: () -> Unit, onOpenSshHelp: () -> Unit, viewModel: D
                     error = FormError.PORT in form.errors,
                     errorText = R.string.error_port,
                     number = true,
-                ) { v -> viewModel.update { it.copy(port = v) } }
+                ) { v -> viewModel.update { it.copy(port = FieldInput.port(v)) } }
 
                 Text(stringResource(R.string.field_os), style = MaterialTheme.typography.labelLarge)
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -138,7 +153,7 @@ fun DeviceEditScreen(onDone: () -> Unit, onOpenSshHelp: () -> Unit, viewModel: D
                     errorText = R.string.error_port,
                     supporting = R.string.hint_status_port,
                     number = true,
-                ) { v -> viewModel.update { it.copy(statusPort = v) } }
+                ) { v -> viewModel.update { it.copy(statusPort = FieldInput.port(v)) } }
 
                 val groups by viewModel.groups.collectAsStateWithLifecycle()
                 var newGroupDialog by remember { mutableStateOf(false) }
@@ -187,14 +202,14 @@ fun DeviceEditScreen(onDone: () -> Unit, onOpenSshHelp: () -> Unit, viewModel: D
                     error = FormError.SSH_USER in form.errors,
                     errorText = R.string.error_ssh_user,
                     supporting = R.string.hint_ssh,
-                ) { v -> viewModel.update { it.copy(sshUser = v.take(Device.MAX_SSH_USER)) } }
+                ) { v -> viewModel.update { it.copy(sshUser = FieldInput.sshUser(v)) } }
                 Field(
                     label = R.string.field_ssh_port,
                     value = form.sshPort,
                     error = FormError.SSH_PORT in form.errors,
                     errorText = R.string.error_port,
                     number = true,
-                ) { v -> viewModel.update { it.copy(sshPort = v) } }
+                ) { v -> viewModel.update { it.copy(sshPort = FieldInput.port(v)) } }
                 TextButton(onClick = onOpenSshHelp) { Text(stringResource(R.string.help_ssh_link)) }
                 if (viewModel.canShutDown) {
                     OutlinedButton(

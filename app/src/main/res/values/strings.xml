@@ -8,6 +8,10 @@
     <string name="delete_confirm">Delete \"%1$s\"? This cannot be undone.</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
+    <string name="discard_title">Discard changes?</string>
+    <string name="discard_text">Your edits to this device have not been saved.</string>
+    <string name="discard_confirm">Discard</string>
+    <string name="discard_keep">Keep editing</string>
     <string name="wake">Wake</string>
     <string name="empty_devices">No devices yet. Tap \"Add device\" to create one.</string>
     <string name="empty_devices_prereq">Your PC needs Wake-on-LAN turned on first.</string>
