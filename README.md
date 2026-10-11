@@ -9,9 +9,9 @@ WakeDeck is an Android app that wakes your computers with Wake-on-LAN. Its main 
 - Online and offline status for every device. It refreshes every few seconds in the app, on demand with the refresh button or by pulling the list down, and in the background for widgets.
 - Groups and "Wake all" for a whole group.
 - Optional remote shutdown over SSH for Linux and Windows machines. It signs in with a key that stays in the Android Keystore. There are no passwords, and the host key is pinned after you confirm its fingerprint.
-- Import and export of your devices as a JSON file.
+- Import and export of your devices as a JSON file. An import shows a preview first and flags devices that point outside your home network.
 - A setup guide inside the app for the PC side: BIOS and network card settings, SSH, and waking from outside your home network over a VPN.
-- Light, dark or system theme, and Material You colors. The layout adapts to foldable screens.
+- Light, dark or system theme in the WakeDeck navy color scheme, with an optional switch for Material You wallpaper colors. The layout adapts to foldable screens.
 - Languages: English, Portuguese (Brazil and Portugal), French, German, Spanish, Chinese and Japanese. On Android 13 and newer you can pick the app language inside the app.
 
 The translations have not been reviewed by native speakers yet.

@@ -12,7 +12,7 @@ captures/
 *.keystore
 keystore.properties
 
-# Claude Code (local only)
+# Local tooling files
 CLAUDE.md
 .claude/
 
