@@ -4,6 +4,7 @@
 Run from the repo root: python3 tools/build_site.py
 Languages: the folder name (empty for English) maps to the html lang code and the native name shown in the picker.
 """
+import hashlib
 import html
 import pathlib
 
@@ -11,6 +12,8 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent / "docs"
 SITE = "https://wakedeck.app"
 KOFI = "https://ko-fi.com/diegobergonsi"
 UPDATED = "2026-10-11"
+# Changes with the stylesheet, so browsers do not keep serving an old copy.
+CSS_VERSION = hashlib.sha1((ROOT / "assets" / "site.css").read_bytes()).hexdigest()[:8]
 
 LANGS = [
     ("", "en", "English"),
@@ -665,7 +668,7 @@ def head(lang_code, folder, page, title, desc, ogdesc):
 <meta property="og:description" content="{html.escape(ogdesc)}">
 <meta property="og:url" content="{SITE}{path}">
 <meta property="og:image" content="{SITE}/assets/og.png">
-<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/site.css?v={CSS_VERSION}">
 </head>"""
 
 
