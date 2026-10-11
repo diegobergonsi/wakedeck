@@ -1,5 +1,7 @@
 # WakeDeck
 
+Website: [wakedeck.app](https://wakedeck.app)
+
 WakeDeck is an Android app that wakes your computers with Wake-on-LAN. Its main feature is a set of home-screen widgets that you can customize.
 
 ## Features
@@ -18,7 +20,7 @@ The translations have not been reviewed by native speakers yet.
 
 ## Privacy
 
-WakeDeck has no ads, no analytics and no telemetry. Device data stays on your phone. The app only talks to the devices you add, on your local network or through your own VPN. The full policy is in [docs/privacy.md](docs/privacy.md).
+WakeDeck has no ads, no analytics and no telemetry. Device data stays on your phone. The app only talks to the devices you add, on your local network or through your own VPN. The full policy is at [wakedeck.app/privacy](https://wakedeck.app/privacy) (source: [docs/privacy.md](docs/privacy.md)).
 
 Permissions: `INTERNET`, `ACCESS_NETWORK_STATE` and `POST_NOTIFICATIONS`. The last one is declared only because MagicOS hides toasts from apps that cannot post notifications. WakeDeck never posts a notification.
 

@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WakeDeck: Wake-on-LAN widgets for Android</title>
+<meta name="description" content="Wake your PCs from your Android home screen. Customizable widgets, shortcuts and Quick Settings tiles. No ads, no analytics, no accounts.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#161E56">
+<link rel="canonical" href="https://wakedeck.app/">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="WakeDeck: Wake-on-LAN widgets for Android">
+<meta property="og:description" content="Wake your devices from your smartphone. Customizable home-screen widgets. No ads, no analytics, no accounts.">
+<meta property="og:url" content="https://wakedeck.app/">
+<meta property="og:image" content="https://wakedeck.app/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root {
+    --navy-900: #0f1540;
+    --navy-800: #161e56;
+    --navy-700: #2c3b82;
+    --periwinkle: #b8c3ff;
+    --cream: #ffe2b8;
+    --amber: #ffb03b;
+    --text: #f2f3fb;
+    --muted: #c3c8e6;
+    --card: #1d2766;
+    --line: #36448f;
+    --max: 1080px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: linear-gradient(180deg, var(--navy-700) 0, var(--navy-800) 520px, var(--navy-900) 100%) no-repeat, var(--navy-900);
+    color: var(--text);
+    font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--periwinkle); text-underline-offset: 3px; }
+  a:hover { color: #fff; }
+  :focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; border-radius: 4px; }
+  .skip { position: absolute; left: -999px; top: 8px; background: var(--cream); color: var(--navy-800); padding: 8px 14px; border-radius: 8px; z-index: 10; }
+  .skip:focus { left: 8px; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding-inline: 24px; }
+
+  header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 22px; }
+  .brand { color: var(--cream); text-decoration: none; font-size: 22px; letter-spacing: .02em; }
+  .brand b { font-weight: 800; }
+  .brand span { font-weight: 400; }
+  nav { display: flex; gap: 22px; }
+  nav a { color: var(--muted); text-decoration: none; font-size: 15px; white-space: nowrap; }
+  nav a:hover { color: #fff; }
+
+  .hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; padding-block: 40px 88px; }
+  h1 { font-size: clamp(34px, 4.7vw, 54px); line-height: 1.1; margin: 0 0 20px; letter-spacing: -.01em; text-wrap: balance; }
+  h1 em { font-style: normal; color: var(--amber); }
+  .lead { font-size: 20px; color: var(--muted); max-width: 34em; margin: 0 0 30px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+  .btn { display: inline-block; padding: 13px 22px; border-radius: 999px; font-weight: 700; text-decoration: none; font-size: 16px; }
+  .btn.primary { background: var(--periwinkle); color: var(--navy-800); }
+  .btn.primary:hover { background: #fff; color: var(--navy-800); }
+  .btn.ghost { border: 2px solid var(--line); color: var(--text); }
+  .btn.ghost:hover { border-color: var(--periwinkle); }
+  .soon { margin: 14px 0 0; font-size: 14px; color: var(--muted); }
+  .hero img { width: 100%; max-width: 440px; height: auto; justify-self: center; border-radius: 36px; box-shadow: 0 24px 60px rgba(8, 11, 40, .55); }
+
+  section { padding-block: 72px; }
+  h2 { font-size: clamp(28px, 3.6vw, 38px); line-height: 1.15; margin: 0 0 12px; letter-spacing: -.005em; }
+  .sub { color: var(--muted); max-width: 40em; margin: 0 0 40px; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 26px; }
+  .card h3 { margin: 0 0 8px; font-size: 19px; color: var(--cream); }
+  .card p { margin: 0; color: var(--muted); font-size: 16px; }
+
+  .steps { counter-reset: s; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; list-style: none; padding: 0; margin: 0; }
+  .steps li { counter-increment: s; background: var(--navy-800); border: 1px solid var(--line); border-radius: 22px; padding: 26px; }
+  .steps li::before { content: counter(s); display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--amber); color: var(--navy-900); font-weight: 800; margin-bottom: 14px; }
+  .steps h3 { margin: 0 0 8px; font-size: 19px; }
+  .steps p { margin: 0; color: var(--muted); font-size: 16px; }
+
+  .band { background: var(--navy-900); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .band .inner { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; }
+  .band p { margin: 0; color: var(--muted); max-width: 38em; }
+
+  footer { padding: 40px 0 56px; color: var(--muted); font-size: 15px; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; }
+  footer ul { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; flex-wrap: wrap; }
+
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; padding-bottom: 56px; gap: 32px; }
+    .hero img { max-width: 320px; }
+    .grid, .steps { grid-template-columns: 1fr; }
+    .band .inner { grid-template-columns: 1fr; }
+    section { padding-block: 52px; }
+  }
+  @media (max-width: 480px) {
+    nav { gap: 16px; }
+    nav a:nth-child(2) { display: none; }
+    .wrap { padding-inline: 18px; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="WakeDeck home"><b>Wake</b><span>Deck</span></a>
+    <nav aria-label="Main">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="/privacy">Privacy</a>
+      <a href="https://github.com/diegobergonsi/wakedeck">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap hero">
+    <div>
+      <h1>Wake your devices from your <em>smartphone</em></h1>
+      <p class="lead">WakeDeck turns on your PCs with a Wake-on-LAN magic packet, straight from widgets you design yourself. One tap on your home screen, and the app does not even open.</p>
+      <div class="actions">
+        <span class="btn primary" aria-disabled="true">Google Play: coming soon</span>
+        <a class="btn ghost" href="https://github.com/diegobergonsi/wakedeck">View the source</a>
+      </div>
+      <p class="soon">Free for Android 8.0 and newer. No ads, no analytics, no accounts.</p>
+    </div>
+    <img src="/assets/hero.webp" width="720" height="720" alt="The WakeDeck icon: a power symbol made of colorful rings on a navy background">
+  </div>
+
+  <section id="features" class="wrap">
+    <h2>Built around the widget</h2>
+    <p class="sub">Your home screen is the remote control. Pick how it looks and where it sits.</p>
+    <div class="grid">
+      <article class="card">
+        <h3>Widgets you design</h3>
+        <p>A single device, a list or a grid. Choose colors, transparency, corner radius, border, icon, text size and layout. Online and offline status updates in the background.</p>
+      </article>
+      <article class="card">
+        <h3>One tap, no app</h3>
+        <p>Tap Wake in the widget itself. You can also wake from launcher shortcuts and Quick Settings tiles.</p>
+      </article>
+      <article class="card">
+        <h3>Know what is on</h3>
+        <p>See which devices are online. Refresh them all with a button, or pull the list down.</p>
+      </article>
+      <article class="card">
+        <h3>Groups and Wake all</h3>
+        <p>Put devices in groups, such as Office or Lab, and wake a whole group with one button.</p>
+      </article>
+      <article class="card">
+        <h3>Remote shutdown over SSH</h3>
+        <p>Optional. WakeDeck signs in with a key kept in the Android Keystore. It never asks for or stores a password, and it pins each PC's host key.</p>
+      </article>
+      <article class="card">
+        <h3>Private by design</h3>
+        <p>No ads, no analytics, no accounts. Your devices and settings stay on your phone, and the app only talks to the addresses you add.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="how" class="wrap">
+    <h2>Three steps</h2>
+    <p class="sub">An in-app guide walks you through the PC side, for Windows and Linux.</p>
+    <ol class="steps">
+      <li><h3>Turn on Wake-on-LAN</h3><p>Enable it in your PC's BIOS or UEFI and in the network card settings. Wired Ethernet works best.</p></li>
+      <li><h3>Add your device</h3><p>Enter a name and the MAC address. Add the IP address if you want to see its online status.</p></li>
+      <li><h3>Add a widget</h3><p>Long-press your home screen, add a WakeDeck widget, and style it your way.</p></li>
+    </ol>
+  </section>
+
+  <div class="band">
+    <div class="wrap">
+      <section class="inner" aria-labelledby="privacy-h">
+        <div>
+          <h2 id="privacy-h">Your data stays yours</h2>
+          <p>WakeDeck has no server and no account. It does not collect or share personal data. Read the short privacy policy to see exactly what is stored on your phone.</p>
+        </div>
+        <a class="btn ghost" href="/privacy">Privacy policy</a>
+      </section>
+    </div>
+  </div>
+
+  <section class="wrap">
+    <h2>Away from home?</h2>
+    <p class="sub">Use your own VPN and set the device's broadcast address to your subnet's, for example 192.168.1.255. Your VPN and router must forward it. The in-app help explains the details and the common error messages.</p>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>&copy; 2026 Diego Bergonsi</div>
+    <ul>
+      <li><a href="/privacy">Privacy</a></li>
+      <li><a href="https://github.com/diegobergonsi/wakedeck">GitHub</a></li>
+      <li><a href="mailto:diego.bergonsi@outlook.com">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+</body>
+</html>
