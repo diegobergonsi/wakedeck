@@ -1,6 +1,5 @@
 package com.diegobergonsi.wakedeck.ui.devices
 
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.foundation.clickable
@@ -98,13 +97,13 @@ fun DeviceEditScreen(onDone: () -> Unit, onOpenSshHelp: () -> Unit, viewModel: D
                 supporting = R.string.hint_broadcast,
             ) { v -> viewModel.update { it.copy(broadcast = v) } }
             val hasErrors = form.errors.isNotEmpty()
-            var moreOpen by rememberSaveable {
+            var moreOpen by remember(viewModel.loaded) {
                 mutableStateOf(
                     !viewModel.isNew && (form.port != Device.DEFAULT_PORT.toString() || form.statusPort.isNotBlank() ||
                         form.groupId != null || form.showInLauncher || form.os != OsType.LINUX),
                 )
             }
-            var sshOpen by rememberSaveable { mutableStateOf(form.sshUser.isNotBlank()) }
+            var sshOpen by remember(viewModel.loaded) { mutableStateOf(form.sshUser.isNotBlank()) }
             val showMore = moreOpen || FormError.PORT in form.errors || FormError.STATUS_PORT in form.errors
             val showSsh = sshOpen || FormError.SSH_USER in form.errors || FormError.SSH_PORT in form.errors
 

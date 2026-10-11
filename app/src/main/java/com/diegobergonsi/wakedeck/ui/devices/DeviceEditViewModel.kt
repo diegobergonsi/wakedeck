@@ -73,6 +73,10 @@ class DeviceEditViewModel @Inject constructor(
         private set
     var finished by mutableStateOf(false)
         private set
+
+    /** False until an existing device has been read from the database. */
+    var loaded by mutableStateOf(isNew)
+        private set
     var shutdownUi by mutableStateOf<ShutdownUi>(ShutdownUi.Idle)
         private set
 
@@ -97,6 +101,7 @@ class DeviceEditViewModel @Inject constructor(
                         sshUser = device.sshUser,
                         sshPort = device.sshPort.toString(),
                     )
+                    loaded = true
                 }
             }
         }

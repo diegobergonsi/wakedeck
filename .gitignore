@@ -20,3 +20,7 @@ CLAUDE.md
 *.pem
 *.key
 .env
+
+# Local design context (kept in the claude-projects repo)
+/PRODUCT.md
+/DESIGN.md

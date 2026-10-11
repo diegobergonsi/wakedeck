@@ -48,6 +48,11 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
+    packaging {
+        // BouncyCastle 1.86 ships the same license file in three jars; keep one copy.
+        resources.pickFirsts += "META-INF/LICENSE.md"
+    }
+
     buildFeatures {
         compose = true
         buildConfig = true
@@ -78,6 +83,12 @@ dependencies {
     implementation(libs.androidx.glance.appwidget)
     implementation(libs.androidx.glance.material3)
     implementation(libs.sshj)
+    constraints {
+        // sshj 0.41.1 resolves BouncyCastle 1.84; 1.86 is the newest release.
+        implementation("org.bouncycastle:bcprov-jdk18on:1.86")
+        implementation("org.bouncycastle:bcpkix-jdk18on:1.86")
+        implementation("org.bouncycastle:bcutil-jdk18on:1.86")
+    }
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
