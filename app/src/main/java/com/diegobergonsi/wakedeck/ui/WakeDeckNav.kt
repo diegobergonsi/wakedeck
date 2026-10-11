@@ -5,8 +5,16 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -34,8 +42,11 @@ fun WakeDeckNav(openAddDevice: Boolean = false, onAddDeviceHandled: () -> Unit =
             onAddDeviceHandled()
         }
     }
+    // On the unfolded screen a full-width form is hard to read, so the content stays in a centred column.
+    Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background), contentAlignment = Alignment.TopCenter) {
     NavHost(
         nav,
+        modifier = Modifier.widthIn(max = 640.dp).fillMaxSize(),
         startDestination = LIST,
         enterTransition = { slideInHorizontally(tween(300)) { it / 4 } + fadeIn(tween(300)) },
         exitTransition = { slideOutHorizontally(tween(300)) { -it / 8 } + fadeOut(tween(150)) },
@@ -62,5 +73,6 @@ fun WakeDeckNav(openAddDevice: Boolean = false, onAddDeviceHandled: () -> Unit =
         composable(EDIT, arguments = listOf(navArgument("deviceId") { type = NavType.LongType })) {
             DeviceEditScreen(onDone = { nav.popBackStack() }, onOpenSshHelp = { nav.navigate("help?section=ssh") })
         }
+    }
     }
 }
