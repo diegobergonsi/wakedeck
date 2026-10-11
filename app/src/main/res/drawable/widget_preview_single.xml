@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Static picker preview for launchers that ignore generated previews: a rounded card, a power badge, two text lines. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="160dp"
+    android:height="60dp"
+    android:viewportWidth="160"
+    android:viewportHeight="60">
+    <path android:fillColor="#E4E1E9" android:pathData="M16,0 H144 A16,16 0 0 1 160,16 V44 A16,16 0 0 1 144,60 H16 A16,16 0 0 1 0,44 V16 A16,16 0 0 1 16,0 Z" />
+    <path android:fillColor="#3F4F86" android:pathData="M30,30 m-14,0 a14,14 0 1,0 28,0 a14,14 0 1,0 -28,0" />
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="2.6" android:strokeLineCap="round" android:fillColor="#00000000" android:pathData="M24.5,24.5 A8,8 0 1,0 35.5,24.5" />
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="2.6" android:strokeLineCap="round" android:fillColor="#00000000" android:pathData="M30,21 L30,29.5" />
+    <path android:fillColor="#1B1B21" android:pathData="M56,20 H110 A3,3 0 0 1 113,23 V24 A3,3 0 0 1 110,27 H56 A3,3 0 0 1 53,24 V23 A3,3 0 0 1 56,20 Z" />
+    <path android:fillColor="#2E9E4F" android:pathData="M58,38 m-4,0 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0" />
+    <path android:fillColor="#46464F" android:pathData="M68,35 H100 A2.5,2.5 0 0 1 102.5,37.5 V38.5 A2.5,2.5 0 0 1 100,41 H68 A2.5,2.5 0 0 1 65.5,38.5 V37.5 A2.5,2.5 0 0 1 68,35 Z" />
+</vector>

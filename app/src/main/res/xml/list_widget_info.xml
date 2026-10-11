@@ -2,6 +2,7 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:configure="com.diegobergonsi.wakedeck.widget.config.WidgetConfigActivity"
     android:description="@string/widget_list_desc"
+    android:previewImage="@drawable/widget_preview_list"
     android:initialLayout="@layout/glance_default_loading_layout"
     android:minWidth="220dp"
     android:minHeight="150dp"
