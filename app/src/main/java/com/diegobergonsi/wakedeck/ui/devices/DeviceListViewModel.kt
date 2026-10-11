@@ -122,20 +122,40 @@ class DeviceListViewModel @Inject constructor(
         }
     }
 
+    private val _refreshing = MutableStateFlow(false)
+    val refreshing: StateFlow<Boolean> = _refreshing
+
     /** Checks all devices every [POLL_INTERVAL_MS] until cancelled. Call while the screen is visible. */
     suspend fun pollStatuses() {
         while (true) {
-            val current = repository.observeAll().first()
-            _statuses.update { old -> old.filterKeys { id -> current.any { it.id == id } } }
-            coroutineScope {
-                current.forEach { device ->
-                    launch {
-                        val status = statusChecker.check(device)
-                        _statuses.update { it + (device.id to status) }
-                    }
+            checkAll()
+            delay(POLL_INTERVAL_MS)
+        }
+    }
+
+    /** Button or pull-down: one check of every device now, with a progress indicator. */
+    fun refresh() {
+        if (_refreshing.value) return
+        viewModelScope.launch {
+            _refreshing.value = true
+            try {
+                checkAll()
+            } finally {
+                _refreshing.value = false
+            }
+        }
+    }
+
+    private suspend fun checkAll() {
+        val current = repository.observeAll().first()
+        _statuses.update { old -> old.filterKeys { id -> current.any { it.id == id } } }
+        coroutineScope {
+            current.forEach { device ->
+                launch {
+                    val status = statusChecker.check(device)
+                    _statuses.update { it + (device.id to status) }
                 }
             }
-            delay(POLL_INTERVAL_MS)
         }
     }
 
