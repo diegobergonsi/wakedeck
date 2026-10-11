@@ -7,6 +7,7 @@ import androidx.activity.compose.BackHandler
 import com.diegobergonsi.wakedeck.domain.FieldInput
 import androidx.compose.foundation.clickable
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Icon
@@ -103,6 +104,7 @@ fun DeviceEditScreen(onDone: () -> Unit, onOpenSshHelp: () -> Unit, viewModel: D
                 value = form.mac,
                 error = FormError.MAC in form.errors,
                 errorText = R.string.error_mac,
+                visualTransformation = MacVisualTransformation,
             ) { v -> viewModel.update { it.copy(mac = FieldInput.mac(v)) } }
             Field(label = R.string.field_host, value = form.host, supporting = R.string.hint_host) { v ->
                 viewModel.update { it.copy(host = FieldInput.host(v)) }
@@ -311,6 +313,7 @@ private fun Field(
     errorText: Int? = null,
     supporting: Int? = null,
     number: Boolean = false,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
     onChange: (String) -> Unit,
 ) {
     OutlinedTextField(
@@ -324,6 +327,7 @@ private fun Field(
             else -> null
         },
         singleLine = true,
+        visualTransformation = visualTransformation,
         keyboardOptions = KeyboardOptions(keyboardType = if (number) KeyboardType.Number else KeyboardType.Text),
         modifier = Modifier.fillMaxWidth(),
     )

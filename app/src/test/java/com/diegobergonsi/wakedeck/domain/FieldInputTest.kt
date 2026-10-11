@@ -4,11 +4,17 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class FieldInputTest {
-    @Test fun macDropsNonHexAndCapitalises() = assertEquals("AA:BB::CC", FieldInput.mac("aa:bb:zz:cc!"))
+    @Test fun macKeepsOnlyHexDigitsInCapitals() = assertEquals("AABBCC", FieldInput.mac("aa:bb:zz:cc!"))
 
-    @Test fun macStopsAtSeventeenCharacters() = assertEquals(17, FieldInput.mac("AAAAAAAAAAAAAAAAAAAAAAAA").length)
+    @Test fun macStopsAtTwelveDigits() = assertEquals("AAAAAAAAAAAA", FieldInput.mac("AAAAAAAAAAAAAAAAAAAAAAAA"))
 
-    @Test fun macRemovesPastedSpaces() = assertEquals("AABBCCDDEEFF", FieldInput.mac("aa bb cc dd ee ff"))
+    @Test fun macAcceptsAPastedMacWithAnySeparator() {
+        assertEquals("AABBCCDDEEFF", FieldInput.mac("aa bb cc dd ee ff"))
+        assertEquals("AABBCCDDEEFF", FieldInput.mac("aa-bb-cc-dd-ee-ff"))
+        assertEquals("AABBCCDDEEFF", FieldInput.mac("aabb.ccdd.eeff"))
+    }
+
+    @Test fun macTextWithTooManyDigitsOrColonsLosesTheExtras() = assertEquals("AA8282828287", FieldInput.mac("AA:828282828:7272"))
 
     @Test fun portKeepsFiveDigits() = assertEquals("12345", FieldInput.port("1-2.3,4 5 6"))
 

@@ -2,12 +2,11 @@ package com.diegobergonsi.wakedeck.domain
 
 /** Keeps each form field to the characters it can hold while the user types or pastes. Validation on save stays as the final check. */
 object FieldInput {
-    private const val MAC_MAX = 17
     private const val PORT_DIGITS = 5
 
-    /** Hex digits and the separators [MagicPacket.parseMac] accepts, in capitals. */
+    /** At most [MagicPacket.MAC_BYTES] x 2 hex digits, in capitals. Separators are dropped: the form shows them again. */
     fun mac(text: String): String =
-        text.filter { it in '0'..'9' || it in 'a'..'f' || it in 'A'..'F' || it == ':' || it == '-' || it == '.' }.uppercase().take(MAC_MAX)
+        text.filter { it in '0'..'9' || it in 'a'..'f' || it in 'A'..'F' }.uppercase().take(MagicPacket.MAC_BYTES * 2)
 
     fun port(text: String): String = text.filter { it in '0'..'9' }.take(PORT_DIGITS)
 

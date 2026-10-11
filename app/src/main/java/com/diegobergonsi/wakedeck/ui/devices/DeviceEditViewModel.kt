@@ -16,6 +16,7 @@ import com.diegobergonsi.wakedeck.domain.Group
 import com.diegobergonsi.wakedeck.ssh.FingerprintResult
 import com.diegobergonsi.wakedeck.ssh.SshShutdown
 import com.diegobergonsi.wakedeck.ssh.ShutdownResult
+import com.diegobergonsi.wakedeck.domain.FieldInput
 import com.diegobergonsi.wakedeck.domain.MagicPacket
 import com.diegobergonsi.wakedeck.domain.OsType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -94,7 +95,7 @@ class DeviceEditViewModel @Inject constructor(
                     sshHostKey = device.sshHostKey
                     val opened = DeviceForm(
                         name = device.name,
-                        mac = device.mac,
+                        mac = FieldInput.mac(device.mac),
                         host = device.host,
                         broadcast = device.broadcastAddress,
                         port = device.port.toString(),
