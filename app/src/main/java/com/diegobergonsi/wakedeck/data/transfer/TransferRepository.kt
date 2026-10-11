@@ -10,10 +10,14 @@ import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 import javax.inject.Singleton
 
+sealed interface ImportPreview {
+    data class Ready(val plan: ImportPlan) : ImportPreview
+    data class Failed(val reason: String) : ImportPreview
+    data object TooMany : ImportPreview
+}
+
 sealed interface ImportOutcome {
     data class Done(val added: Int, val skipped: Int, val invalid: Int) : ImportOutcome
-    data class Failed(val reason: String) : ImportOutcome
-    data object TooMany : ImportOutcome
 }
 
 @Singleton
@@ -28,15 +32,20 @@ class TransferRepository @Inject constructor(
         return DeviceTransfer.encode(all, groups.getAll()) to all.size
     }
 
-    suspend fun import(text: String): ImportOutcome {
+    /** Reads the file and works out what an import would add. Changes nothing: the user confirms first. */
+    suspend fun preview(text: String): ImportPreview {
         val decoded = when (val d = DeviceTransfer.decode(text)) {
-            is DecodeResult.Failure -> return ImportOutcome.Failed(d.reason)
-            DecodeResult.TooMany -> return ImportOutcome.TooMany
+            is DecodeResult.Failure -> return ImportPreview.Failed(d.reason)
+            DecodeResult.TooMany -> return ImportPreview.TooMany
             is DecodeResult.Success -> d
         }
         val existing = devices.observeAll().first()
         val plan = DeviceTransfer.plan(existing, decoded.devices, decoded.invalid)
-        if (existing.size + plan.toAdd.size > DeviceTransfer.MAX_DEVICES) return ImportOutcome.TooMany
+        if (existing.size + plan.toAdd.size > DeviceTransfer.MAX_DEVICES) return ImportPreview.TooMany
+        return ImportPreview.Ready(plan)
+    }
+
+    suspend fun commit(plan: ImportPlan): ImportOutcome.Done {
 
         // One transaction: a failure part-way leaves nothing half-imported.
         db.withTransaction {

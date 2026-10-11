@@ -191,6 +191,13 @@
     <string name="import_done">インポートが完了しました。追加：%1$d。保存済み：%2$d。使用不可：%3$d。</string>
     <string name="import_failed">インポートできません：WakeDeck のファイルではありません</string>
     <string name="import_too_many">インポートできません：WakeDeck が扱えるデバイスは最大 %1$d 台です</string>
+    <string name="import_preview_title">デバイスをインポートしますか？</string>
+    <string name="import_preview_summary">追加 %1$d 台 · 既存 %2$d 台 · 無効 %3$d 台</string>
+    <string name="import_preview_warning">一部のデバイスが自宅ネットワークの外を指しています。信頼できる相手のファイルだけをインポートしてください。</string>
+    <string name="import_preview_outside">ネットワーク外</string>
+    <string name="import_preview_more">…ほか %1$d 台</string>
+    <string name="import_preview_confirm">インポート</string>
+    <string name="import_preview_ssh">SSH ユーザー %1$s（ポート %2$d）</string>
     <plurals name="group_device_count">
         <item quantity="other">%1$d 台のデバイス</item>
     </plurals>

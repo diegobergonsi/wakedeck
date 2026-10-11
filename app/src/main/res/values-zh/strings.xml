@@ -191,6 +191,13 @@
     <string name="import_done">导入完成。已添加：%1$d。已存在：%2$d。无法使用：%3$d。</string>
     <string name="import_failed">无法导入：这不是 WakeDeck 文件</string>
     <string name="import_too_many">无法导入：WakeDeck 最多支持 %1$d 台设备</string>
+    <string name="import_preview_title">导入设备？</string>
+    <string name="import_preview_summary">待添加 %1$d 台 · 已存在 %2$d 台 · 无效 %3$d 台</string>
+    <string name="import_preview_warning">部分设备指向您的家庭网络之外。请只导入来自可信任者的文件。</string>
+    <string name="import_preview_outside">在您的网络之外</string>
+    <string name="import_preview_more">…另有 %1$d 台</string>
+    <string name="import_preview_confirm">导入</string>
+    <string name="import_preview_ssh">SSH 用户 %1$s（端口 %2$d）</string>
     <plurals name="group_device_count">
         <item quantity="other">%1$d 台设备</item>
     </plurals>

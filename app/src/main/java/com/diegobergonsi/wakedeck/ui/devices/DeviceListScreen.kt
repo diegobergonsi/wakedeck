@@ -92,6 +92,7 @@ fun DeviceListScreen(
     }
     val statuses by viewModel.statuses.collectAsStateWithLifecycle()
     val refreshing by viewModel.refreshing.collectAsStateWithLifecycle()
+    val pendingImport by viewModel.pendingImport.collectAsStateWithLifecycle()
     val lifecycleOwner = LocalLifecycleOwner.current
     val snackbar = remember { SnackbarHostState() }
     val resources = LocalResources.current
@@ -109,6 +110,7 @@ fun DeviceListScreen(
         }
     }
 
+    pendingImport?.let { ImportPreviewDialog(it, onConfirm = viewModel::confirmImport, onDismiss = viewModel::cancelImport) }
     if (themeOpen) ThemeDialog(onDismiss = { themeOpen = false })
     if (languageOpen && perAppLanguageSupported) {
         @Suppress("NewApi")

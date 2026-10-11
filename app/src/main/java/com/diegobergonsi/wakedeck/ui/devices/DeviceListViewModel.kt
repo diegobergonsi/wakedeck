@@ -11,7 +11,8 @@ import com.diegobergonsi.wakedeck.data.WakeCoordinator
 import com.diegobergonsi.wakedeck.data.WakeOutcome
 import com.diegobergonsi.wakedeck.data.messageRes
 import com.diegobergonsi.wakedeck.data.transfer.DeviceTransfer
-import com.diegobergonsi.wakedeck.data.transfer.ImportOutcome
+import com.diegobergonsi.wakedeck.data.transfer.ImportPlan
+import com.diegobergonsi.wakedeck.data.transfer.ImportPreview
 import com.diegobergonsi.wakedeck.data.transfer.TransferRepository
 import com.diegobergonsi.wakedeck.domain.Device
 import com.diegobergonsi.wakedeck.domain.DeviceStatus
@@ -108,22 +109,44 @@ class DeviceListViewModel @Inject constructor(
         }
     }
 
+    /** The file the user picked, read and checked but not yet imported. The screen shows it for confirmation. */
+    private val _pendingImport = MutableStateFlow<ImportPlan?>(null)
+    val pendingImport: StateFlow<ImportPlan?> = _pendingImport
+
     fun importFrom(uri: Uri) {
         viewModelScope.launch {
-            val message = withContext(Dispatchers.IO) {
+            val preview = withContext(Dispatchers.IO) {
                 runCatching {
                     val text = context.contentResolver.openInputStream(uri)?.use { readLimited(it, MAX_IMPORT_BYTES) }
                         ?: error("cannot read")
                     require(text.length <= MAX_IMPORT_CHARS) { "file too large" }
-                    when (val outcome = transfer.import(text)) {
-                        is ImportOutcome.Done -> UiMessage(R.string.import_done, listOf(outcome.added, outcome.skipped, outcome.invalid))
-                        is ImportOutcome.Failed -> UiMessage(R.string.import_failed)
-                        ImportOutcome.TooMany -> UiMessage(R.string.import_too_many, listOf(DeviceTransfer.MAX_DEVICES))
-                    }
+                    transfer.preview(text)
+                }.getOrElse { ImportPreview.Failed("unreadable") }
+            }
+            when (preview) {
+                is ImportPreview.Ready -> _pendingImport.value = preview.plan
+                is ImportPreview.Failed -> messageChannel.send(UiMessage(R.string.import_failed))
+                ImportPreview.TooMany -> messageChannel.send(UiMessage(R.string.import_too_many, listOf(DeviceTransfer.MAX_DEVICES)))
+            }
+        }
+    }
+
+    fun confirmImport() {
+        val plan = _pendingImport.value ?: return
+        _pendingImport.value = null
+        viewModelScope.launch {
+            val message = withContext(Dispatchers.IO) {
+                runCatching {
+                    val done = transfer.commit(plan)
+                    UiMessage(R.string.import_done, listOf(done.added, done.skipped, done.invalid))
                 }.getOrElse { UiMessage(R.string.import_failed) }
             }
             messageChannel.send(message)
         }
+    }
+
+    fun cancelImport() {
+        _pendingImport.value = null
     }
 
     private val _refreshing = MutableStateFlow(false)

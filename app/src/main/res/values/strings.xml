@@ -193,6 +193,13 @@
     <string name="import_done">Import finished. Added: %1$d. Already saved: %2$d. Unusable: %3$d.</string>
     <string name="import_failed">Could not import: this is not a WakeDeck file</string>
     <string name="import_too_many">Could not import: WakeDeck holds at most %1$d devices</string>
+    <string name="import_preview_title">Import devices?</string>
+    <string name="import_preview_summary">%1$d to add · %2$d already here · %3$d invalid</string>
+    <string name="import_preview_warning">Some devices point outside your home network. Only import files from someone you trust.</string>
+    <string name="import_preview_outside">Outside your network</string>
+    <string name="import_preview_more">…and %1$d more</string>
+    <string name="import_preview_confirm">Import</string>
+    <string name="import_preview_ssh">SSH user %1$s (port %2$d)</string>
     <plurals name="group_device_count">
         <item quantity="one">%1$d device</item>
         <item quantity="other">%1$d devices</item>

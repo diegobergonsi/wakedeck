@@ -195,6 +195,13 @@
     <string name="import_done">Importation terminée. Ajoutés : %1$d. Déjà enregistrés : %2$d. Inutilisables : %3$d.</string>
     <string name="import_failed">Importation impossible : ce n’est pas un fichier WakeDeck</string>
     <string name="import_too_many">Impossible d’importer : WakeDeck accepte au maximum %1$d appareils</string>
+    <string name="import_preview_title">Importer les appareils ?</string>
+    <string name="import_preview_summary">%1$d à ajouter · %2$d déjà présents · %3$d non valides</string>
+    <string name="import_preview_warning">Certains appareils pointent hors de votre réseau domestique. N’importez que des fichiers de personnes de confiance.</string>
+    <string name="import_preview_outside">Hors de votre réseau</string>
+    <string name="import_preview_more">…et %1$d de plus</string>
+    <string name="import_preview_confirm">Importer</string>
+    <string name="import_preview_ssh">Utilisateur SSH %1$s (port %2$d)</string>
     <plurals name="group_device_count">
         <item quantity="one">%1$d appareil</item>
         <item quantity="many">%1$d d’appareils</item>
