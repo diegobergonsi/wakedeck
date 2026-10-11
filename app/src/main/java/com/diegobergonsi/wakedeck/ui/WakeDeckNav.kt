@@ -1,6 +1,7 @@
 package com.diegobergonsi.wakedeck.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -14,8 +15,14 @@ private const val LIST = "devices"
 private const val EDIT = "edit/{deviceId}"
 
 @Composable
-fun WakeDeckNav() {
+fun WakeDeckNav(openAddDevice: Boolean = false, onAddDeviceHandled: () -> Unit = {}) {
     val nav = rememberNavController()
+    LaunchedEffect(openAddDevice) {
+        if (openAddDevice) {
+            nav.navigate("edit/$NEW_DEVICE_ID")
+            onAddDeviceHandled()
+        }
+    }
     NavHost(nav, startDestination = LIST) {
         composable(LIST) {
             DeviceListScreen(

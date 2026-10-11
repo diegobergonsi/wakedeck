@@ -2,6 +2,8 @@ package com.diegobergonsi.wakedeck.di
 
 import android.content.Context
 import com.diegobergonsi.wakedeck.data.DeviceRepository
+import com.diegobergonsi.wakedeck.data.WakeCoordinator
+import com.diegobergonsi.wakedeck.tile.TileStore
 import com.diegobergonsi.wakedeck.data.widget.StatusStore
 import com.diegobergonsi.wakedeck.data.widget.WidgetConfigStore
 import com.diegobergonsi.wakedeck.domain.StatusChecker
@@ -20,6 +22,8 @@ interface WidgetEntryPoint {
     fun statusChecker(): StatusChecker
     fun configStore(): WidgetConfigStore
     fun statusStore(): StatusStore
+    fun wakeCoordinator(): WakeCoordinator
+    fun tileStore(): TileStore
 }
 
 fun Context.widgetEntryPoint(): WidgetEntryPoint =

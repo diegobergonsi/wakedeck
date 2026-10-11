@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="add-device"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_add"
+        android:shortcutLongLabel="@string/shortcut_add_long"
+        android:shortcutShortLabel="@string/shortcut_add_short">
+        <intent
+            android:action="com.diegobergonsi.wakedeck.action.ADD_DEVICE"
+            android:targetClass="com.diegobergonsi.wakedeck.MainActivity"
+            android:targetPackage="com.diegobergonsi.wakedeck" />
+    </shortcut>
+</shortcuts>

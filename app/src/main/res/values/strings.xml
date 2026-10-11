@@ -101,4 +101,19 @@
     <string name="icon_star">Star</string>
     <string name="icon_chip">Chip</string>
     <string name="color_default">Default</string>
+    <string name="field_show_in_launcher">Show in launcher menu</string>
+    <string name="hint_show_in_launcher">Long-press the app icon to wake this device (up to 4 devices)</string>
+    <string name="shortcut_wake_long">Wake %1$s</string>
+    <string name="shortcut_add_short">Add device</string>
+    <string name="shortcut_add_long">Add a device</string>
+    <string name="tile_label_1">WakeDeck 1</string>
+    <string name="tile_label_2">WakeDeck 2</string>
+    <string name="tile_label_3">WakeDeck 3</string>
+    <string name="tile_choose">Choose device</string>
+    <string name="tile_config_title">Tile %1$d: device</string>
+    <string name="tile_no_device">No device</string>
+    <string name="notif_info_title">Allow notifications?</string>
+    <string name="notif_info_text">WakeDeck uses this only to confirm that a device was woken, for example \"Magic packet sent\" after you tap a launcher shortcut. It never sends ads, reminders or anything else, and nothing leaves your phone.</string>
+    <string name="notif_info_continue">Continue</string>
+    <string name="notif_info_not_now">Not now</string>
 </resources>

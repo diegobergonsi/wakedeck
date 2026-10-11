@@ -5,6 +5,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <!-- Declared only because MagicOS hides toasts from apps that cannot post notifications, and the launcher
+         shortcut confirms a wake with a toast. WakeDeck never posts a notification. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <!-- WorkManager adds these on its own. We do not need them: JobScheduler keeps periodic work across reboots
          and we run no foreground service. WAKE_LOCK stays, WorkManager holds it while a job runs. -->
     <uses-permission
@@ -26,6 +30,61 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity>
+
+        <!-- Behind the launcher shortcuts: wakes a device and closes at once, never visible. -->
+        <activity
+            android:name=".shortcuts.WakeShortcutActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:noHistory="true"
+            android:taskAffinity=""
+            android:theme="@style/Theme.WakeDeck.NoDisplay" />
+
+        <!-- Quick Settings tiles: WakeDeck 1, 2, 3. Each wakes the device chosen in its settings screen. Not marked as
+             ACTIVE_TILE, so Android starts them whenever the panel opens and the status refreshes. -->
+        <service
+            android:name=".tile.WakeTile1Service"
+            android:exported="true"
+            android:icon="@drawable/ic_widget_power"
+            android:label="@string/tile_label_1"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".tile.WakeTile2Service"
+            android:exported="true"
+            android:icon="@drawable/ic_widget_power"
+            android:label="@string/tile_label_2"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".tile.WakeTile3Service"
+            android:exported="true"
+            android:icon="@drawable/ic_widget_power"
+            android:label="@string/tile_label_3"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <!-- Opens on long-press of a tile to choose its device. -->
+        <activity
+            android:name=".tile.TileConfigActivity"
+            android:exported="true"
+            android:theme="@style/Theme.WakeDeck">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
             </intent-filter>
         </activity>
 

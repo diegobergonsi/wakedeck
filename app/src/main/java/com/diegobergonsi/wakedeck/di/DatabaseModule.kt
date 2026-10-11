@@ -17,7 +17,9 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun database(@ApplicationContext context: Context): AppDatabase =
-        Room.databaseBuilder(context, AppDatabase::class.java, "wakedeck.db").build()
+        Room.databaseBuilder(context, AppDatabase::class.java, "wakedeck.db")
+            .addMigrations(AppDatabase.MIGRATION_1_2)
+            .build()
 
     @Provides
     fun deviceDao(db: AppDatabase): DeviceDao = db.deviceDao()

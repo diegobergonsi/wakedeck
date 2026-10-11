@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -24,6 +25,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -104,6 +106,18 @@ fun DeviceEditScreen(onDone: () -> Unit, viewModel: DeviceEditViewModel = hiltVi
                 supporting = R.string.hint_status_port,
                 number = true,
             ) { v -> viewModel.update { it.copy(statusPort = v) } }
+
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier.weight(1f)) {
+                    Text(stringResource(R.string.field_show_in_launcher))
+                    Text(
+                        stringResource(R.string.hint_show_in_launcher),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                Switch(checked = form.showInLauncher, onCheckedChange = { v -> viewModel.update { it.copy(showInLauncher = v) } })
+            }
 
             if (!viewModel.isNew) {
                 OutlinedButton(

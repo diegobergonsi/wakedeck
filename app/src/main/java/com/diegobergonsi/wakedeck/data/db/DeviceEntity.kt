@@ -1,5 +1,6 @@
 package com.diegobergonsi.wakedeck.data.db
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.diegobergonsi.wakedeck.domain.Device
@@ -16,6 +17,7 @@ data class DeviceEntity(
     val os: String,
     val statusPort: Int?,
     val groupId: Long?,
+    @ColumnInfo(defaultValue = "0") val showInLauncher: Boolean = false,
 )
 
 fun DeviceEntity.toDomain() = Device(
@@ -28,6 +30,7 @@ fun DeviceEntity.toDomain() = Device(
     os = OsType.entries.firstOrNull { it.name == os } ?: OsType.LINUX,
     statusPort = statusPort,
     groupId = groupId,
+    showInLauncher = showInLauncher,
 )
 
 fun Device.toEntity() = DeviceEntity(
@@ -40,4 +43,5 @@ fun Device.toEntity() = DeviceEntity(
     os = os.name,
     statusPort = statusPort,
     groupId = groupId,
+    showInLauncher = showInLauncher,
 )

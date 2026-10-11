@@ -101,4 +101,19 @@
     <string name="icon_star">Estrela</string>
     <string name="icon_chip">Chip</string>
     <string name="color_default">Padrão</string>
+    <string name="field_show_in_launcher">Mostrar no menu do ícone</string>
+    <string name="hint_show_in_launcher">Pressione e segure o ícone do app para ligar este dispositivo (até 4)</string>
+    <string name="shortcut_wake_long">Ligar %1$s</string>
+    <string name="shortcut_add_short">Adicionar</string>
+    <string name="shortcut_add_long">Adicionar dispositivo</string>
+    <string name="tile_label_1">WakeDeck 1</string>
+    <string name="tile_label_2">WakeDeck 2</string>
+    <string name="tile_label_3">WakeDeck 3</string>
+    <string name="tile_choose">Escolher dispositivo</string>
+    <string name="tile_config_title">Bloco %1$d: dispositivo</string>
+    <string name="tile_no_device">Nenhum dispositivo</string>
+    <string name="notif_info_title">Permitir notificações?</string>
+    <string name="notif_info_text">O WakeDeck usa isso apenas para confirmar que um dispositivo foi ligado, por exemplo \"Pacote mágico enviado\" depois de tocar em um atalho do ícone. Ele nunca envia anúncios, lembretes ou qualquer outra coisa, e nada sai do seu celular.</string>
+    <string name="notif_info_continue">Continuar</string>
+    <string name="notif_info_not_now">Agora não</string>
 </resources>

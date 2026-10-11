@@ -24,6 +24,7 @@ data class DeviceForm(
     val port: String = Device.DEFAULT_PORT.toString(),
     val os: OsType = OsType.LINUX,
     val statusPort: String = "",
+    val showInLauncher: Boolean = false,
     val errors: Set<FormError> = emptySet(),
 )
 
@@ -60,6 +61,7 @@ class DeviceEditViewModel @Inject constructor(
                         port = device.port.toString(),
                         os = device.os,
                         statusPort = device.statusPort?.toString().orEmpty(),
+                        showInLauncher = device.showInLauncher,
                     )
                 }
             }
@@ -95,6 +97,7 @@ class DeviceEditViewModel @Inject constructor(
                     os = f.os,
                     statusPort = f.statusPort.toIntOrNull(),
                     groupId = groupId,
+                    showInLauncher = f.showInLauncher,
                 ),
             )
             finished = true

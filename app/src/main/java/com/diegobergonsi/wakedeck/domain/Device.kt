@@ -15,6 +15,8 @@ data class Device(
     val os: OsType = OsType.LINUX,
     val statusPort: Int? = null,
     val groupId: Long? = null,
+    /** Offer a wake shortcut when long-pressing the launcher icon (the launcher shows about 4). */
+    val showInLauncher: Boolean = false,
 ) {
     companion object {
         const val DEFAULT_BROADCAST = "255.255.255.255"
