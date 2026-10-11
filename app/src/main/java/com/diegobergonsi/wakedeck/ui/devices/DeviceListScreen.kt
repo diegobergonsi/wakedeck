@@ -59,6 +59,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.diegobergonsi.wakedeck.R
 import com.diegobergonsi.wakedeck.ui.language.LanguageDialog
 import com.diegobergonsi.wakedeck.ui.language.perAppLanguageSupported
+import com.diegobergonsi.wakedeck.ui.theme.ThemeDialog
 import com.diegobergonsi.wakedeck.domain.Device
 import com.diegobergonsi.wakedeck.domain.DeviceStatus
 
@@ -76,6 +77,7 @@ fun DeviceListScreen(
     val hasDevices = sections.isNotEmpty()
     var menuOpen by remember { mutableStateOf(false) }
     var languageOpen by remember { mutableStateOf(false) }
+    var themeOpen by remember { mutableStateOf(false) }
     val exportLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
         uri?.let(viewModel::exportTo)
     }
@@ -100,6 +102,7 @@ fun DeviceListScreen(
         }
     }
 
+    if (themeOpen) ThemeDialog(onDismiss = { themeOpen = false })
     if (languageOpen && perAppLanguageSupported) {
         @Suppress("NewApi")
         LanguageDialog(onDismiss = { languageOpen = false })
@@ -120,6 +123,7 @@ fun DeviceListScreen(
                         MenuItem(R.string.menu_export) { menuOpen = false; exportLauncher.launch("wakedeck-devices.json") }
                         HorizontalDivider()
                         MenuItem(R.string.menu_ssh_key) { menuOpen = false; onOpenSshKey() }
+                        MenuItem(R.string.config_theme) { menuOpen = false; themeOpen = true }
                         if (perAppLanguageSupported) MenuItem(R.string.menu_language) { menuOpen = false; languageOpen = true }
                         MenuItem(R.string.menu_help) { menuOpen = false; onOpenHelp() }
                     }
