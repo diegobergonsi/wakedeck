@@ -61,6 +61,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.flow.collectLatest
 import com.diegobergonsi.wakedeck.R
 import com.diegobergonsi.wakedeck.ui.language.LanguageDialog
 import com.diegobergonsi.wakedeck.ui.language.perAppLanguageSupported
@@ -100,8 +101,8 @@ fun DeviceListScreen(
     }
 
     LaunchedEffect(viewModel) {
-        viewModel.messages.collect { m ->
-            snackbar.currentSnackbarData?.dismiss()
+        // collectLatest: a new message replaces the one on screen instead of queueing behind it.
+        viewModel.messages.collectLatest { m ->
             val args = m.args.toTypedArray()
             val text = if (m.quantity != null) resources.getQuantityString(m.res, m.quantity, *args) else resources.getString(m.res, *args)
             snackbar.showSnackbar(text)
