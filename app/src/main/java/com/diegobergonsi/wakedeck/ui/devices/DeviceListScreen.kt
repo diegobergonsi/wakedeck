@@ -190,7 +190,7 @@ private fun DeviceRowContent(device: Device, status: DeviceStatus, onWake: () ->
             Text(device.name, style = MaterialTheme.typography.titleMedium)
             Text(
                 device.mac,
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Text(
