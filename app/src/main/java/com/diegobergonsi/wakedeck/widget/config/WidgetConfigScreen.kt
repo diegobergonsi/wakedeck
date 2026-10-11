@@ -158,11 +158,12 @@ fun WidgetConfigScreen(
             }
 
             Section(R.string.config_theme) {
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     WidgetThemeMode.entries.forEach { mode ->
                         FilterChip(
                             selected = config.themeMode == mode,
-                            onClick = { viewModel.update { it.copy(themeMode = mode) } },
+                            // Custom colors win over the theme, so choosing a theme clears them; otherwise the preview would not change.
+                            onClick = { viewModel.update { it.copy(themeMode = mode, backgroundColor = null, accentColor = null) } },
                             label = {
                                 Text(
                                     stringResource(
