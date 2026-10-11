@@ -18,6 +18,9 @@ data class DeviceEntity(
     val statusPort: Int?,
     val groupId: Long?,
     @ColumnInfo(defaultValue = "0") val showInLauncher: Boolean = false,
+    @ColumnInfo(defaultValue = "") val sshUser: String = "",
+    @ColumnInfo(defaultValue = "22") val sshPort: Int = 22,
+    @ColumnInfo(defaultValue = "") val sshHostKey: String = "",
 )
 
 fun DeviceEntity.toDomain() = Device(
@@ -31,6 +34,9 @@ fun DeviceEntity.toDomain() = Device(
     statusPort = statusPort,
     groupId = groupId,
     showInLauncher = showInLauncher,
+    sshUser = sshUser,
+    sshPort = sshPort,
+    sshHostKey = sshHostKey,
 )
 
 fun Device.toEntity() = DeviceEntity(
@@ -44,4 +50,7 @@ fun Device.toEntity() = DeviceEntity(
     statusPort = statusPort,
     groupId = groupId,
     showInLauncher = showInLauncher,
+    sshUser = sshUser,
+    sshPort = sshPort,
+    sshHostKey = sshHostKey,
 )

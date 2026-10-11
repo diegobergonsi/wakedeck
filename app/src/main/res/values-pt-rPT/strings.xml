@@ -116,4 +116,37 @@
     <string name="notif_info_text">A WakeDeck usa isto apenas para confirmar que um dispositivo foi ligado, por exemplo \"Pacote mágico enviado\" depois de tocar num atalho do ícone. Nunca envia anúncios, lembretes ou qualquer outra coisa, e nada sai do seu telemóvel.</string>
     <string name="notif_info_continue">Continuar</string>
     <string name="notif_info_not_now">Agora não</string>
+    <string name="section_ssh">Encerramento remoto (SSH)</string>
+    <string name="field_ssh_user">Utilizador SSH (opcional)</string>
+    <string name="field_ssh_port">Porta SSH</string>
+    <string name="hint_ssh">Apenas início de sessão por chave, sem palavras-passe. Primeiro adicione a chave SSH da app ao PC: ecrã principal \u2192 Chave SSH.</string>
+    <string name="error_ssh_user">Não são permitidos espaços</string>
+    <string name="button_shutdown">Desligar agora</string>
+    <string name="shutdown_confirm_title">Desligar %1$s?</string>
+    <string name="shutdown_confirm_text">A WakeDeck vai ligar-se por SSH como %1$s e mandar o PC desligar.</string>
+    <string name="shutdown_busy">A ligar\u2026</string>
+    <string name="trust_title">Confiar neste PC?</string>
+    <string name="trust_text">Primeira ligação a %1$s. Confirme que esta impressão digital é a mesma da chave de anfitrião SSH do PC antes de confiar:\n\n%2$s</string>
+    <string name="trust_button">Confiar</string>
+    <string name="key_changed_title">A chave SSH do PC mudou</string>
+    <string name="key_changed_text">A chave de %1$s não é a que confiou antes. Isso pode significar que o PC foi reinstalado, ou que alguém se está a fazer passar por ele. Só confie na nova chave se souber porque mudou.\n\nNova chave: %2$s</string>
+    <string name="key_changed_trust">Confiar na nova chave</string>
+    <string name="shutdown_sent">Comando de encerramento enviado para %1$s</string>
+    <string name="shutdown_auth_failed">O PC recusou a chave SSH. Adicione a chave pública da app ao PC (ecrã principal \u2192 Chave SSH) e confirme o nome de utilizador.</string>
+    <string name="shutdown_not_configured">Defina primeiro o utilizador SSH e o anfitrião.</string>
+    <string name="shutdown_failed">O PC respondeu com um erro (saída %1$d): %2$s</string>
+    <string name="shutdown_unreachable">Não foi possível ligar: %1$s</string>
+    <string name="ok">OK</string>
+    <string name="ssh_key_title">Chave SSH</string>
+    <string name="ssh_key_intro">A WakeDeck entra no seu PC com esta chave, nunca com palavra-passe. A chave privada fica no armazenamento seguro do telemóvel e não pode ser copiada. Adicione esta chave pública a cada PC:</string>
+    <string name="ssh_key_copy">Copiar chave pública</string>
+    <string name="ssh_key_copied">Copiado</string>
+    <string name="ssh_key_fingerprint">Impressão digital: %1$s</string>
+    <string name="ssh_key_linux_title">Linux</string>
+    <string name="ssh_key_linux_text">Adicione a linha da chave a ~/.ssh/authorized_keys do seu utilizador. Depois permita desligar sem palavra-passe: execute sudo visudo -f /etc/sudoers.d/wakedeck e adicione esta linha (troque youruser e confirme o caminho com: which shutdown):\nyouruser ALL=(ALL) NOPASSWD: /usr/bin/shutdown</string>
+    <string name="ssh_key_windows_title">Windows</string>
+    <string name="ssh_key_windows_text">Instale a funcionalidade opcional Servidor OpenSSH e inicie o serviço sshd. Para conta de administrador, ponha a linha da chave em C:\\ProgramData\\ssh\\administrators_authorized_keys e restrinja as permissões (apenas Administradores e SYSTEM). Para conta normal use C:\\Users\\NOME\\.ssh\\authorized_keys.</string>
+    <string name="ssh_key_regenerate">Criar nova chave</string>
+    <string name="ssh_key_regenerate_warning">A chave atual deixa de funcionar em todos os PCs. Terá de adicionar a nova chave novamente.</string>
+    <string name="menu_ssh_key">Chave SSH</string>
 </resources>

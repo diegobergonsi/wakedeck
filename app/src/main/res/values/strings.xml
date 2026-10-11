@@ -116,4 +116,37 @@
     <string name="notif_info_text">WakeDeck uses this only to confirm that a device was woken, for example \"Magic packet sent\" after you tap a launcher shortcut. It never sends ads, reminders or anything else, and nothing leaves your phone.</string>
     <string name="notif_info_continue">Continue</string>
     <string name="notif_info_not_now">Not now</string>
+    <string name="section_ssh">Remote shutdown (SSH)</string>
+    <string name="field_ssh_user">SSH user (optional)</string>
+    <string name="field_ssh_port">SSH port</string>
+    <string name="hint_ssh">Key login only, no passwords. First add the app\'s SSH key to the PC: main screen \u2192 SSH key.</string>
+    <string name="error_ssh_user">No spaces allowed</string>
+    <string name="button_shutdown">Shut down now</string>
+    <string name="shutdown_confirm_title">Shut down %1$s?</string>
+    <string name="shutdown_confirm_text">WakeDeck will connect over SSH as %1$s and tell the PC to shut down.</string>
+    <string name="shutdown_busy">Connecting\u2026</string>
+    <string name="trust_title">Trust this PC?</string>
+    <string name="trust_text">First connection to %1$s. Check that this fingerprint matches the PC\'s SSH host key before you trust it:\n\n%2$s</string>
+    <string name="trust_button">Trust</string>
+    <string name="key_changed_title">The PC\'s SSH key changed</string>
+    <string name="key_changed_text">The key of %1$s is not the one you trusted before. That can mean the PC was reinstalled, or that someone is impersonating it. Only trust the new key if you know why it changed.\n\nNew key: %2$s</string>
+    <string name="key_changed_trust">Trust new key</string>
+    <string name="shutdown_sent">Shutdown command sent to %1$s</string>
+    <string name="shutdown_auth_failed">The PC refused the SSH key. Add the app\'s public key to the PC (main screen \u2192 SSH key) and check the user name.</string>
+    <string name="shutdown_not_configured">Set the SSH user and the host first.</string>
+    <string name="shutdown_failed">The PC replied with an error (exit %1$d): %2$s</string>
+    <string name="shutdown_unreachable">Could not connect: %1$s</string>
+    <string name="ok">OK</string>
+    <string name="ssh_key_title">SSH key</string>
+    <string name="ssh_key_intro">WakeDeck logs in to your PC with this key, never with a password. The private key stays in the phone\'s secure storage and cannot be copied out. Add this public key to each PC:</string>
+    <string name="ssh_key_copy">Copy public key</string>
+    <string name="ssh_key_copied">Copied</string>
+    <string name="ssh_key_fingerprint">Fingerprint: %1$s</string>
+    <string name="ssh_key_linux_title">Linux</string>
+    <string name="ssh_key_linux_text">Add the key line to ~/.ssh/authorized_keys of your user. Then allow shutdown without a password: run sudo visudo -f /etc/sudoers.d/wakedeck and add this line (replace youruser, and check the path with: which shutdown):\nyouruser ALL=(ALL) NOPASSWD: /usr/bin/shutdown</string>
+    <string name="ssh_key_windows_title">Windows</string>
+    <string name="ssh_key_windows_text">Install the OpenSSH Server optional feature and start the sshd service. For an administrator account, put the key line in C:\\ProgramData\\ssh\\administrators_authorized_keys and restrict its permissions (only Administrators and SYSTEM). For a normal account use C:\\Users\\NAME\\.ssh\\authorized_keys.</string>
+    <string name="ssh_key_regenerate">Create a new key</string>
+    <string name="ssh_key_regenerate_warning">The current key stops working on every PC. You will have to add the new key again.</string>
+    <string name="menu_ssh_key">SSH key</string>
 </resources>

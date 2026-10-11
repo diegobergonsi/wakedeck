@@ -17,9 +17,15 @@ data class Device(
     val groupId: Long? = null,
     /** Offer a wake shortcut when long-pressing the launcher icon (the launcher shows about 4). */
     val showInLauncher: Boolean = false,
+    /** Remote shutdown over SSH (key authentication only). Empty user = not set up. */
+    val sshUser: String = "",
+    val sshPort: Int = DEFAULT_SSH_PORT,
+    /** SHA256 fingerprint of the PC's SSH host key, confirmed by the user on first use. Empty = not confirmed. */
+    val sshHostKey: String = "",
 ) {
     companion object {
         const val DEFAULT_BROADCAST = "255.255.255.255"
         const val DEFAULT_PORT = 9
+        const val DEFAULT_SSH_PORT = 22
     }
 }

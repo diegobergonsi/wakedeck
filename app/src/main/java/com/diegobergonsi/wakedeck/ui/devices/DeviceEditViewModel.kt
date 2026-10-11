@@ -7,14 +7,19 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.diegobergonsi.wakedeck.data.DeviceRepository
+import androidx.annotation.StringRes
+import com.diegobergonsi.wakedeck.R
 import com.diegobergonsi.wakedeck.domain.Device
+import com.diegobergonsi.wakedeck.ssh.FingerprintResult
+import com.diegobergonsi.wakedeck.ssh.SshShutdown
+import com.diegobergonsi.wakedeck.ssh.ShutdownResult
 import com.diegobergonsi.wakedeck.domain.MagicPacket
 import com.diegobergonsi.wakedeck.domain.OsType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-enum class FormError { NAME, MAC, BROADCAST, PORT, STATUS_PORT }
+enum class FormError { NAME, MAC, BROADCAST, PORT, STATUS_PORT, SSH_USER, SSH_PORT }
 
 data class DeviceForm(
     val name: String = "",
@@ -25,24 +30,40 @@ data class DeviceForm(
     val os: OsType = OsType.LINUX,
     val statusPort: String = "",
     val showInLauncher: Boolean = false,
+    val sshUser: String = "",
+    val sshPort: String = Device.DEFAULT_SSH_PORT.toString(),
     val errors: Set<FormError> = emptySet(),
 )
 
 const val NEW_DEVICE_ID = -1L
 
+/** Where the "shut down now" flow is. Each state maps to one dialog. */
+sealed interface ShutdownUi {
+    data object Idle : ShutdownUi
+    data object Confirm : ShutdownUi
+    data object Busy : ShutdownUi
+    data class TrustKey(val fingerprint: String) : ShutdownUi
+    data class KeyChanged(val seen: String) : ShutdownUi
+    data class Message(@StringRes val res: Int, val args: List<Any> = emptyList()) : ShutdownUi
+}
+
 @HiltViewModel
 class DeviceEditViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val repository: DeviceRepository,
+    private val ssh: SshShutdown,
 ) : ViewModel() {
     private val deviceId: Long = savedStateHandle.get<Long>("deviceId") ?: NEW_DEVICE_ID
     private var groupId: Long? = null
+    private var sshHostKey: String = ""
 
     val isNew: Boolean get() = deviceId == NEW_DEVICE_ID
 
     var form by mutableStateOf(DeviceForm())
         private set
     var finished by mutableStateOf(false)
+        private set
+    var shutdownUi by mutableStateOf<ShutdownUi>(ShutdownUi.Idle)
         private set
 
     init {
@@ -53,6 +74,7 @@ class DeviceEditViewModel @Inject constructor(
                     finished = true
                 } else {
                     groupId = device.groupId
+                    sshHostKey = device.sshHostKey
                     form = DeviceForm(
                         name = device.name,
                         mac = device.mac,
@@ -62,6 +84,8 @@ class DeviceEditViewModel @Inject constructor(
                         os = device.os,
                         statusPort = device.statusPort?.toString().orEmpty(),
                         showInLauncher = device.showInLauncher,
+                        sshUser = device.sshUser,
+                        sshPort = device.sshPort.toString(),
                     )
                 }
             }
@@ -72,7 +96,8 @@ class DeviceEditViewModel @Inject constructor(
         form = transform(form).copy(errors = emptySet())
     }
 
-    fun save() {
+    /** Checks the form. Returns the device to save, or null after marking the errors. */
+    private fun validatedDevice(): Device? {
         val f = form
         val errors = buildSet {
             if (f.name.isBlank()) add(FormError.NAME)
@@ -80,27 +105,92 @@ class DeviceEditViewModel @Inject constructor(
             if (f.broadcast.isBlank() || f.broadcast.any { it.isWhitespace() }) add(FormError.BROADCAST)
             if (f.port.toIntOrNull() !in 1..65535) add(FormError.PORT)
             if (f.statusPort.isNotBlank() && f.statusPort.toIntOrNull() !in 1..65535) add(FormError.STATUS_PORT)
+            if (f.sshUser.any { it.isWhitespace() }) add(FormError.SSH_USER)
+            if (f.sshPort.toIntOrNull() !in 1..65535) add(FormError.SSH_PORT)
         }
         if (errors.isNotEmpty()) {
             form = f.copy(errors = errors)
-            return
+            return null
         }
+        return Device(
+            id = if (isNew) 0 else deviceId,
+            name = f.name.trim(),
+            mac = MagicPacket.formatMac(MagicPacket.parseMac(f.mac)!!),
+            host = f.host.trim(),
+            broadcastAddress = f.broadcast.trim(),
+            port = f.port.toInt(),
+            os = f.os,
+            statusPort = f.statusPort.toIntOrNull(),
+            groupId = groupId,
+            showInLauncher = f.showInLauncher,
+            sshUser = f.sshUser.trim(),
+            sshPort = f.sshPort.toInt(),
+            sshHostKey = sshHostKey,
+        )
+    }
+
+    fun save() {
+        val device = validatedDevice() ?: return
         viewModelScope.launch {
-            repository.save(
-                Device(
-                    id = if (isNew) 0 else deviceId,
-                    name = f.name.trim(),
-                    mac = MagicPacket.formatMac(MagicPacket.parseMac(f.mac)!!),
-                    host = f.host.trim(),
-                    broadcastAddress = f.broadcast.trim(),
-                    port = f.port.toInt(),
-                    os = f.os,
-                    statusPort = f.statusPort.toIntOrNull(),
-                    groupId = groupId,
-                    showInLauncher = f.showInLauncher,
-                ),
-            )
+            repository.save(device)
             finished = true
+        }
+    }
+
+    // ---- Remote shutdown over SSH ----
+
+    val canShutDown: Boolean get() = !isNew && form.sshUser.isNotBlank() && form.host.isNotBlank()
+
+    fun requestShutdown() {
+        if (canShutDown && validatedDevice() != null) shutdownUi = ShutdownUi.Confirm
+    }
+
+    fun dismissShutdown() {
+        shutdownUi = ShutdownUi.Idle
+    }
+
+    fun confirmShutdown() {
+        val device = validatedDevice() ?: return
+        shutdownUi = ShutdownUi.Busy
+        viewModelScope.launch {
+            repository.save(device)
+            if (sshHostKey.isBlank()) askToTrustHostKey(device) else runShutdown(device)
+        }
+    }
+
+    private suspend fun askToTrustHostKey(device: Device) {
+        shutdownUi = when (val r = ssh.fetchHostKeyFingerprint(device)) {
+            is FingerprintResult.Found -> ShutdownUi.TrustKey(r.fingerprint)
+            is FingerprintResult.Failed -> ShutdownUi.Message(R.string.shutdown_unreachable, listOf(r.reason))
+        }
+    }
+
+    /** The user confirmed the fingerprint (first use) or accepted a changed key. */
+    fun trustHostKey() {
+        val fingerprint = when (val ui = shutdownUi) {
+            is ShutdownUi.TrustKey -> ui.fingerprint
+            is ShutdownUi.KeyChanged -> ui.seen
+            else -> return
+        }
+        sshHostKey = fingerprint
+        val device = validatedDevice() ?: return
+        shutdownUi = ShutdownUi.Busy
+        viewModelScope.launch {
+            repository.save(device)
+            runShutdown(device)
+        }
+    }
+
+    private suspend fun runShutdown(device: Device) {
+        shutdownUi = when (val r = ssh.shutdown(device)) {
+            ShutdownResult.Sent -> ShutdownUi.Message(R.string.shutdown_sent, listOf(device.name))
+            ShutdownResult.AuthFailed -> ShutdownUi.Message(R.string.shutdown_auth_failed)
+            ShutdownResult.NotConfigured -> ShutdownUi.Message(R.string.shutdown_not_configured)
+            ShutdownResult.NoHostKey -> ShutdownUi.Message(R.string.shutdown_not_configured)
+            is ShutdownResult.HostKeyChanged -> ShutdownUi.KeyChanged(r.seen)
+            is ShutdownResult.CommandFailed ->
+                ShutdownUi.Message(R.string.shutdown_failed, listOf(r.exitStatus, r.message.ifBlank { "-" }))
+            is ShutdownResult.Unreachable -> ShutdownUi.Message(R.string.shutdown_unreachable, listOf(r.reason))
         }
     }
 

@@ -24,6 +24,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -48,6 +49,7 @@ import com.diegobergonsi.wakedeck.domain.DeviceStatus
 fun DeviceListScreen(
     onAdd: () -> Unit,
     onEdit: (Long) -> Unit,
+    onOpenSshKey: () -> Unit,
     viewModel: DeviceListViewModel = hiltViewModel(),
 ) {
     val devices by viewModel.devices.collectAsStateWithLifecycle()
@@ -72,7 +74,12 @@ fun DeviceListScreen(
     }
 
     Scaffold(
-        topBar = { CenterAlignedTopAppBar(title = { Text(stringResource(R.string.app_name)) }) },
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = { Text(stringResource(R.string.app_name)) },
+                actions = { TextButton(onClick = onOpenSshKey) { Text(stringResource(R.string.menu_ssh_key)) } },
+            )
+        },
         snackbarHost = { SnackbarHost(snackbar) },
         floatingActionButton = {
             ExtendedFloatingActionButton(onClick = onAdd) { Text(stringResource(R.string.add_device)) }

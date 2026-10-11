@@ -9,6 +9,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
@@ -107,6 +108,28 @@ fun DeviceEditScreen(onDone: () -> Unit, viewModel: DeviceEditViewModel = hiltVi
                 number = true,
             ) { v -> viewModel.update { it.copy(statusPort = v) } }
 
+            Text(stringResource(R.string.section_ssh), style = MaterialTheme.typography.titleSmall)
+            Field(
+                label = R.string.field_ssh_user,
+                value = form.sshUser,
+                error = FormError.SSH_USER in form.errors,
+                errorText = R.string.error_ssh_user,
+                supporting = R.string.hint_ssh,
+            ) { v -> viewModel.update { it.copy(sshUser = v) } }
+            Field(
+                label = R.string.field_ssh_port,
+                value = form.sshPort,
+                error = FormError.SSH_PORT in form.errors,
+                errorText = R.string.error_port,
+                number = true,
+            ) { v -> viewModel.update { it.copy(sshPort = v) } }
+            if (viewModel.canShutDown) {
+                OutlinedButton(
+                    onClick = viewModel::requestShutdown,
+                    modifier = Modifier.fillMaxWidth(),
+                ) { Text(stringResource(R.string.button_shutdown)) }
+            }
+
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 Column(Modifier.weight(1f)) {
                     Text(stringResource(R.string.field_show_in_launcher))
@@ -141,6 +164,47 @@ fun DeviceEditScreen(onDone: () -> Unit, viewModel: DeviceEditViewModel = hiltVi
             dismissButton = {
                 TextButton(onClick = { confirmDelete = false }) { Text(stringResource(R.string.cancel)) }
             },
+        )
+    }
+
+    ShutdownDialogs(viewModel.shutdownUi, form.name, form.sshUser, viewModel)
+}
+
+@Composable
+private fun ShutdownDialogs(state: ShutdownUi, deviceName: String, sshUser: String, viewModel: DeviceEditViewModel) {
+    when (state) {
+        ShutdownUi.Idle -> Unit
+        ShutdownUi.Confirm -> AlertDialog(
+            onDismissRequest = viewModel::dismissShutdown,
+            title = { Text(stringResource(R.string.shutdown_confirm_title, deviceName)) },
+            text = { Text(stringResource(R.string.shutdown_confirm_text, sshUser)) },
+            confirmButton = { TextButton(onClick = viewModel::confirmShutdown) { Text(stringResource(R.string.button_shutdown)) } },
+            dismissButton = { TextButton(onClick = viewModel::dismissShutdown) { Text(stringResource(R.string.cancel)) } },
+        )
+        ShutdownUi.Busy -> AlertDialog(
+            onDismissRequest = {},
+            title = { Text(stringResource(R.string.shutdown_busy)) },
+            text = { CircularProgressIndicator() },
+            confirmButton = {},
+        )
+        is ShutdownUi.TrustKey -> AlertDialog(
+            onDismissRequest = viewModel::dismissShutdown,
+            title = { Text(stringResource(R.string.trust_title)) },
+            text = { Text(stringResource(R.string.trust_text, deviceName, state.fingerprint)) },
+            confirmButton = { TextButton(onClick = viewModel::trustHostKey) { Text(stringResource(R.string.trust_button)) } },
+            dismissButton = { TextButton(onClick = viewModel::dismissShutdown) { Text(stringResource(R.string.cancel)) } },
+        )
+        is ShutdownUi.KeyChanged -> AlertDialog(
+            onDismissRequest = viewModel::dismissShutdown,
+            title = { Text(stringResource(R.string.key_changed_title)) },
+            text = { Text(stringResource(R.string.key_changed_text, deviceName, state.seen)) },
+            confirmButton = { TextButton(onClick = viewModel::trustHostKey) { Text(stringResource(R.string.key_changed_trust)) } },
+            dismissButton = { TextButton(onClick = viewModel::dismissShutdown) { Text(stringResource(R.string.cancel)) } },
+        )
+        is ShutdownUi.Message -> AlertDialog(
+            onDismissRequest = viewModel::dismissShutdown,
+            text = { Text(stringResource(state.res, *state.args.toTypedArray())) },
+            confirmButton = { TextButton(onClick = viewModel::dismissShutdown) { Text(stringResource(R.string.ok)) } },
         )
     }
 }
