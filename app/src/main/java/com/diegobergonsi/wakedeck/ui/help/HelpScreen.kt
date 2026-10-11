@@ -10,6 +10,8 @@ import android.content.Context
 import android.content.Intent
 import android.provider.Settings
 import androidx.compose.foundation.clickable
+import androidx.compose.ui.semantics.Role
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -160,7 +162,7 @@ private fun Section(title: Int, expanded: Boolean, onToggle: () -> Unit, content
             Text(
                 stringResource(title),
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.fillMaxWidth().clickable(onClick = onToggle),
+                modifier = Modifier.fillMaxWidth().clickable(interactionSource = remember { MutableInteractionSource() }, indication = null, role = Role.Button, onClick = onToggle),
             )
             if (expanded) content()
         }
