@@ -68,8 +68,8 @@ class DeviceGridWidget : GlanceAppWidget() {
 
     override suspend fun providePreview(context: Context, widgetCategory: Int) {
         provideContent {
-            CompositionLocalProvider(LocalSize provides DpSize(260.dp, 90.dp)) {
-                DeviceGridContent(SampleWidgetStates.multi(), preview = true)
+            CompositionLocalProvider(LocalSize provides DpSize(200.dp, 80.dp)) {
+                DeviceGridContent(SampleWidgetStates.multi(count = 2), preview = true)
             }
         }
     }
@@ -115,7 +115,7 @@ fun DeviceGridContent(state: MultiWidgetState, preview: Boolean = false) {
                     GridLayout.autoColumns(usableWidth, usableHeight, state.rows.size)
                 }.coerceAtMost(state.rows.size)
                 val tileHeight = GridLayout.tileHeightDp(usableHeight, ceil(state.rows.size / columns.toFloat()).toInt()).dp
-                MultiBody(config, state, palette, scale, refreshInColumn = true, centerContent = true) {
+                MultiBody(config, state, palette, scale, refreshInColumn = true, centerContent = true, preview = preview) {
                     if (preview) {
                         Column(GlanceModifier.fillMaxWidth()) {
                             state.rows.chunked(columns).forEach { chunk ->

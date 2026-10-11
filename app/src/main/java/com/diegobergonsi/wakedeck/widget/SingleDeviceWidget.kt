@@ -87,7 +87,7 @@ class SingleDeviceWidget : GlanceAppWidget() {
 
     override suspend fun providePreview(context: Context, widgetCategory: Int) {
         provideContent {
-            CompositionLocalProvider(LocalSize provides DpSize(220.dp, 70.dp)) { SingleDeviceContent(SampleWidgetStates.single()) }
+            CompositionLocalProvider(LocalSize provides DpSize(160.dp, 60.dp)) { SingleDeviceContent(SampleWidgetStates.single()) }
         }
     }
 

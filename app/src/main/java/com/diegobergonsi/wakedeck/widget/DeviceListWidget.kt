@@ -61,8 +61,8 @@ class DeviceListWidget : GlanceAppWidget() {
 
     override suspend fun providePreview(context: Context, widgetCategory: Int) {
         provideContent {
-            CompositionLocalProvider(LocalSize provides DpSize(300.dp, 190.dp)) {
-                DeviceListContent(SampleWidgetStates.multi(), preview = true)
+            CompositionLocalProvider(LocalSize provides DpSize(220.dp, 150.dp)) {
+                DeviceListContent(SampleWidgetStates.multi(count = 2), preview = true)
             }
         }
     }
@@ -106,7 +106,7 @@ fun DeviceListContent(state: MultiWidgetState, preview: Boolean = false) {
                 }
                 val usableHeight = size.height.value - 8 - headerHeight
                 val rowHeight = ListLayout.rowHeightDp(usableHeight, state.rows.size, config.density).dp
-                MultiBody(config, state, palette, scale, refreshInColumn = false, centerContent = false) {
+                MultiBody(config, state, palette, scale, refreshInColumn = false, centerContent = false, preview = preview) {
                     if (preview) {
                         Column(GlanceModifier.fillMaxWidth()) {
                             state.rows.forEach { row -> ListRow(row, config, palette, scale, rowHeight) }

@@ -73,6 +73,7 @@ fun MultiBody(
     scale: Float,
     refreshInColumn: Boolean,
     centerContent: Boolean,
+    preview: Boolean = false,
     content: @Composable () -> Unit,
 ) {
     val titled = config.label.isNotBlank()
@@ -91,7 +92,8 @@ fun MultiBody(
             }
         }
         Row(
-            GlanceModifier.fillMaxSize(),
+            // Previews have no scrolling collection to stretch, so the row just wraps its content.
+            if (preview) GlanceModifier.fillMaxWidth() else GlanceModifier.fillMaxSize(),
             verticalAlignment = if (centerContent) Alignment.CenterVertically else Alignment.Top,
         ) {
             Box(GlanceModifier.defaultWeight()) { content() }
