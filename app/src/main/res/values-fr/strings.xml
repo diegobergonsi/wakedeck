@@ -155,6 +155,8 @@
     <string name="menu_groups">Groupes</string>
     <string name="menu_import">Importer des appareils</string>
     <string name="menu_export">Exporter les appareils</string>
+    <string name="menu_language">Langue</string>
+    <string name="language_system">Par défaut du système</string>
     <string name="menu_help">Aide</string>
     <string name="groups_title">Groupes</string>
     <string name="groups_empty">Aucun groupe pour l’instant. Un groupe permet d’allumer plusieurs appareils à la fois.</string>

@@ -155,6 +155,8 @@
     <string name="menu_groups">Grupos</string>
     <string name="menu_import">Importar dispositivos</string>
     <string name="menu_export">Exportar dispositivos</string>
+    <string name="menu_language">Idioma</string>
+    <string name="language_system">Padrão do sistema</string>
     <string name="menu_help">Ajuda</string>
     <string name="groups_title">Grupos</string>
     <string name="groups_empty">Nenhum grupo ainda. Um grupo permite ligar vários dispositivos de uma vez.</string>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Each language is shown in its own language, so these are not translated. -->
+    <string name="language_en" translatable="false">English</string>
+    <string name="language_pt_br" translatable="false">Português (Brasil)</string>
+    <string name="language_pt_pt" translatable="false">Português (Portugal)</string>
+    <string name="language_fr" translatable="false">Français</string>
+    <string name="language_de" translatable="false">Deutsch</string>
+    <string name="language_es" translatable="false">Español</string>
+    <string name="language_zh" translatable="false">中文</string>
+    <string name="language_ja" translatable="false">日本語</string>
+</resources>

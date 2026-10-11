@@ -155,6 +155,8 @@
     <string name="menu_groups">Gruppen</string>
     <string name="menu_import">Geräte importieren</string>
     <string name="menu_export">Geräte exportieren</string>
+    <string name="menu_language">Sprache</string>
+    <string name="language_system">Systemstandard</string>
     <string name="menu_help">Hilfe</string>
     <string name="groups_title">Gruppen</string>
     <string name="groups_empty">Noch keine Gruppen. Mit einer Gruppe kannst du mehrere Geräte auf einmal aufwecken.</string>

@@ -155,6 +155,8 @@
     <string name="menu_groups">Groups</string>
     <string name="menu_import">Import devices</string>
     <string name="menu_export">Export devices</string>
+    <string name="menu_language">Language</string>
+    <string name="language_system">System default</string>
     <string name="menu_help">Help</string>
     <string name="groups_title">Groups</string>
     <string name="groups_empty">No groups yet. A group lets you wake several devices at once.</string>

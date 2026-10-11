@@ -155,6 +155,8 @@
     <string name="menu_groups">グループ</string>
     <string name="menu_import">デバイスをインポート</string>
     <string name="menu_export">デバイスをエクスポート</string>
+    <string name="menu_language">言語</string>
+    <string name="language_system">システムのデフォルト</string>
     <string name="menu_help">ヘルプ</string>
     <string name="groups_title">グループ</string>
     <string name="groups_empty">グループがまだありません。グループを使うと、複数のデバイスをまとめて起動できます。</string>
