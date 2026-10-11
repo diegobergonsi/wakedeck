@@ -9,6 +9,7 @@ import pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent / "docs"
 SITE = "https://wakedeck.app"
+KOFI = "https://ko-fi.com/diegobergonsi"
 UPDATED = "2026-10-11"
 
 LANGS = [
@@ -607,6 +608,34 @@ PRIVACY = {
 }
 
 
+# ---------------------------------------------------------------- support (tip) section
+SUPPORT = {
+    "en": ("Support WakeDeck", "WakeDeck is free and has no ads. If it saves you time and you want to chip in, a tip helps cover the Play Store fee and the domain.", "Leave a tip"),
+    "pt-br": ("Apoie o WakeDeck", "O WakeDeck é gratuito e não tem anúncios. Se ele poupa o seu tempo e você quer ajudar, uma gorjeta ajuda a cobrir a taxa da Play Store e o domínio.", "Deixar uma gorjeta"),
+    "pt-pt": ("Apoie a WakeDeck", "A WakeDeck é gratuita e não tem anúncios. Se lhe poupa tempo e quiser ajudar, uma gorjeta ajuda a cobrir a taxa da Play Store e o domínio.", "Deixar uma gorjeta"),
+    "fr": ("Soutenir WakeDeck", "WakeDeck est gratuit et sans publicité. S’il vous fait gagner du temps et que vous souhaitez contribuer, un pourboire aide à couvrir les frais du Play Store et le nom de domaine.", "Laisser un pourboire"),
+    "de": ("WakeDeck unterstützen", "WakeDeck ist kostenlos und werbefrei. Wenn es dir Zeit spart und du etwas beitragen möchtest, hilft ein Trinkgeld, die Play-Store-Gebühr und die Domain zu decken.", "Trinkgeld geben"),
+    "es": ("Apoya WakeDeck", "WakeDeck es gratis y no tiene anuncios. Si te ahorra tiempo y quieres colaborar, una propina ayuda a cubrir la tarifa de Play Store y el dominio.", "Dejar una propina"),
+    "zh": ("支持 WakeDeck", "WakeDeck 免费且没有广告。如果它为你节省了时间，你也想表示支持，一笔打赏能帮助支付 Play 商店费用和域名费用。", "打赏"),
+    "ja": ("WakeDeck を応援", "WakeDeck は無料で、広告もありません。お役に立てて、応援したいと思っていただけたら、チップが Play ストアの手数料とドメイン代の足しになります。", "チップを贈る"),
+}
+
+# One privacy block per language, shown after "Third parties".
+TIPS_BLOCK = {
+    "en": ("Tips", "The support button on this website opens Ko-fi, a third-party site with its own privacy policy. The app has no donation feature. Ko-fi and its payment providers handle any tip, and the developer sees only what Ko-fi shows for it, such as the name and message you choose to give."),
+    "pt-br": ("Gorjetas", "O botão de apoio deste site abre o Ko-fi, um site de terceiros com a própria política de privacidade. O app não tem recurso de doação. O Ko-fi e os seus provedores de pagamento cuidam de qualquer gorjeta, e o desenvolvedor vê apenas o que o Ko-fi mostra, como o nome e a mensagem que você decidir informar."),
+    "pt-pt": ("Gorjetas", "O botão de apoio deste sítio abre o Ko-fi, um sítio de terceiros com a sua própria política de privacidade. A aplicação não tem funcionalidade de donativos. O Ko-fi e os seus fornecedores de pagamento tratam de qualquer gorjeta, e o programador vê apenas o que o Ko-fi mostra, como o nome e a mensagem que decidir indicar."),
+    "fr": ("Pourboires", "Le bouton de soutien de ce site ouvre Ko-fi, un site tiers doté de sa propre politique de confidentialité. L’application n’a aucune fonction de don. Ko-fi et ses prestataires de paiement gèrent tout pourboire, et le développeur ne voit que ce que Ko-fi lui indique, comme le nom et le message que vous choisissez de donner."),
+    "de": ("Trinkgelder", "Die Unterstützen-Schaltfläche auf dieser Website öffnet Ko-fi, eine Seite eines Drittanbieters mit eigener Datenschutzerklärung. Die App hat keine Spendenfunktion. Ko-fi und dessen Zahlungsdienstleister wickeln jedes Trinkgeld ab, und der Entwickler sieht nur, was Ko-fi dazu anzeigt, etwa den Namen und die Nachricht, die du angibst."),
+    "es": ("Propinas", "El botón de apoyo de este sitio abre Ko-fi, un sitio de terceros con su propia política de privacidad. La app no tiene función de donaciones. Ko-fi y sus proveedores de pago gestionan cualquier propina, y el desarrollador solo ve lo que Ko-fi muestra, como el nombre y el mensaje que decidas indicar."),
+    "zh": ("打赏", "本网站上的支持按钮会打开 Ko-fi，这是一个有自己隐私政策的第三方网站。应用本身没有捐赠功能。任何打赏均由 Ko-fi 及其支付服务商处理，开发者只能看到 Ko-fi 显示的信息，例如你选择提供的姓名和留言。"),
+    "ja": ("チップ", "このウェブサイトの応援ボタンは、独自のプライバシーポリシーを持つ第三者サイト Ko-fi を開きます。アプリ自体に寄付機能はありません。チップの処理は Ko-fi とその決済事業者が行い、開発者に見えるのは、あなたが入力した名前やメッセージなど Ko-fi が表示する情報のみです。"),
+}
+
+
+THIRD_PARTIES = {"Third parties", "Terceiros", "Tiers", "Dritte", "Terceros", "第三方", "第三者"}
+
+
 def base(folder):
     return f"/{folder}/" if folder else "/"
 
@@ -679,6 +708,7 @@ def footer(t, folder):
     <div>&copy; 2026 Diego Bergonsi</div>
     <ul>
       <li><a href="{b}privacy">{t["privacy"]}</a></li>
+      <li><a href="{KOFI}" rel="noopener noreferrer">{SUPPORT[folder or "en"][2]}</a></li>
       <li><a href="mailto:diego.bergonsi@outlook.com">{t["contact"]}</a></li>
     </ul>
   </div>
@@ -740,6 +770,12 @@ def build_index(folder, code):
     <h2>{t["away_h"]}</h2>
     <p class="sub">{t["away_p"]}</p>
   </section>
+
+  <section class="wrap support" aria-labelledby="support-h">
+    <h2 id="support-h">{SUPPORT[folder or "en"][0]}</h2>
+    <p class="sub">{SUPPORT[folder or "en"][1]}</p>
+    <a class="btn ghost" href="{KOFI}" rel="noopener noreferrer">{SUPPORT[folder or "en"][2]}</a>
+  </section>
 </main>
 """ + footer(t, folder)
 
@@ -748,7 +784,10 @@ def build_privacy(folder, code):
     p = PRIVACY[folder or "en"]
     t = INDEX[folder or "en"]
     out = []
-    for kind, val in p["blocks"]:
+    blocks = list(p["blocks"])
+    third = next(i for i, b in enumerate(blocks) if b[0] == "h2" and b[1] in THIRD_PARTIES)
+    blocks[third + 2:third + 2] = [("h2", TIPS_BLOCK[folder or "en"][0]), ("p", TIPS_BLOCK[folder or "en"][1])]
+    for kind, val in blocks:
         if kind == "h2":
             out.append(f"    <h2>{val}</h2>")
         elif kind == "p":

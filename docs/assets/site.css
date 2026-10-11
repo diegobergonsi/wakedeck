@@ -113,3 +113,6 @@ nav a[aria-current="page"] { color: #fff; text-decoration: underline; text-decor
 .lang li a[aria-current="true"] { color: var(--amber); font-weight: 700; }
 .prose .note { color: var(--muted); font-size: 15px; margin: 16px 0 8px; }
 @media (max-width: 640px) { nav a.opt { display: none; } }
+
+.support { padding-top: 8px; }
+.support .sub { margin-bottom: 24px; }
