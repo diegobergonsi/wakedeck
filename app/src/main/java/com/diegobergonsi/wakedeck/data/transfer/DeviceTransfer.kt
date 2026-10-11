@@ -93,23 +93,26 @@ object DeviceTransfer {
     private fun parseDevice(o: JSONObject): TransferDevice? {
         val name = o.str("name").trim()
         val mac = MagicPacket.parseMac(o.str("mac"))?.let { MagicPacket.formatMac(it) } ?: return null
-        if (name.isEmpty()) return null
+        if (name.isEmpty() || name.length > Device.MAX_NAME) return null
         val port = o.optInt("port", Device.DEFAULT_PORT).takeIf { it in 1..65535 } ?: return null
         val sshPort = o.optInt("sshPort", Device.DEFAULT_SSH_PORT).takeIf { it in 1..65535 } ?: return null
         val broadcast = o.str("broadcast").trim().ifBlank { Device.DEFAULT_BROADCAST }
         if (!BroadcastAddress.isValid(broadcast)) return null
         val sshUser = o.str("sshUser").trim()
-        if (sshUser.any { it.isWhitespace() }) return null
+        if (sshUser.any { it.isWhitespace() } || sshUser.length > Device.MAX_SSH_USER) return null
+        val host = o.str("host").trim()
+        val group = o.str("group").trim().ifEmpty { null }
+        if (host.length > Device.MAX_HOST || (group?.length ?: 0) > Device.MAX_NAME) return null
         val statusPort = if (o.has("statusPort")) o.optInt("statusPort").takeIf { it in 1..65535 } ?: return null else null
         return TransferDevice(
             name = name,
             mac = mac,
-            host = o.str("host").trim(),
+            host = host,
             broadcastAddress = broadcast,
             port = port,
             os = OsType.entries.firstOrNull { it.name == o.str("os") } ?: OsType.LINUX,
             statusPort = statusPort,
-            group = o.str("group").trim().ifEmpty { null },
+            group = group,
             showInLauncher = o.optBoolean("showInLauncher", false),
             sshUser = sshUser,
             sshPort = sshPort,

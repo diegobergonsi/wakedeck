@@ -135,6 +135,7 @@
     <string name="trust_button">信頼する</string>
     <string name="key_changed_title">PC の SSH 鍵が変更されました</string>
     <string name="key_changed_text">%1$s の鍵が、以前に信頼したものと異なります。PC が再インストールされたか、誰かがなりすましている可能性があります。変更された理由がわかる場合にのみ、新しい鍵を信頼してください。\n\n新しい鍵：%2$s</string>
+    <string name="key_changed_old">以前に信頼した鍵：%1$s</string>
     <string name="key_changed_trust">新しい鍵を信頼する</string>
     <string name="shutdown_sent">%1$s にシャットダウンコマンドを送信しました</string>
     <string name="shutdown_auth_failed">PC が SSH 鍵を拒否しました。このアプリの公開鍵を PC に追加し（メイン画面 \u2192 SSH 鍵）、ユーザー名を確認してください。</string>
@@ -206,7 +207,7 @@
     <string name="help_ssh_intro">アプリは専用の鍵でログインし、パスワードは使いません。PC には SSH サーバーが必要で、アプリの公開鍵を追加しておく必要があります。以下のコマンドには、すでにあなたの鍵が含まれています。</string>
     <string name="help_ssh_l1">SSH サーバーをインストールして起動します（Debian/Ubuntu の例）：</string>
     <string name="help_ssh_l1b">Fedora、Arch、SteamOS ではサービス名が sshd です：</string>
-    <string name="help_ssh_l2">アプリの鍵をユーザーに追加します：</string>
+    <string name="help_ssh_l2">アプリの鍵をユーザーに追加します。この行により、鍵はシャットダウンコマンドだけに制限されます：</string>
     <string name="help_ssh_l3">パスワードなしでシャットダウンできるようにします。次を実行し、その下の行を追加してください（youruser を置き換え、which shutdown でパスを確認してください）：</string>
     <string name="help_ssh_w1">管理者として PowerShell を開き、OpenSSH サーバーをインストールして起動します：</string>
     <string name="help_ssh_w2">管理者アカウント：鍵を追加し、ファイルのアクセス許可を制限します（そうしないと SSH はファイルを無視します）：</string>

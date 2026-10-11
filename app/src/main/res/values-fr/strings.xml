@@ -135,6 +135,7 @@
     <string name="trust_button">Faire confiance</string>
     <string name="key_changed_title">La clé SSH du PC a changé</string>
     <string name="key_changed_text">La clé de %1$s n’est pas celle à laquelle vous aviez fait confiance. Cela peut signifier que le PC a été réinstallé, ou que quelqu’un se fait passer pour lui. N’acceptez la nouvelle clé que si vous savez pourquoi elle a changé.\n\nNouvelle clé : %2$s</string>
+    <string name="key_changed_old">Clé approuvée précédemment : %1$s</string>
     <string name="key_changed_trust">Faire confiance à la nouvelle clé</string>
     <string name="shutdown_sent">Commande d’extinction envoyée à %1$s</string>
     <string name="shutdown_auth_failed">Le PC a refusé la clé SSH. Ajoutez la clé publique de l’app au PC (écran principal \u2192 Clé SSH) et vérifiez le nom d’utilisateur.</string>
@@ -212,7 +213,7 @@
     <string name="help_ssh_intro">L’app se connecte avec sa propre clé, jamais avec un mot de passe. Le PC doit disposer d’un serveur SSH et la clé publique de l’app doit y être ajoutée. Les commandes ci-dessous contiennent déjà votre clé.</string>
     <string name="help_ssh_l1">Installez et démarrez le serveur SSH (exemple pour Debian/Ubuntu) :</string>
     <string name="help_ssh_l1b">Sous Fedora, Arch ou SteamOS, le service s’appelle plutôt sshd :</string>
-    <string name="help_ssh_l2">Ajoutez la clé de l’app à votre utilisateur :</string>
+    <string name="help_ssh_l2">Ajoutez la clé de l’app à votre utilisateur. La ligne limite la clé à la commande d’extinction :</string>
     <string name="help_ssh_l3">Autorisez l’extinction sans mot de passe. Exécutez ceci, puis ajoutez la ligne en dessous (remplacez youruser et vérifiez le chemin avec : which shutdown) :</string>
     <string name="help_ssh_w1">Dans PowerShell en tant qu’administrateur, installez et démarrez le serveur OpenSSH :</string>
     <string name="help_ssh_w2">Compte administrateur : ajoutez la clé et verrouillez les autorisations du fichier (sinon SSH l’ignore) :</string>

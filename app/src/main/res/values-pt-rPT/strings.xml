@@ -135,6 +135,7 @@
     <string name="trust_button">Confiar</string>
     <string name="key_changed_title">A chave SSH do PC mudou</string>
     <string name="key_changed_text">A chave de %1$s não é a que confiou antes. Isso pode significar que o PC foi reinstalado, ou que alguém se está a fazer passar por ele. Só confie na nova chave se souber porque mudou.\n\nNova chave: %2$s</string>
+    <string name="key_changed_old">Chave anteriormente confiada: %1$s</string>
     <string name="key_changed_trust">Confiar na nova chave</string>
     <string name="shutdown_sent">Comando de encerramento enviado para %1$s</string>
     <string name="shutdown_auth_failed">O PC recusou a chave SSH. Adicione a chave pública da app ao PC (ecrã principal \u2192 Chave SSH) e confirme o nome de utilizador.</string>
@@ -212,7 +213,7 @@
     <string name="help_ssh_intro">A app entra com a sua própria chave, nunca com palavra-passe. O PC precisa de um servidor SSH e a chave pública da app tem de estar nele. Os comandos abaixo já contêm a sua chave.</string>
     <string name="help_ssh_l1">Instale e inicie o servidor SSH (exemplo Debian/Ubuntu):</string>
     <string name="help_ssh_l1b">No Fedora, Arch ou SteamOS o serviço chama-se sshd:</string>
-    <string name="help_ssh_l2">Adicione a chave da app ao seu utilizador:</string>
+    <string name="help_ssh_l2">Adicione a chave da app ao seu utilizador. A linha limita a chave ao comando de encerrar:</string>
     <string name="help_ssh_l3">Permita desligar sem palavra-passe. Execute isto e depois adicione a linha abaixo (troque youruser e confirme o caminho com: which shutdown):</string>
     <string name="help_ssh_w1">Na PowerShell como Administrador, instale e inicie o Servidor OpenSSH:</string>
     <string name="help_ssh_w2">Conta de administrador: adicione a chave e restrinja as permissões do ficheiro (senão o SSH ignora-o):</string>

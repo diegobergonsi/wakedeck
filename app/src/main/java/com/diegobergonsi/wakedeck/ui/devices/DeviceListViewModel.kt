@@ -111,7 +111,7 @@ class DeviceListViewModel @Inject constructor(
         viewModelScope.launch {
             val message = withContext(Dispatchers.IO) {
                 runCatching {
-                    val text = context.contentResolver.openInputStream(uri)?.use { it.readBytes().decodeToString() }
+                    val text = context.contentResolver.openInputStream(uri)?.use { readLimited(it, MAX_IMPORT_BYTES) }
                         ?: error("cannot read")
                     require(text.length <= MAX_IMPORT_CHARS) { "file too large" }
                     when (val outcome = transfer.import(text)) {
@@ -144,5 +144,19 @@ class DeviceListViewModel @Inject constructor(
     private companion object {
         const val POLL_INTERVAL_MS = 5_000L
         const val MAX_IMPORT_CHARS = 1_000_000
+        const val MAX_IMPORT_BYTES = 4_000_000
     }
+}
+
+/** Reads at most [max] bytes, so a huge file fails before it fills memory. */
+private fun readLimited(stream: java.io.InputStream, max: Int): String {
+    val out = java.io.ByteArrayOutputStream()
+    val buffer = ByteArray(8192)
+    while (true) {
+        val n = stream.read(buffer)
+        if (n < 0) break
+        require(out.size() + n <= max) { "file too large" }
+        out.write(buffer, 0, n)
+    }
+    return out.toByteArray().decodeToString()
 }

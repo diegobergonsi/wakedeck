@@ -1,5 +1,7 @@
 package com.diegobergonsi.wakedeck.data.transfer
 
+import com.diegobergonsi.wakedeck.data.db.AppDatabase
+import androidx.room.withTransaction
 import com.diegobergonsi.wakedeck.data.DeviceRepository
 import com.diegobergonsi.wakedeck.data.GroupRepository
 import com.diegobergonsi.wakedeck.domain.Device
@@ -17,6 +19,7 @@ sealed interface ImportOutcome {
 class TransferRepository @Inject constructor(
     private val devices: DeviceRepository,
     private val groups: GroupRepository,
+    private val db: AppDatabase,
 ) {
     /** The export file text, and how many devices are in it. */
     suspend fun export(): Pair<String, Int> {
@@ -31,27 +34,30 @@ class TransferRepository @Inject constructor(
         }
         val plan = DeviceTransfer.plan(devices.observeAll().first(), decoded.devices, decoded.invalid)
 
-        // Groups are matched by name, ignoring case; missing ones are created.
-        val byName = groups.getAll().associateBy { it.name.lowercase() }.toMutableMap()
-        plan.toAdd.mapNotNull { it.group }.distinctBy { it.lowercase() }.forEach { name ->
-            if (name.lowercase() !in byName) byName[name.lowercase()] = Group(groups.save(Group(name = name)), name)
-        }
-        plan.toAdd.forEach { t ->
-            devices.save(
-                Device(
-                    name = t.name,
-                    mac = t.mac,
-                    host = t.host,
-                    broadcastAddress = t.broadcastAddress,
-                    port = t.port,
-                    os = t.os,
-                    statusPort = t.statusPort,
-                    groupId = t.group?.let { byName[it.lowercase()]?.id },
-                    showInLauncher = t.showInLauncher,
-                    sshUser = t.sshUser,
-                    sshPort = t.sshPort,
-                ),
-            )
+        // One transaction: a failure part-way leaves nothing half-imported.
+        db.withTransaction {
+            // Groups are matched by name, ignoring case; missing ones are created.
+            val byName = groups.getAll().associateBy { it.name.lowercase() }.toMutableMap()
+            plan.toAdd.mapNotNull { it.group }.distinctBy { it.lowercase() }.forEach { name ->
+                if (name.lowercase() !in byName) byName[name.lowercase()] = Group(groups.save(Group(name = name)), name)
+            }
+            plan.toAdd.forEach { t ->
+                devices.save(
+                    Device(
+                        name = t.name,
+                        mac = t.mac,
+                        host = t.host,
+                        broadcastAddress = t.broadcastAddress,
+                        port = t.port,
+                        os = t.os,
+                        statusPort = t.statusPort,
+                        groupId = t.group?.let { byName[it.lowercase()]?.id },
+                        showInLauncher = t.showInLauncher,
+                        sshUser = t.sshUser,
+                        sshPort = t.sshPort,
+                    ),
+                )
+            }
         }
         return ImportOutcome.Done(plan.toAdd.size, plan.skippedExisting, plan.invalid)
     }

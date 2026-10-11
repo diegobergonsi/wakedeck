@@ -135,6 +135,7 @@
     <string name="trust_button">Vertrauen</string>
     <string name="key_changed_title">Der SSH-Schlüssel des PCs hat sich geändert</string>
     <string name="key_changed_text">Der Schlüssel von %1$s ist nicht der, dem du zuvor vertraut hast. Das kann bedeuten, dass der PC neu installiert wurde oder dass sich jemand als er ausgibt. Vertraue dem neuen Schlüssel nur, wenn du weißt, warum er sich geändert hat.\n\nNeuer Schlüssel: %2$s</string>
+    <string name="key_changed_old">Zuvor vertrauter Schlüssel: %1$s</string>
     <string name="key_changed_trust">Neuem Schlüssel vertrauen</string>
     <string name="shutdown_sent">Herunterfahren-Befehl an %1$s gesendet</string>
     <string name="shutdown_auth_failed">Der PC hat den SSH-Schlüssel abgelehnt. Füge den öffentlichen Schlüssel der App auf dem PC hinzu (Hauptbildschirm \u2192 SSH-Schlüssel) und prüfe den Benutzernamen.</string>
@@ -209,7 +210,7 @@
     <string name="help_ssh_intro">Die App meldet sich mit ihrem eigenen Schlüssel an, nie mit einem Passwort. Der PC braucht einen SSH-Server, und der öffentliche Schlüssel der App muss dort hinzugefügt werden. Die Befehle unten enthalten bereits deinen Schlüssel.</string>
     <string name="help_ssh_l1">SSH-Server installieren und starten (Beispiel für Debian/Ubuntu):</string>
     <string name="help_ssh_l1b">Unter Fedora, Arch oder SteamOS heißt der Dienst stattdessen sshd:</string>
-    <string name="help_ssh_l2">Füge den Schlüssel der App zu deinem Benutzer hinzu:</string>
+    <string name="help_ssh_l2">Füge den Schlüssel der App zu deinem Benutzer hinzu. Die Zeile beschränkt den Schlüssel auf den Herunterfahren-Befehl:</string>
     <string name="help_ssh_l3">Erlaube das Herunterfahren ohne Passwort. Führe dies aus und füge dann die Zeile darunter hinzu (ersetze youruser und prüfe den Pfad mit: which shutdown):</string>
     <string name="help_ssh_w1">Installiere und starte den OpenSSH-Server in PowerShell als Administrator:</string>
     <string name="help_ssh_w2">Administratorkonto: Füge den Schlüssel hinzu und schränke die Dateiberechtigungen ein (sonst ignoriert SSH die Datei):</string>

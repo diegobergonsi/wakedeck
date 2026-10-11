@@ -135,6 +135,7 @@
     <string name="trust_button">信任</string>
     <string name="key_changed_title">电脑的 SSH 密钥已更改</string>
     <string name="key_changed_text">%1$s 的密钥与你之前信任的不一致。这可能是因为电脑被重新安装，也可能有人在冒充它。只有在你清楚密钥为何更改时，才信任新密钥。\n\n新密钥：%2$s</string>
+    <string name="key_changed_old">之前信任的密钥：%1$s</string>
     <string name="key_changed_trust">信任新密钥</string>
     <string name="shutdown_sent">已向 %1$s 发送关机命令</string>
     <string name="shutdown_auth_failed">电脑拒绝了该 SSH 密钥。请把应用的公钥添加到电脑（主界面 \u2192 SSH 密钥），并检查用户名。</string>
@@ -206,7 +207,7 @@
     <string name="help_ssh_intro">应用使用自己的密钥登录，绝不使用密码。电脑需要运行 SSH 服务器，并且必须添加应用的公钥。下面的命令已经包含了你的密钥。</string>
     <string name="help_ssh_l1">安装并启动 SSH 服务器（以 Debian/Ubuntu 为例）：</string>
     <string name="help_ssh_l1b">在 Fedora、Arch 或 SteamOS 上，服务名称是 sshd：</string>
-    <string name="help_ssh_l2">把应用的密钥添加到你的用户：</string>
+    <string name="help_ssh_l2">把应用的密钥添加到你的用户。这一行会把密钥限制为只能执行关机命令：</string>
     <string name="help_ssh_l3">允许无需密码关机。运行下面的命令，然后添加其下方的那一行（替换 youruser，并用 which shutdown 确认路径）：</string>
     <string name="help_ssh_w1">以管理员身份打开 PowerShell，安装并启动 OpenSSH 服务器：</string>
     <string name="help_ssh_w2">管理员账户：添加密钥并收紧文件权限（否则 SSH 会忽略该文件）：</string>

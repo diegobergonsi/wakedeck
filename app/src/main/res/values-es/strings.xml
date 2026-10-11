@@ -135,6 +135,7 @@
     <string name="trust_button">Confiar</string>
     <string name="key_changed_title">Ha cambiado la clave SSH del PC</string>
     <string name="key_changed_text">La clave de %1$s no es la misma en la que confiaste antes. Puede significar que el PC se reinstaló o que alguien se hace pasar por él. Confía en la nueva clave solo si sabes por qué ha cambiado.\n\nNueva clave: %2$s</string>
+    <string name="key_changed_old">Clave en la que confiaste antes: %1$s</string>
     <string name="key_changed_trust">Confiar en la nueva clave</string>
     <string name="shutdown_sent">Comando de apagado enviado a %1$s</string>
     <string name="shutdown_auth_failed">El PC rechazó la clave SSH. Añade la clave pública de la app al PC (pantalla principal \u2192 Clave SSH) y comprueba el nombre de usuario.</string>
@@ -212,7 +213,7 @@
     <string name="help_ssh_intro">La app inicia sesión con su propia clave, nunca con una contraseña. El PC necesita un servidor SSH y hay que añadirle la clave pública de la app. Los comandos de abajo ya incluyen tu clave.</string>
     <string name="help_ssh_l1">Instala e inicia el servidor SSH (ejemplo para Debian/Ubuntu):</string>
     <string name="help_ssh_l1b">En Fedora, Arch o SteamOS el servicio se llama sshd:</string>
-    <string name="help_ssh_l2">Añade la clave de la app a tu usuario:</string>
+    <string name="help_ssh_l2">Añade la clave de la app a tu usuario. La línea limita la clave al comando de apagado:</string>
     <string name="help_ssh_l3">Permite apagar sin contraseña. Ejecuta esto y después añade la línea de debajo (sustituye youruser y comprueba la ruta con: which shutdown):</string>
     <string name="help_ssh_w1">En PowerShell como administrador, instala e inicia el servidor OpenSSH:</string>
     <string name="help_ssh_w2">Cuenta de administrador: añade la clave y restringe los permisos del archivo (si no, SSH lo ignora):</string>

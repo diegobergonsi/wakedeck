@@ -27,5 +27,8 @@ data class Device(
         const val DEFAULT_BROADCAST = "255.255.255.255"
         const val DEFAULT_PORT = 9
         const val DEFAULT_SSH_PORT = 22
+        const val MAX_NAME = 100
+        const val MAX_HOST = 255
+        const val MAX_SSH_USER = 64
     }
 }

@@ -50,7 +50,7 @@ sealed interface ShutdownUi {
     data object Confirm : ShutdownUi
     data object Busy : ShutdownUi
     data class TrustKey(val fingerprint: String) : ShutdownUi
-    data class KeyChanged(val seen: String) : ShutdownUi
+    data class KeyChanged(val old: String, val seen: String) : ShutdownUi
     data class Message(@StringRes val res: Int, val args: List<Any> = emptyList()) : ShutdownUi
 }
 
@@ -193,12 +193,14 @@ class DeviceEditViewModel @Inject constructor(
             is ShutdownUi.KeyChanged -> ui.seen
             else -> return
         }
+        val rePin = shutdownUi is ShutdownUi.KeyChanged
         sshHostKey = fingerprint
         val device = validatedDevice() ?: return
         shutdownUi = ShutdownUi.Busy
         viewModelScope.launch {
             repository.save(device)
-            runShutdown(device)
+            // A changed key is re-pinned only: the user confirms the shutdown again with the new key in place.
+            if (rePin) shutdownUi = ShutdownUi.Confirm else runShutdown(device)
         }
     }
 
@@ -208,7 +210,7 @@ class DeviceEditViewModel @Inject constructor(
             ShutdownResult.AuthFailed -> ShutdownUi.Message(R.string.shutdown_auth_failed)
             ShutdownResult.NotConfigured -> ShutdownUi.Message(R.string.shutdown_not_configured)
             ShutdownResult.NoHostKey -> ShutdownUi.Message(R.string.shutdown_not_configured)
-            is ShutdownResult.HostKeyChanged -> ShutdownUi.KeyChanged(r.seen)
+            is ShutdownResult.HostKeyChanged -> ShutdownUi.KeyChanged(r.expected, r.seen)
             is ShutdownResult.CommandFailed ->
                 ShutdownUi.Message(R.string.shutdown_failed, listOf(r.exitStatus, r.message.ifBlank { "-" }))
             is ShutdownResult.Unreachable -> ShutdownUi.Message(R.string.shutdown_unreachable, listOf(r.reason))

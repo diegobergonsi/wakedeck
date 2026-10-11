@@ -69,14 +69,14 @@ class SshShutdown @Inject constructor(private val keys: SshKeyManager) {
         if (device.host.isBlank() || device.sshUser.isBlank()) return@withContext ShutdownResult.NotConfigured
         if (device.sshHostKey.isBlank()) return@withContext ShutdownResult.NoHostKey
 
-        var mismatch: ShutdownResult.HostKeyChanged? = null
+        val mismatch = java.util.concurrent.atomic.AtomicReference<ShutdownResult.HostKeyChanged?>(null)
         val client = newClient(object : HostKeyVerifier {
             override fun verify(hostname: String, port: Int, key: PublicKey): Boolean {
                 val seen = fingerprintOf(key)
                 return when (HostKeyPolicy.decide(device.sshHostKey, seen)) {
                     HostKeyPolicy.Decision.MATCH -> true
                     else -> {
-                        mismatch = ShutdownResult.HostKeyChanged(device.sshHostKey, seen)
+                        mismatch.set(ShutdownResult.HostKeyChanged(device.sshHostKey, seen))
                         false
                     }
                 }
@@ -91,7 +91,7 @@ class SshShutdown @Inject constructor(private val keys: SshKeyManager) {
         } catch (e: UserAuthException) {
             ShutdownResult.AuthFailed
         } catch (e: IOException) {
-            mismatch ?: ShutdownResult.Unreachable(e.message ?: e.javaClass.simpleName)
+            mismatch.get() ?: ShutdownResult.Unreachable(e.message ?: e.javaClass.simpleName)
         } finally {
             runCatching { client.disconnect() }
         }
@@ -113,7 +113,12 @@ class SshShutdown @Inject constructor(private val keys: SshKeyManager) {
     }
 
     private fun readError(cmd: Session.Command): String =
-        runCatching { cmd.errorStream.readBytes().decodeToString().trim() }.getOrDefault("")
+        runCatching {
+            // A hostile server could stream without end, so read one bounded chunk only.
+            val buffer = ByteArray(MAX_ERROR_BYTES)
+            val n = cmd.errorStream.read(buffer).coerceAtLeast(0)
+            buffer.decodeToString(0, n).trim()
+        }.getOrDefault("")
 
     /**
      * Only ECDSA and RSA host keys: with the platform crypto sshj cannot decode an Ed25519 host key. Every OpenSSH
@@ -145,5 +150,6 @@ class SshShutdown @Inject constructor(private val keys: SshKeyManager) {
     private companion object {
         const val TIMEOUT_MS = 5_000
         const val COMMAND_WAIT_SECONDS = 5L
+        const val MAX_ERROR_BYTES = 4096
     }
 }

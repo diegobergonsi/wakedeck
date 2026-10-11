@@ -1,5 +1,6 @@
 package com.diegobergonsi.wakedeck.ssh
 
+import com.diegobergonsi.wakedeck.domain.OsType
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import java.security.KeyPairGenerator
@@ -21,6 +22,7 @@ class SshKeyManager @Inject constructor() {
     fun hasKey(): Boolean = keyStore.containsAlias(ALIAS)
 
     /** Creates the key pair if it does not exist yet. */
+    @Synchronized
     fun ensureKey() {
         if (hasKey()) return
         val generator = KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_EC, PROVIDER)
@@ -52,6 +54,10 @@ class SshKeyManager @Inject constructor() {
 
     /** The line to put in the PC's authorized_keys file. */
     fun authorizedKeysLine(): String = OpenSshKey.authorizedKeysLine(point(), COMMENT)
+
+    /** The Linux line limits the key to the shutdown command, so a stolen phone cannot open a shell. */
+    fun linuxAuthorizedKeysLine(): String =
+        "restrict,command=\"${ShutdownCommand.forOs(OsType.LINUX)}\" ${authorizedKeysLine()}"
 
     fun fingerprint(): String = OpenSshKey.fingerprint(OpenSshKey.blob(point()))
 

@@ -18,11 +18,18 @@ class HelpViewModel @Inject constructor(private val keys: SshKeyManager) : ViewM
     var publicKeyLine by mutableStateOf("")
         private set
 
+    /** The Linux version carries a forced command, see [SshKeyManager.linuxAuthorizedKeysLine]. */
+    var linuxKeyLine by mutableStateOf("")
+        private set
+
     init {
         viewModelScope.launch {
-            publicKeyLine = withContext(Dispatchers.Default) {
+            withContext(Dispatchers.Default) {
                 keys.ensureKey()
-                keys.authorizedKeysLine()
+                keys.authorizedKeysLine() to keys.linuxAuthorizedKeysLine()
+            }.let { (plain, linux) ->
+                publicKeyLine = plain
+                linuxKeyLine = linux
             }
         }
     }

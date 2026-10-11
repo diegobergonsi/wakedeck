@@ -107,7 +107,7 @@ fun HelpScreen(onBack: () -> Unit, openSection: String? = null, viewModel: HelpV
                 if (linux) {
                     Body(R.string.help_ssh_l1); Command(stringResource(R.string.cmd_linux_install_ssh), copy)
                     Body(R.string.help_ssh_l1b); Command(stringResource(R.string.cmd_linux_enable_sshd), copy)
-                    Body(R.string.help_ssh_l2); Command(stringResource(R.string.cmd_linux_add_key, key), copy)
+                    Body(R.string.help_ssh_l2); Command(stringResource(R.string.cmd_linux_add_key, viewModel.linuxKeyLine), copy)
                     Body(R.string.help_ssh_l3)
                     Command(stringResource(R.string.cmd_linux_sudoers), copy)
                     Command(stringResource(R.string.cmd_linux_sudoers_line), copy)

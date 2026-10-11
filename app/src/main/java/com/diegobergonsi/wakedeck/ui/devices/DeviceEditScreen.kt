@@ -1,5 +1,6 @@
 package com.diegobergonsi.wakedeck.ui.devices
 
+import com.diegobergonsi.wakedeck.domain.Device
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -69,7 +70,7 @@ fun DeviceEditScreen(onDone: () -> Unit, onOpenSshHelp: () -> Unit, viewModel: D
                 value = form.name,
                 error = FormError.NAME in form.errors,
                 errorText = R.string.error_name,
-            ) { v -> viewModel.update { it.copy(name = v) } }
+            ) { v -> viewModel.update { it.copy(name = v.take(Device.MAX_NAME)) } }
             Field(
                 label = R.string.field_mac,
                 value = form.mac,
@@ -77,7 +78,7 @@ fun DeviceEditScreen(onDone: () -> Unit, onOpenSshHelp: () -> Unit, viewModel: D
                 errorText = R.string.error_mac,
             ) { v -> viewModel.update { it.copy(mac = v) } }
             Field(label = R.string.field_host, value = form.host, supporting = R.string.hint_host) { v ->
-                viewModel.update { it.copy(host = v) }
+                viewModel.update { it.copy(host = v.take(Device.MAX_HOST)) }
             }
             Field(
                 label = R.string.field_broadcast,
@@ -146,7 +147,7 @@ fun DeviceEditScreen(onDone: () -> Unit, onOpenSshHelp: () -> Unit, viewModel: D
                 error = FormError.SSH_USER in form.errors,
                 errorText = R.string.error_ssh_user,
                 supporting = R.string.hint_ssh,
-            ) { v -> viewModel.update { it.copy(sshUser = v) } }
+            ) { v -> viewModel.update { it.copy(sshUser = v.take(Device.MAX_SSH_USER)) } }
             Field(
                 label = R.string.field_ssh_port,
                 value = form.sshPort,
@@ -234,7 +235,7 @@ private fun ShutdownDialogs(state: ShutdownUi, deviceName: String, sshUser: Stri
         is ShutdownUi.KeyChanged -> AlertDialog(
             onDismissRequest = viewModel::dismissShutdown,
             title = { Text(stringResource(R.string.key_changed_title)) },
-            text = { Text(stringResource(R.string.key_changed_text, deviceName, state.seen)) },
+            text = { Text(stringResource(R.string.key_changed_text, deviceName, state.seen) + "\n\n" + stringResource(R.string.key_changed_old, state.old)) },
             confirmButton = { TextButton(onClick = viewModel::trustHostKey) { Text(stringResource(R.string.key_changed_trust)) } },
             dismissButton = { TextButton(onClick = viewModel::dismissShutdown) { Text(stringResource(R.string.cancel)) } },
         )

@@ -1,5 +1,7 @@
 package com.diegobergonsi.wakedeck.widget.work
 
+import kotlinx.coroutines.sync.withPermit
+import kotlinx.coroutines.sync.Semaphore
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
@@ -25,11 +27,16 @@ class StatusRefreshWorker @AssistedInject constructor(
     private val configs: WidgetConfigStore,
     private val statuses: StatusStore,
 ) : CoroutineWorker(context, params) {
+    private companion object {
+        const val MAX_PARALLEL_CHECKS = 8
+    }
+
     override suspend fun doWork(): Result {
         configs.pruneExcept(StatusScheduler.activeWidgetIds(applicationContext))
         val targets = configs.allDeviceIds().mapNotNull { devices.get(it) }
+        val limit = Semaphore(MAX_PARALLEL_CHECKS)
         coroutineScope {
-            targets.map { device -> async { statuses.setStatus(device.id, checker.check(device)) } }.awaitAll()
+            targets.map { device -> async { limit.withPermit { statuses.setStatus(device.id, checker.check(device)) } } }.awaitAll()
         }
         WidgetUpdater.updateAll(applicationContext)
         return Result.success()

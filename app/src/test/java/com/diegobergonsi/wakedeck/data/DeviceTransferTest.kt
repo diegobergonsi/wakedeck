@@ -104,4 +104,13 @@ class DeviceTransferTest {
         assertEquals("", d.host)
         assertEquals(null, d.group)
     }
+
+    @Test
+    fun importRejectsOversizedFields() {
+        val ok = """"name":"A","mac":"00:11:22:33:44:55""""
+        val long = "x".repeat(300)
+        val result = decode(file("{$ok,\"host\":\"$long\"},{\"name\":\"$long\",\"mac\":\"00:11:22:33:44:56\"},{$ok,\"group\":\"$long\"}"))
+        assertTrue(result.devices.isEmpty())
+        assertEquals(3, result.invalid)
+    }
 }

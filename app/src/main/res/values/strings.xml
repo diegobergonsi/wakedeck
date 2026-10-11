@@ -135,6 +135,7 @@
     <string name="trust_button">Trust</string>
     <string name="key_changed_title">The PC\'s SSH key changed</string>
     <string name="key_changed_text">The key of %1$s is not the one you trusted before. That can mean the PC was reinstalled, or that someone is impersonating it. Only trust the new key if you know why it changed.\n\nNew key: %2$s</string>
+    <string name="key_changed_old">Previously trusted key: %1$s</string>
     <string name="key_changed_trust">Trust new key</string>
     <string name="shutdown_sent">Shutdown command sent to %1$s</string>
     <string name="shutdown_auth_failed">The PC refused the SSH key. Add the app\'s public key to the PC (main screen \u2192 SSH key) and check the user name.</string>
@@ -209,7 +210,7 @@
     <string name="help_ssh_intro">The app logs in with its own key, never a password. The PC needs an SSH server, and the app\u2019s public key must be added to it. The commands below already contain your key.</string>
     <string name="help_ssh_l1">Install and start the SSH server (Debian/Ubuntu shown):</string>
     <string name="help_ssh_l1b">On Fedora, Arch or SteamOS the service is called sshd instead:</string>
-    <string name="help_ssh_l2">Add the app\u2019s key to your user:</string>
+    <string name="help_ssh_l2">Add the app’s key to your user. The line limits the key to the shutdown command:</string>
     <string name="help_ssh_l3">Allow shutdown without a password. Run this, then add the line below it (replace youruser, and check the path with: which shutdown):</string>
     <string name="help_ssh_w1">In PowerShell as Administrator, install and start OpenSSH Server:</string>
     <string name="help_ssh_w2">Administrator account: add the key and lock down the file permissions (SSH ignores the file otherwise):</string>
