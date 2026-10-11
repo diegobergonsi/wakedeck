@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -48,15 +49,12 @@ data class DeviceSection(val group: Group?, val devices: List<Device>)
 @HiltViewModel
 class DeviceListViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    repository: DeviceRepository,
+    private val repository: DeviceRepository,
     groups: GroupRepository,
     private val coordinator: WakeCoordinator,
     private val transfer: TransferRepository,
     private val statusChecker: StatusChecker,
 ) : ViewModel() {
-    val devices: StateFlow<List<Device>> = repository.observeAll()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
-
     /** Groups by name, then devices without a group. With no groups at all there is one section without a header. */
     val sections: StateFlow<List<DeviceSection>> = combine(repository.observeAll(), groups.observeAll()) { all, groupList ->
         val named = groupList.mapNotNull { g -> all.filter { it.groupId == g.id }.takeIf { it.isNotEmpty() }?.let { DeviceSection(g, it) } }
@@ -127,7 +125,7 @@ class DeviceListViewModel @Inject constructor(
     /** Checks all devices every [POLL_INTERVAL_MS] until cancelled. Call while the screen is visible. */
     suspend fun pollStatuses() {
         while (true) {
-            val current = devices.value
+            val current = repository.observeAll().first()
             _statuses.update { old -> old.filterKeys { id -> current.any { it.id == id } } }
             coroutineScope {
                 current.forEach { device ->
