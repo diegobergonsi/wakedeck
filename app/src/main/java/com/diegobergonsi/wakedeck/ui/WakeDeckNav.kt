@@ -26,12 +26,14 @@ import com.diegobergonsi.wakedeck.ui.devices.DeviceListScreen
 import com.diegobergonsi.wakedeck.ui.devices.NEW_DEVICE_ID
 import com.diegobergonsi.wakedeck.ui.groups.GroupsScreen
 import com.diegobergonsi.wakedeck.ui.help.HelpScreen
+import com.diegobergonsi.wakedeck.ui.licenses.LicensesScreen
 import com.diegobergonsi.wakedeck.ui.ssh.SshKeyScreen
 
 private const val LIST = "devices"
 private const val EDIT = "edit/{deviceId}"
 private const val SSH_KEY = "sshkey"
 private const val GROUPS = "groups"
+private const val LICENSES = "licenses"
 private const val HELP = "help?section={section}"
 
 @Composable
@@ -61,6 +63,7 @@ fun WakeDeckNav(openAddDevice: Boolean = false, onAddDeviceHandled: () -> Unit =
                 onOpenSshKey = { nav.navigate(SSH_KEY) },
                 onOpenGroups = { nav.navigate(GROUPS) },
                 onOpenHelp = { nav.navigate("help?section=wol") },
+                onOpenLicenses = { nav.navigate(LICENSES) },
             )
         }
         composable(GROUPS) { GroupsScreen(onBack = { nav.popBackStack() }) }
@@ -70,6 +73,7 @@ fun WakeDeckNav(openAddDevice: Boolean = false, onAddDeviceHandled: () -> Unit =
         ) { entry ->
             HelpScreen(onBack = { nav.popBackStack() }, openSection = entry.arguments?.getString("section"))
         }
+        composable(LICENSES) { LicensesScreen(onBack = { nav.popBackStack() }) }
         composable(SSH_KEY) { SshKeyScreen(onBack = { nav.popBackStack() }) }
         composable(EDIT, arguments = listOf(navArgument("deviceId") { type = NavType.LongType })) {
             DeviceEditScreen(onDone = { nav.popBackStack() }, onOpenSshHelp = { nav.navigate("help?section=ssh") })

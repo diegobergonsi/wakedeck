@@ -1,0 +1,9 @@
+Copyright (c) 2026 Diego Bergonsi. All rights reserved.
+
+The source code in this repository is public so that anyone can see how WakeDeck works. It is not open source.
+
+No permission is granted to copy, modify, distribute, sublicense or sell the code, the app or any part of them without the written permission of the copyright holder. The only exceptions are viewing the code and the actions that GitHub's Terms of Service allow for public repositories, such as viewing and forking within GitHub.
+
+The name WakeDeck, the app icon and the artwork are not licensed for any use.
+
+Third-party libraries used by the app belong to their own authors and are licensed under their own terms. They are listed, with their licenses, in the app under "Open source licenses" and in app/src/main/res/raw/open_source_licenses.txt.

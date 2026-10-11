@@ -52,4 +52,4 @@ The app is not on Google Play yet. The listing texts and the privacy policy are 
 
 ## License
 
-No license has been chosen yet, so all rights are reserved for now.
+All rights reserved. The code is public so that you can see how the app works, but it is not open source. See [LICENSE](LICENSE). Third-party libraries keep their own licenses, listed in the app under "Open source licenses".

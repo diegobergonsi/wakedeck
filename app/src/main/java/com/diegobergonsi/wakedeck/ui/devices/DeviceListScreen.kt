@@ -77,6 +77,7 @@ fun DeviceListScreen(
     onOpenSshKey: () -> Unit,
     onOpenGroups: () -> Unit,
     onOpenHelp: () -> Unit,
+    onOpenLicenses: () -> Unit,
     viewModel: DeviceListViewModel = hiltViewModel(),
 ) {
     val sections by viewModel.sections.collectAsStateWithLifecycle()
@@ -138,6 +139,7 @@ fun DeviceListScreen(
                         MenuItem(R.string.config_theme) { menuOpen = false; themeOpen = true }
                         if (perAppLanguageSupported) MenuItem(R.string.menu_language) { menuOpen = false; languageOpen = true }
                         MenuItem(R.string.menu_help) { menuOpen = false; onOpenHelp() }
+                        MenuItem(R.string.menu_licenses) { menuOpen = false; onOpenLicenses() }
                     }
                 },
             )

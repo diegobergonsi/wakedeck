@@ -169,6 +169,8 @@
     <string name="menu_language">Sprache</string>
     <string name="language_system">Systemstandard</string>
     <string name="menu_help">Hilfe</string>
+    <string name="menu_licenses">Open-Source-Lizenzen</string>
+    <string name="licenses_intro">WakeDeck verwendet die folgenden Open-Source-Bibliotheken. Jede unterliegt ihrer eigenen Lizenz.</string>
     <string name="groups_title">Gruppen</string>
     <string name="groups_empty">Noch keine Gruppen. Mit einer Gruppe kannst du mehrere Geräte auf einmal aufwecken.</string>
     <string name="group_add">Gruppe hinzufügen</string>

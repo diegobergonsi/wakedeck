@@ -169,6 +169,8 @@
     <string name="menu_language">言語</string>
     <string name="language_system">システムのデフォルト</string>
     <string name="menu_help">ヘルプ</string>
+    <string name="menu_licenses">オープンソースライセンス</string>
+    <string name="licenses_intro">WakeDeck は以下のオープンソースライブラリを使用しています。各ライブラリはそれぞれのライセンスに従います。</string>
     <string name="groups_title">グループ</string>
     <string name="groups_empty">グループがまだありません。グループを使うと、複数のデバイスをまとめて起動できます。</string>
     <string name="group_add">グループを追加</string>

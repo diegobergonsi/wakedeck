@@ -169,6 +169,8 @@
     <string name="menu_language">Idioma</string>
     <string name="language_system">Padrão do sistema</string>
     <string name="menu_help">Ajuda</string>
+    <string name="menu_licenses">Licenças de código aberto</string>
+    <string name="licenses_intro">O WakeDeck usa as bibliotecas de código aberto abaixo. Cada uma continua sob a sua própria licença.</string>
     <string name="groups_title">Grupos</string>
     <string name="groups_empty">Nenhum grupo ainda. Um grupo permite ligar vários dispositivos de uma vez.</string>
     <string name="group_add">Adicionar grupo</string>

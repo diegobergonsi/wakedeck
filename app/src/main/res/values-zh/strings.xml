@@ -169,6 +169,8 @@
     <string name="menu_language">语言</string>
     <string name="language_system">跟随系统</string>
     <string name="menu_help">帮助</string>
+    <string name="menu_licenses">开源许可</string>
+    <string name="licenses_intro">WakeDeck 使用下列开源库，每个库均遵循其各自的许可证。</string>
     <string name="groups_title">分组</string>
     <string name="groups_empty">还没有分组。分组可以让你一次唤醒多台设备。</string>
     <string name="group_add">添加分组</string>
