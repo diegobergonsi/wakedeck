@@ -10,7 +10,6 @@ import net.schmizz.sshj.common.Buffer
 import net.schmizz.sshj.common.KeyType
 import net.schmizz.sshj.common.SecurityUtils
 import net.schmizz.sshj.connection.channel.direct.Session
-import net.schmizz.sshj.transport.TransportException
 import net.schmizz.sshj.transport.verification.HostKeyVerifier
 import net.schmizz.sshj.userauth.UserAuthException
 import net.schmizz.sshj.userauth.keyprovider.KeyProvider
@@ -92,11 +91,7 @@ class SshShutdown @Inject constructor(private val keys: SshKeyManager) {
         } catch (e: UserAuthException) {
             ShutdownResult.AuthFailed
         } catch (e: IOException) {
-            mismatch ?: if (e is TransportException && e.message?.contains("host key", true) == true) {
-                ShutdownResult.Unreachable(e.message.orEmpty())
-            } else {
-                ShutdownResult.Unreachable(e.message ?: e.javaClass.simpleName)
-            }
+            mismatch ?: ShutdownResult.Unreachable(e.message ?: e.javaClass.simpleName)
         } finally {
             runCatching { client.disconnect() }
         }

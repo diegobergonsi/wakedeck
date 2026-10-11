@@ -86,4 +86,22 @@ class DeviceTransferTest {
         assertEquals(listOf("Main PC"), plan.toAdd.map { it.name })
         assertEquals(2, plan.skippedExisting)
     }
+
+    private fun file(entry: String) = """{"app":"WakeDeck","version":1,"devices":[$entry]}"""
+
+    @Test
+    fun importRejectsWhatTheEditScreenRejects() {
+        val ok = """"name":"A","mac":"00:11:22:33:44:55""""
+        assertEquals(1, decode(file("{$ok,\"broadcast\":\"192.168.1.255\"}")).devices.size)
+        val bad = decode(file("{$ok,\"broadcast\":\"192.168.1\"},{$ok,\"sshUser\":\"my user\"}"))
+        assertTrue(bad.devices.isEmpty())
+        assertEquals(2, bad.invalid)
+    }
+
+    @Test
+    fun jsonNullIsEmptyNotTheWordNull() {
+        val d = decode(file("""{"name":"A","mac":"00:11:22:33:44:55","host":null,"group":null}""")).devices.single()
+        assertEquals("", d.host)
+        assertEquals(null, d.group)
+    }
 }

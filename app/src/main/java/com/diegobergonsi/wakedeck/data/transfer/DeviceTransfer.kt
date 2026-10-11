@@ -1,5 +1,6 @@
 package com.diegobergonsi.wakedeck.data.transfer
 
+import com.diegobergonsi.wakedeck.domain.BroadcastAddress
 import com.diegobergonsi.wakedeck.domain.Device
 import com.diegobergonsi.wakedeck.domain.Group
 import com.diegobergonsi.wakedeck.domain.MagicPacket
@@ -86,24 +87,31 @@ object DeviceTransfer {
         return DecodeResult.Success(devices, invalid)
     }
 
+    /** Empty for a missing key or a JSON null; plain optString would turn a JSON null into the text "null". */
+    private fun JSONObject.str(key: String): String = if (isNull(key)) "" else optString(key)
+
     private fun parseDevice(o: JSONObject): TransferDevice? {
-        val name = o.optString("name").trim()
-        val mac = MagicPacket.parseMac(o.optString("mac"))?.let { MagicPacket.formatMac(it) } ?: return null
+        val name = o.str("name").trim()
+        val mac = MagicPacket.parseMac(o.str("mac"))?.let { MagicPacket.formatMac(it) } ?: return null
         if (name.isEmpty()) return null
         val port = o.optInt("port", Device.DEFAULT_PORT).takeIf { it in 1..65535 } ?: return null
         val sshPort = o.optInt("sshPort", Device.DEFAULT_SSH_PORT).takeIf { it in 1..65535 } ?: return null
+        val broadcast = o.str("broadcast").trim().ifBlank { Device.DEFAULT_BROADCAST }
+        if (!BroadcastAddress.isValid(broadcast)) return null
+        val sshUser = o.str("sshUser").trim()
+        if (sshUser.any { it.isWhitespace() }) return null
         val statusPort = if (o.has("statusPort")) o.optInt("statusPort").takeIf { it in 1..65535 } ?: return null else null
         return TransferDevice(
             name = name,
             mac = mac,
-            host = o.optString("host").trim(),
-            broadcastAddress = o.optString("broadcast", Device.DEFAULT_BROADCAST).trim().ifBlank { Device.DEFAULT_BROADCAST },
+            host = o.str("host").trim(),
+            broadcastAddress = broadcast,
             port = port,
-            os = OsType.entries.firstOrNull { it.name == o.optString("os") } ?: OsType.LINUX,
+            os = OsType.entries.firstOrNull { it.name == o.str("os") } ?: OsType.LINUX,
             statusPort = statusPort,
-            group = o.optString("group").trim().ifEmpty { null },
+            group = o.str("group").trim().ifEmpty { null },
             showInLauncher = o.optBoolean("showInLauncher", false),
-            sshUser = o.optString("sshUser").trim(),
+            sshUser = sshUser,
             sshPort = sshPort,
         )
     }
