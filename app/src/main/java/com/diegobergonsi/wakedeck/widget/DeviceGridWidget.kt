@@ -69,7 +69,8 @@ class DeviceGridWidget : GlanceAppWidget() {
     override suspend fun providePreview(context: Context, widgetCategory: Int) {
         provideContent {
             CompositionLocalProvider(LocalSize provides DpSize(200.dp, 80.dp)) {
-                DeviceGridContent(SampleWidgetStates.multi(count = 2), preview = true)
+                // The picker may lay a preview out without a size, so give it the real default size.
+                Box(GlanceModifier.size(200.dp, 80.dp)) { DeviceGridContent(SampleWidgetStates.multi(count = 2), preview = true) }
             }
         }
     }

@@ -23,6 +23,7 @@ import androidx.glance.appwidget.action.actionStartActivity
 import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.lazy.items
 import androidx.glance.appwidget.provideContent
+import androidx.glance.layout.size
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
 import androidx.glance.layout.Column
@@ -62,7 +63,8 @@ class DeviceListWidget : GlanceAppWidget() {
     override suspend fun providePreview(context: Context, widgetCategory: Int) {
         provideContent {
             CompositionLocalProvider(LocalSize provides DpSize(220.dp, 150.dp)) {
-                DeviceListContent(SampleWidgetStates.multi(count = 2), preview = true)
+                // The picker may lay a preview out without a size, so give it the real default size.
+                Box(GlanceModifier.size(220.dp, 150.dp)) { DeviceListContent(SampleWidgetStates.multi(count = 2), preview = true) }
             }
         }
     }
