@@ -15,6 +15,7 @@
     <string name="empty_devices_widgets">そのあと、ホーム画面に WakeDeck ウィジェットを追加します。</string>
     <string name="broadcast_summary">%1$s : %2$d</string>
     <string name="wake_sent">%1$s にマジックパケットを送信しました</string>
+    <string name="wake_sent_off_lan">%1$s にマジックパケットを送信しましたが、スマートフォンが Wi-Fi にも VPN にも接続されていません。PC が受信できない可能性があります。</string>
     <string name="wake_failed">%1$s にパケットを送信できませんでした</string>
     <string name="wake_failed_no_network">%1$s に送信できません：ネットワークまたは VPN に接続されていません</string>
     <string name="wake_failed_bad_address">%1$s に送信できません：ブロードキャストアドレスが見つかりません</string>

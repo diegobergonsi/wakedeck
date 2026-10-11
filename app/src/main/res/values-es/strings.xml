@@ -15,6 +15,7 @@
     <string name="empty_devices_widgets">Después añade un widget de WakeDeck a la pantalla de inicio.</string>
     <string name="broadcast_summary">%1$s : %2$d</string>
     <string name="wake_sent">Paquete mágico enviado a %1$s</string>
+    <string name="wake_sent_off_lan">Paquete mágico enviado a %1$s, pero el teléfono no está en Wi-Fi ni en una VPN. Es posible que el PC no lo reciba.</string>
     <string name="wake_failed">No se pudo enviar el paquete a %1$s</string>
     <string name="wake_failed_no_network">No se pudo enviar a %1$s: sin conexión de red ni VPN</string>
     <string name="wake_failed_bad_address">No se pudo enviar a %1$s: no se encontró la dirección de difusión</string>

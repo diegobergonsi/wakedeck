@@ -1,6 +1,8 @@
 package com.diegobergonsi.wakedeck.data
 
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import com.diegobergonsi.wakedeck.R
 import com.diegobergonsi.wakedeck.data.widget.StatusStore
 import com.diegobergonsi.wakedeck.di.ApplicationScope
@@ -18,10 +20,12 @@ import javax.inject.Singleton
 
 enum class WakeOutcome { SENT, FAILED, NOT_FOUND }
 
-data class WakeResult(val outcome: WakeOutcome, val deviceName: String?, val failure: WakeFailure? = null)
+/** [offLan]: the packet went out, but the phone is on neither Wi-Fi, Ethernet nor a VPN, so the PC may never see it. */
+data class WakeResult(val outcome: WakeOutcome, val deviceName: String?, val failure: WakeFailure? = null, val offLan: Boolean = false)
 
 /** String resource that tells the user how this wake went. Takes the device name as its argument. */
 fun WakeResult.messageRes(): Int = when {
+    outcome == WakeOutcome.SENT && offLan -> R.string.wake_sent_off_lan
     outcome == WakeOutcome.SENT -> R.string.wake_sent
     failure == WakeFailure.NO_NETWORK -> R.string.wake_failed_no_network
     failure == WakeFailure.BAD_ADDRESS -> R.string.wake_failed_bad_address
@@ -52,7 +56,14 @@ class WakeCoordinator @Inject constructor(
             if (ok) WakeOutcome.SENT else WakeOutcome.FAILED,
             device.name,
             sent.exceptionOrNull()?.let(WakeFailure::from),
+            offLan = ok && !onLocalNetwork(),
         )
+    }
+
+    private fun onLocalNetwork(): Boolean {
+        val manager = context.getSystemService(ConnectivityManager::class.java)
+        val caps = manager.getNetworkCapabilities(manager.activeNetwork) ?: return false
+        return listOf(NetworkCapabilities.TRANSPORT_WIFI, NetworkCapabilities.TRANSPORT_ETHERNET, NetworkCapabilities.TRANSPORT_VPN).any(caps::hasTransport)
     }
 
     suspend fun refreshWidgets() = WidgetUpdater.updateAll(context)

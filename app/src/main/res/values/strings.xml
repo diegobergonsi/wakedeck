@@ -15,6 +15,7 @@
     <string name="empty_devices_widgets">Then add a WakeDeck widget from your home screen.</string>
     <string name="broadcast_summary">%1$s : %2$d</string>
     <string name="wake_sent">Magic packet sent to %1$s</string>
+    <string name="wake_sent_off_lan">Magic packet sent to %1$s, but the phone is not on Wi-Fi or a VPN. The PC may not receive it.</string>
     <string name="wake_failed">Could not send packet to %1$s</string>
     <string name="wake_failed_no_network">Could not send to %1$s: no network or VPN connection</string>
     <string name="wake_failed_bad_address">Could not send to %1$s: broadcast address not found</string>

@@ -15,6 +15,7 @@
     <string name="empty_devices_widgets">Füge danach ein WakeDeck-Widget zu deinem Startbildschirm hinzu.</string>
     <string name="broadcast_summary">%1$s : %2$d</string>
     <string name="wake_sent">Magic Packet an %1$s gesendet</string>
+    <string name="wake_sent_off_lan">Magic Packet an %1$s gesendet, aber das Telefon ist weder im WLAN noch in einem VPN. Der PC erhält es möglicherweise nicht.</string>
     <string name="wake_failed">Paket konnte nicht an %1$s gesendet werden</string>
     <string name="wake_failed_no_network">Senden an %1$s nicht möglich: keine Netzwerk- oder VPN-Verbindung</string>
     <string name="wake_failed_bad_address">Senden an %1$s nicht möglich: Broadcast-Adresse nicht gefunden</string>

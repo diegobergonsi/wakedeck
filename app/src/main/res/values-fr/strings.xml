@@ -15,6 +15,7 @@
     <string name="empty_devices_widgets">Ajoutez ensuite un widget WakeDeck à votre écran d’accueil.</string>
     <string name="broadcast_summary">%1$s : %2$d</string>
     <string name="wake_sent">Paquet magique envoyé à %1$s</string>
+    <string name="wake_sent_off_lan">Paquet magique envoyé à %1$s, mais le téléphone n’est pas sur le Wi-Fi ni sur un VPN. Le PC risque de ne pas le recevoir.</string>
     <string name="wake_failed">Impossible d’envoyer le paquet à %1$s</string>
     <string name="wake_failed_no_network">Envoi impossible à %1$s : pas de connexion réseau ou VPN</string>
     <string name="wake_failed_bad_address">Envoi impossible à %1$s : adresse de diffusion introuvable</string>

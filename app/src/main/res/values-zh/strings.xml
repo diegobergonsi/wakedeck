@@ -15,6 +15,7 @@
     <string name="empty_devices_widgets">然后在主屏幕上添加 WakeDeck 小组件。</string>
     <string name="broadcast_summary">%1$s : %2$d</string>
     <string name="wake_sent">已向 %1$s 发送魔术包</string>
+    <string name="wake_sent_off_lan">已向 %1$s 发送魔术包，但手机未连接 Wi-Fi 或 VPN，电脑可能收不到。</string>
     <string name="wake_failed">无法向 %1$s 发送数据包</string>
     <string name="wake_failed_no_network">无法发送到 %1$s：没有网络或 VPN 连接</string>
     <string name="wake_failed_bad_address">无法发送到 %1$s：找不到广播地址</string>

@@ -15,6 +15,7 @@
     <string name="empty_devices_widgets">Depois adicione um widget do WakeDeck na tela inicial.</string>
     <string name="broadcast_summary">%1$s : %2$d</string>
     <string name="wake_sent">Pacote mágico enviado para %1$s</string>
+    <string name="wake_sent_off_lan">Pacote mágico enviado para %1$s, mas o celular não está no Wi-Fi nem em uma VPN. O PC pode não recebê-lo.</string>
     <string name="wake_failed">Não foi possível enviar o pacote para %1$s</string>
     <string name="wake_failed_no_network">Não foi possível enviar para %1$s: sem conexão de rede ou VPN</string>
     <string name="wake_failed_bad_address">Não foi possível enviar para %1$s: endereço de broadcast não encontrado</string>
