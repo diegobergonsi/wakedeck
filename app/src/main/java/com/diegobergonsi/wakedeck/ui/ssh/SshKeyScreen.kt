@@ -1,6 +1,7 @@
 package com.diegobergonsi.wakedeck.ui.ssh
 
 import androidx.compose.material3.IconButton
+import com.diegobergonsi.wakedeck.ui.contentSidePadding
 import androidx.compose.material3.Icon
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.Icons
@@ -56,7 +57,7 @@ fun SshKeyScreen(onBack: () -> Unit, viewModel: SshKeyViewModel = hiltViewModel(
         },
     ) { padding ->
         Column(
-            Modifier.padding(padding).padding(horizontal = 16.dp).verticalScroll(rememberScrollState()),
+            Modifier.padding(padding).verticalScroll(rememberScrollState()).padding(horizontal = contentSidePadding()),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Text(stringResource(R.string.ssh_key_intro), style = MaterialTheme.typography.bodyMedium)

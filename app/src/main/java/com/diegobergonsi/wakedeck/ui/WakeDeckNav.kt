@@ -8,10 +8,11 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -42,11 +43,11 @@ fun WakeDeckNav(openAddDevice: Boolean = false, onAddDeviceHandled: () -> Unit =
             onAddDeviceHandled()
         }
     }
-    // On the unfolded screen a full-width form is hard to read, so the content stays in a centred column.
+    // The scroll areas span the whole screen; each screen keeps its content in a centred column with [contentSidePadding].
     Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background), contentAlignment = Alignment.TopCenter) {
     NavHost(
         nav,
-        modifier = Modifier.widthIn(max = 640.dp).fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         startDestination = LIST,
         enterTransition = { slideInHorizontally(tween(300)) { it / 4 } + fadeIn(tween(300)) },
         exitTransition = { slideOutHorizontally(tween(300)) { -it / 8 } + fadeOut(tween(150)) },
@@ -76,3 +77,9 @@ fun WakeDeckNav(openAddDevice: Boolean = false, onAddDeviceHandled: () -> Unit =
     }
     }
 }
+
+private val MAX_CONTENT_WIDTH = 640.dp
+
+/** Side padding that keeps content at most [MAX_CONTENT_WIDTH] wide while the scrolling area itself spans the screen. */
+@Composable
+fun contentSidePadding(minimum: Dp = 16.dp): Dp = maxOf(minimum, (LocalConfiguration.current.screenWidthDp.dp - MAX_CONTENT_WIDTH) / 2)

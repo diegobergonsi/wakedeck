@@ -1,6 +1,7 @@
 package com.diegobergonsi.wakedeck.ui.devices
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import com.diegobergonsi.wakedeck.ui.contentSidePadding
 import androidx.compose.material3.Icon
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Refresh
@@ -152,7 +153,7 @@ fun DeviceListScreen(
         )
         if (!hasDevices) {
             Column(
-                Modifier.fillMaxSize().padding(padding).padding(32.dp),
+                Modifier.fillMaxSize().padding(padding).padding(contentSidePadding(32.dp), 32.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -166,7 +167,7 @@ fun DeviceListScreen(
             PullToRefreshBox(isRefreshing = refreshing, onRefresh = viewModel::refresh, modifier = Modifier.fillMaxSize().padding(padding)) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 96.dp),
+                contentPadding = contentSidePadding().let { side -> PaddingValues(side, 8.dp, side, 96.dp) },
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 val hasGroups = sections.any { it.group != null }

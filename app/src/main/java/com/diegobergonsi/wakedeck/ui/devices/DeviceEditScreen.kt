@@ -1,6 +1,7 @@
 package com.diegobergonsi.wakedeck.ui.devices
 
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import com.diegobergonsi.wakedeck.ui.contentSidePadding
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.foundation.clickable
 import androidx.compose.ui.semantics.Role
@@ -73,7 +74,7 @@ fun DeviceEditScreen(onDone: () -> Unit, onOpenSshHelp: () -> Unit, viewModel: D
         },
     ) { padding ->
         Column(
-            Modifier.padding(padding).padding(horizontal = 16.dp).verticalScroll(rememberScrollState()),
+            Modifier.padding(padding).verticalScroll(rememberScrollState()).padding(horizontal = contentSidePadding()),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Field(

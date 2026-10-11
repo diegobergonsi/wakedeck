@@ -1,6 +1,7 @@
 package com.diegobergonsi.wakedeck.ui.help
 
 import androidx.compose.material3.IconButton
+import com.diegobergonsi.wakedeck.ui.contentSidePadding
 import androidx.compose.material3.Icon
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.Icons
@@ -82,7 +83,7 @@ fun HelpScreen(onBack: () -> Unit, openSection: String? = null, viewModel: HelpV
         snackbarHost = { SnackbarHost(snackbar) },
     ) { padding ->
         Column(
-            Modifier.padding(padding).padding(horizontal = 16.dp).verticalScroll(rememberScrollState()),
+            Modifier.padding(padding).verticalScroll(rememberScrollState()).padding(horizontal = contentSidePadding()),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Text(stringResource(R.string.help_intro), style = MaterialTheme.typography.bodyMedium)

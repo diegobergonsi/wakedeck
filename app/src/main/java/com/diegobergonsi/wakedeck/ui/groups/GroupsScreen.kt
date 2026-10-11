@@ -1,6 +1,7 @@
 package com.diegobergonsi.wakedeck.ui.groups
 
 import androidx.compose.material3.IconButton
+import com.diegobergonsi.wakedeck.ui.contentSidePadding
 import androidx.compose.material3.Icon
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.Icons
@@ -68,14 +69,14 @@ fun GroupsScreen(onBack: () -> Unit, viewModel: GroupsViewModel = hiltViewModel(
         if (rows.isEmpty()) {
             Text(
                 stringResource(R.string.groups_empty),
-                Modifier.padding(padding).padding(24.dp),
+                Modifier.padding(padding).padding(contentSidePadding(24.dp), 24.dp),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         } else {
             LazyColumn(
                 Modifier.fillMaxSize().padding(padding),
-                contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp, 8.dp, 16.dp, 96.dp),
+                contentPadding = contentSidePadding().let { side -> androidx.compose.foundation.layout.PaddingValues(side, 8.dp, side, 96.dp) },
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 item(key = "hint") {
