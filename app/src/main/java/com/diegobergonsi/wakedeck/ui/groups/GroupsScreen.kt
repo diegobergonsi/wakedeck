@@ -1,5 +1,9 @@
 package com.diegobergonsi.wakedeck.ui.groups
 
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Icon
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.Icons
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -52,7 +56,9 @@ fun GroupsScreen(onBack: () -> Unit, viewModel: GroupsViewModel = hiltViewModel(
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(R.string.groups_title)) },
-                navigationIcon = { TextButton(onClick = onBack) { Text(stringResource(R.string.back)) } },
+                navigationIcon = {
+                    IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back)) }
+                },
             )
         },
         floatingActionButton = {

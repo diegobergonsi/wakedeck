@@ -1,5 +1,9 @@
 package com.diegobergonsi.wakedeck.ui.devices
 
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.Icon
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.Icons
 import androidx.compose.foundation.background
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -106,14 +110,15 @@ fun DeviceListScreen(
             CenterAlignedTopAppBar(
                 title = { Text(stringResource(R.string.app_name)) },
                 actions = {
-                    val moreLabel = stringResource(R.string.menu_more)
                     IconButton(onClick = { menuOpen = true }) {
-                        Text("\u22EE", fontSize = 26.sp, fontWeight = FontWeight.Bold, modifier = Modifier.semantics { contentDescription = moreLabel })
+                        Icon(Icons.Default.MoreVert, contentDescription = stringResource(R.string.menu_more))
                     }
                     DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
                         MenuItem(R.string.menu_groups) { menuOpen = false; onOpenGroups() }
+                        HorizontalDivider()
                         MenuItem(R.string.menu_import) { menuOpen = false; importLauncher.launch(arrayOf("application/json", "text/*", "application/octet-stream")) }
                         MenuItem(R.string.menu_export) { menuOpen = false; exportLauncher.launch("wakedeck-devices.json") }
+                        HorizontalDivider()
                         MenuItem(R.string.menu_ssh_key) { menuOpen = false; onOpenSshKey() }
                         if (perAppLanguageSupported) MenuItem(R.string.menu_language) { menuOpen = false; languageOpen = true }
                         MenuItem(R.string.menu_help) { menuOpen = false; onOpenHelp() }
@@ -238,9 +243,10 @@ private fun statusOf(device: Device, statuses: Map<Long, DeviceStatus>): DeviceS
 
 @Composable
 private fun StatusIndicator(status: DeviceStatus, modifier: Modifier = Modifier) {
+    val dark = isSystemInDarkTheme()
     val (color, label) = when (status) {
-        DeviceStatus.ONLINE -> StatusGreen to R.string.status_online
-        DeviceStatus.OFFLINE -> StatusRed to R.string.status_offline
+        DeviceStatus.ONLINE -> statusGreen(dark) to R.string.status_online
+        DeviceStatus.OFFLINE -> statusRed(dark) to R.string.status_offline
         DeviceStatus.CHECKING -> MaterialTheme.colorScheme.outline to R.string.status_checking
         DeviceStatus.UNAVAILABLE -> MaterialTheme.colorScheme.outline to R.string.status_no_host
         DeviceStatus.STALE -> MaterialTheme.colorScheme.outline to R.string.status_stale
@@ -255,8 +261,10 @@ private fun StatusIndicator(status: DeviceStatus, modifier: Modifier = Modifier)
     }
 }
 
-private val StatusGreen = Color(0xFF2E9E4F)
-private val StatusRed = Color(0xFFD64545)
+/** Lighter variants on a dark surface keep the dot readable. */
+private fun statusGreen(dark: Boolean) = if (dark) Color(0xFF5BD37F) else Color(0xFF2E9E4F)
+
+private fun statusRed(dark: Boolean) = if (dark) Color(0xFFFF7A7A) else Color(0xFFD64545)
 
 @Composable
 private fun MenuItem(label: Int, onClick: () -> Unit) {

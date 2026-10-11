@@ -1,5 +1,13 @@
 package com.diegobergonsi.wakedeck.ui.devices
 
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.foundation.clickable
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Icon
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.Icons
 import com.diegobergonsi.wakedeck.domain.Device
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -56,7 +64,9 @@ fun DeviceEditScreen(onDone: () -> Unit, onOpenSshHelp: () -> Unit, viewModel: D
                 title = {
                     Text(stringResource(if (viewModel.isNew) R.string.add_device else R.string.edit_device))
                 },
-                navigationIcon = { TextButton(onClick = onDone) { Text(stringResource(R.string.cancel)) } },
+                navigationIcon = {
+                    IconButton(onClick = onDone) { Icon(Icons.Default.Close, contentDescription = stringResource(R.string.cancel)) }
+                },
                 actions = { TextButton(onClick = viewModel::save) { Text(stringResource(R.string.save)) } },
             )
         },
@@ -87,92 +97,110 @@ fun DeviceEditScreen(onDone: () -> Unit, onOpenSshHelp: () -> Unit, viewModel: D
                 errorText = R.string.error_broadcast,
                 supporting = R.string.hint_broadcast,
             ) { v -> viewModel.update { it.copy(broadcast = v) } }
-            Field(
-                label = R.string.field_port,
-                value = form.port,
-                error = FormError.PORT in form.errors,
-                errorText = R.string.error_port,
-                number = true,
-            ) { v -> viewModel.update { it.copy(port = v) } }
-
-            Text(stringResource(R.string.field_os), style = MaterialTheme.typography.labelLarge)
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                OsType.entries.forEach { os ->
-                    FilterChip(
-                        selected = form.os == os,
-                        onClick = { viewModel.update { it.copy(os = os) } },
-                        label = { Text(stringResource(if (os == OsType.WINDOWS) R.string.os_windows else R.string.os_linux)) },
-                    )
-                }
-            }
-
-            Field(
-                label = R.string.field_status_port,
-                value = form.statusPort,
-                error = FormError.STATUS_PORT in form.errors,
-                errorText = R.string.error_port,
-                supporting = R.string.hint_status_port,
-                number = true,
-            ) { v -> viewModel.update { it.copy(statusPort = v) } }
-
-            val groups by viewModel.groups.collectAsStateWithLifecycle()
-            var newGroupDialog by remember { mutableStateOf(false) }
-            Text(stringResource(R.string.field_group), style = MaterialTheme.typography.labelLarge)
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                FilterChip(
-                    selected = form.groupId == null,
-                    onClick = { viewModel.update { it.copy(groupId = null) } },
-                    label = { Text(stringResource(R.string.group_none)) },
+            val hasErrors = form.errors.isNotEmpty()
+            var moreOpen by rememberSaveable {
+                mutableStateOf(
+                    !viewModel.isNew && (form.port != Device.DEFAULT_PORT.toString() || form.statusPort.isNotBlank() ||
+                        form.groupId != null || form.showInLauncher || form.os != OsType.LINUX),
                 )
-                groups.forEach { g ->
+            }
+            var sshOpen by rememberSaveable { mutableStateOf(form.sshUser.isNotBlank()) }
+            val showMore = moreOpen || FormError.PORT in form.errors || FormError.STATUS_PORT in form.errors
+            val showSsh = sshOpen || FormError.SSH_USER in form.errors || FormError.SSH_PORT in form.errors
+
+            ExpandRow(stringResource(if (showMore) R.string.config_advanced_hide else R.string.config_advanced_show), showMore) { moreOpen = !showMore }
+            if (showMore) {
+                Field(
+                    label = R.string.field_port,
+                    value = form.port,
+                    error = FormError.PORT in form.errors,
+                    errorText = R.string.error_port,
+                    number = true,
+                ) { v -> viewModel.update { it.copy(port = v) } }
+
+                Text(stringResource(R.string.field_os), style = MaterialTheme.typography.labelLarge)
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    OsType.entries.forEach { os ->
+                        FilterChip(
+                            selected = form.os == os,
+                            onClick = { viewModel.update { it.copy(os = os) } },
+                            label = { Text(stringResource(if (os == OsType.WINDOWS) R.string.os_windows else R.string.os_linux)) },
+                        )
+                    }
+                }
+
+                Field(
+                    label = R.string.field_status_port,
+                    value = form.statusPort,
+                    error = FormError.STATUS_PORT in form.errors,
+                    errorText = R.string.error_port,
+                    supporting = R.string.hint_status_port,
+                    number = true,
+                ) { v -> viewModel.update { it.copy(statusPort = v) } }
+
+                val groups by viewModel.groups.collectAsStateWithLifecycle()
+                var newGroupDialog by remember { mutableStateOf(false) }
+                Text(stringResource(R.string.field_group), style = MaterialTheme.typography.labelLarge)
+                FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     FilterChip(
-                        selected = form.groupId == g.id,
-                        onClick = { viewModel.update { it.copy(groupId = g.id) } },
-                        label = { Text(g.name) },
+                        selected = form.groupId == null,
+                        onClick = { viewModel.update { it.copy(groupId = null) } },
+                        label = { Text(stringResource(R.string.group_none)) },
                     )
+                    groups.forEach { g ->
+                        FilterChip(
+                            selected = form.groupId == g.id,
+                            onClick = { viewModel.update { it.copy(groupId = g.id) } },
+                            label = { Text(g.name) },
+                        )
+                    }
+                    AssistChip(onClick = { newGroupDialog = true }, label = { Text(stringResource(R.string.group_new)) })
                 }
-                AssistChip(onClick = { newGroupDialog = true }, label = { Text(stringResource(R.string.group_new)) })
-            }
-            if (newGroupDialog) {
-                NameDialog(R.string.group_new, "", onDismiss = { newGroupDialog = false }) { name ->
-                    viewModel.createGroup(name)
-                    newGroupDialog = false
+                if (newGroupDialog) {
+                    NameDialog(R.string.group_new, "", onDismiss = { newGroupDialog = false }) { name ->
+                        viewModel.createGroup(name)
+                        newGroupDialog = false
+                    }
                 }
+
+                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                    Column(Modifier.weight(1f)) {
+                        Text(stringResource(R.string.field_show_in_launcher))
+                        Text(
+                            stringResource(R.string.hint_show_in_launcher),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    Switch(checked = form.showInLauncher, onCheckedChange = { v -> viewModel.update { it.copy(showInLauncher = v) } })
+                }
+
             }
 
-            Text(stringResource(R.string.section_ssh), style = MaterialTheme.typography.titleSmall)
-            Field(
-                label = R.string.field_ssh_user,
-                value = form.sshUser,
-                error = FormError.SSH_USER in form.errors,
-                errorText = R.string.error_ssh_user,
-                supporting = R.string.hint_ssh,
-            ) { v -> viewModel.update { it.copy(sshUser = v.take(Device.MAX_SSH_USER)) } }
-            Field(
-                label = R.string.field_ssh_port,
-                value = form.sshPort,
-                error = FormError.SSH_PORT in form.errors,
-                errorText = R.string.error_port,
-                number = true,
-            ) { v -> viewModel.update { it.copy(sshPort = v) } }
-            TextButton(onClick = onOpenSshHelp) { Text(stringResource(R.string.help_ssh_link)) }
-            if (viewModel.canShutDown) {
-                OutlinedButton(
-                    onClick = viewModel::requestShutdown,
-                    modifier = Modifier.fillMaxWidth(),
-                ) { Text(stringResource(R.string.button_shutdown)) }
-            }
-
-            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                Column(Modifier.weight(1f)) {
-                    Text(stringResource(R.string.field_show_in_launcher))
-                    Text(
-                        stringResource(R.string.hint_show_in_launcher),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
+            ExpandRow(stringResource(R.string.section_ssh), showSsh) { sshOpen = !showSsh }
+            if (showSsh) {
+                Field(
+                    label = R.string.field_ssh_user,
+                    value = form.sshUser,
+                    error = FormError.SSH_USER in form.errors,
+                    errorText = R.string.error_ssh_user,
+                    supporting = R.string.hint_ssh,
+                ) { v -> viewModel.update { it.copy(sshUser = v.take(Device.MAX_SSH_USER)) } }
+                Field(
+                    label = R.string.field_ssh_port,
+                    value = form.sshPort,
+                    error = FormError.SSH_PORT in form.errors,
+                    errorText = R.string.error_port,
+                    number = true,
+                ) { v -> viewModel.update { it.copy(sshPort = v) } }
+                TextButton(onClick = onOpenSshHelp) { Text(stringResource(R.string.help_ssh_link)) }
+                if (viewModel.canShutDown) {
+                    OutlinedButton(
+                        onClick = viewModel::requestShutdown,
+                        modifier = Modifier.fillMaxWidth(),
+                    ) { Text(stringResource(R.string.button_shutdown)) }
                 }
-                Switch(checked = form.showInLauncher, onCheckedChange = { v -> viewModel.update { it.copy(showInLauncher = v) } })
+
             }
 
             if (!viewModel.isNew) {
@@ -244,6 +272,17 @@ private fun ShutdownDialogs(state: ShutdownUi, deviceName: String, sshUser: Stri
             text = { Text(stringResource(state.res, *state.args.toTypedArray())) },
             confirmButton = { TextButton(onClick = viewModel::dismissShutdown) { Text(stringResource(R.string.ok)) } },
         )
+    }
+}
+
+@Composable
+private fun ExpandRow(title: String, expanded: Boolean, onToggle: () -> Unit) {
+    Row(
+        Modifier.fillMaxWidth().clickable(onClick = onToggle).padding(vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(title, style = MaterialTheme.typography.titleSmall, modifier = Modifier.weight(1f))
+        Icon(if (expanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown, contentDescription = null)
     }
 }
 

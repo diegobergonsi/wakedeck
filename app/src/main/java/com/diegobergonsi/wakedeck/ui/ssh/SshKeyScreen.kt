@@ -1,5 +1,9 @@
 package com.diegobergonsi.wakedeck.ui.ssh
 
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Icon
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.Icons
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -45,7 +49,9 @@ fun SshKeyScreen(onBack: () -> Unit, viewModel: SshKeyViewModel = hiltViewModel(
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(R.string.ssh_key_title)) },
-                navigationIcon = { TextButton(onClick = onBack) { Text(stringResource(R.string.back)) } },
+                navigationIcon = {
+                    IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back)) }
+                },
             )
         },
     ) { padding ->
