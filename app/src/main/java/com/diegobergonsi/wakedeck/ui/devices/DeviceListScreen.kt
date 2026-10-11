@@ -127,12 +127,16 @@ fun DeviceListScreen(
         },
     ) { padding ->
         if (!hasDevices) {
-            Box(Modifier.fillMaxSize().padding(padding).padding(32.dp), contentAlignment = Alignment.Center) {
-                Text(
-                    stringResource(R.string.empty_devices),
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
+            Column(
+                Modifier.fillMaxSize().padding(padding).padding(32.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                val muted = MaterialTheme.colorScheme.onSurfaceVariant
+                Text(stringResource(R.string.empty_devices), style = MaterialTheme.typography.bodyLarge, color = muted)
+                Text(stringResource(R.string.empty_devices_prereq), style = MaterialTheme.typography.bodyMedium, color = muted)
+                TextButton(onClick = onOpenHelp) { Text(stringResource(R.string.empty_devices_help)) }
+                Text(stringResource(R.string.empty_devices_widgets), style = MaterialTheme.typography.bodyMedium, color = muted)
             }
         } else {
             LazyColumn(

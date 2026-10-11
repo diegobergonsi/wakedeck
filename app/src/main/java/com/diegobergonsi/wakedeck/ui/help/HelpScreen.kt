@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
@@ -140,7 +142,7 @@ fun HelpScreen(onBack: () -> Unit, openSection: String? = null, viewModel: HelpV
                     Text(stringResource(R.string.help_open_battery_settings))
                 }
             }
-            Text("", Modifier.padding(bottom = 24.dp))
+            Spacer(Modifier.height(24.dp))
         }
     }
 }

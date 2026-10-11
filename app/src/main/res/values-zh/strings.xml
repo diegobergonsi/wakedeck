@@ -10,6 +10,9 @@
     <string name="save">保存</string>
     <string name="wake">唤醒</string>
     <string name="empty_devices">还没有设备。点按“添加设备”来创建一个。</string>
+    <string name="empty_devices_prereq">你的电脑需要先开启 Wake-on-LAN。</string>
+    <string name="empty_devices_help">打开设置指南</string>
+    <string name="empty_devices_widgets">然后在主屏幕上添加 WakeDeck 小组件。</string>
     <string name="broadcast_summary">%1$s : %2$d</string>
     <string name="wake_sent">已向 %1$s 发送魔术包</string>
     <string name="wake_failed">无法向 %1$s 发送数据包</string>

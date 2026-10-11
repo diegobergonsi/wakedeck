@@ -23,6 +23,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -209,7 +210,12 @@ private fun ShutdownDialogs(state: ShutdownUi, deviceName: String, sshUser: Stri
             onDismissRequest = viewModel::dismissShutdown,
             title = { Text(stringResource(R.string.shutdown_confirm_title, deviceName)) },
             text = { Text(stringResource(R.string.shutdown_confirm_text, sshUser)) },
-            confirmButton = { TextButton(onClick = viewModel::confirmShutdown) { Text(stringResource(R.string.button_shutdown)) } },
+            confirmButton = {
+                TextButton(
+                    onClick = viewModel::confirmShutdown,
+                    colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error),
+                ) { Text(stringResource(R.string.button_shutdown)) }
+            },
             dismissButton = { TextButton(onClick = viewModel::dismissShutdown) { Text(stringResource(R.string.cancel)) } },
         )
         ShutdownUi.Busy -> AlertDialog(

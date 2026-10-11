@@ -10,6 +10,9 @@
     <string name="save">Guardar</string>
     <string name="wake">Encender</string>
     <string name="empty_devices">Aún no hay dispositivos. Toca «Añadir dispositivo» para crear uno.</string>
+    <string name="empty_devices_prereq">Tu PC necesita tener Wake-on-LAN activado primero.</string>
+    <string name="empty_devices_help">Abrir la guía de configuración</string>
+    <string name="empty_devices_widgets">Después añade un widget de WakeDeck a la pantalla de inicio.</string>
     <string name="broadcast_summary">%1$s : %2$d</string>
     <string name="wake_sent">Paquete mágico enviado a %1$s</string>
     <string name="wake_failed">No se pudo enviar el paquete a %1$s</string>
