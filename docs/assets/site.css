@@ -31,13 +31,13 @@ header .wrap { display: flex; align-items: center; justify-content: space-betwee
 .brand { color: var(--cream); text-decoration: none; font-size: 22px; letter-spacing: .02em; }
 .brand b { font-weight: 800; }
 .brand span { font-weight: 400; }
-nav { display: flex; gap: 22px; }
+nav { display: flex; gap: 22px; align-items: center; }
 nav a { color: var(--muted); text-decoration: none; font-size: 15px; white-space: nowrap; }
 nav a:hover { color: #fff; }
 
 .hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; padding-block: 40px 88px; }
 h1 { font-size: clamp(34px, 4.7vw, 54px); line-height: 1.1; margin: 0 0 20px; letter-spacing: -.01em; text-wrap: balance; }
-h1 em { font-style: normal; color: var(--amber); }
+h1 em { font-style: normal; color: var(--amber); white-space: nowrap; }
 .lead { font-size: 20px; color: var(--muted); max-width: 34em; margin: 0 0 30px; }
 .actions { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
 .btn { display: inline-block; padding: 13px 22px; border-radius: 999px; font-weight: 700; text-decoration: none; font-size: 16px; }
@@ -99,3 +99,17 @@ footer ul { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; f
 .prose strong { color: #fff; }
 
 nav a[aria-current="page"] { color: #fff; text-decoration: underline; text-decoration-color: var(--amber); text-underline-offset: 6px; text-decoration-thickness: 2px; }
+
+/* Language picker: a native <details> dropdown, no script */
+.lang { position: relative; }
+.lang summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 15px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; white-space: nowrap; }
+.lang summary::-webkit-details-marker { display: none; }
+.lang summary::after { content: ""; width: 7px; height: 7px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg) translateY(-2px); margin-left: 2px; }
+.lang[open] summary { color: #fff; border-color: var(--periwinkle); }
+.lang summary:hover { color: #fff; }
+.lang ul { position: absolute; right: 0; top: calc(100% + 8px); z-index: 20; list-style: none; margin: 0; padding: 6px; min-width: 210px; background: var(--navy-900); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 16px 40px rgba(8, 11, 40, .6); }
+.lang li a { display: block; padding: 9px 14px; border-radius: 10px; color: var(--text); text-decoration: none; font-size: 15px; }
+.lang li a:hover { background: var(--card); }
+.lang li a[aria-current="true"] { color: var(--amber); font-weight: 700; }
+.prose .note { color: var(--muted); font-size: 15px; margin: 16px 0 8px; }
+@media (max-width: 640px) { nav a.opt { display: none; } }

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>隐私政策 | WakeDeck</title>
+<meta name="description" content="WakeDeck 不收集、不分享、不出售个人数据，没有广告、统计或跟踪。本政策说明哪些内容只保存在你的手机上。">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#161E56">
+<link rel="canonical" href="https://wakedeck.app/zh/privacy">
+<link rel="alternate" hreflang="en" href="https://wakedeck.app/privacy">
+<link rel="alternate" hreflang="pt-BR" href="https://wakedeck.app/pt-br/privacy">
+<link rel="alternate" hreflang="pt-PT" href="https://wakedeck.app/pt-pt/privacy">
+<link rel="alternate" hreflang="fr" href="https://wakedeck.app/fr/privacy">
+<link rel="alternate" hreflang="de" href="https://wakedeck.app/de/privacy">
+<link rel="alternate" hreflang="es" href="https://wakedeck.app/es/privacy">
+<link rel="alternate" hreflang="zh-Hans" href="https://wakedeck.app/zh/privacy">
+<link rel="alternate" hreflang="ja" href="https://wakedeck.app/ja/privacy">
+<link rel="alternate" hreflang="x-default" href="https://wakedeck.app/privacy">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="隐私政策 | WakeDeck">
+<meta property="og:description" content="无广告、无统计、无需账号。你的数据只保存在手机上。">
+<meta property="og:url" content="https://wakedeck.app/zh/privacy">
+<meta property="og:image" content="https://wakedeck.app/assets/og.png">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="/zh/" aria-label="WakeDeck"><b>Wake</b><span>Deck</span></a>
+    <nav aria-label="Main">
+      <a class="opt" href="/zh/#features">功能</a>
+      <a class="opt" href="/zh/#how">使用方法</a>
+      <a href="/zh/privacy" aria-current="page">隐私</a>
+      <details class="lang">
+        <summary aria-label="语言"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 4 5.6 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.6-4-9s1.4-6.4 4-9z"/></svg><span>简体中文</span></summary>
+        <ul>
+          <li><a href="/privacy" lang="en" hreflang="en">English</a></li>
+          <li><a href="/pt-br/privacy" lang="pt-BR" hreflang="pt-BR">Português (Brasil)</a></li>
+          <li><a href="/pt-pt/privacy" lang="pt-PT" hreflang="pt-PT">Português (Portugal)</a></li>
+          <li><a href="/fr/privacy" lang="fr" hreflang="fr">Français</a></li>
+          <li><a href="/de/privacy" lang="de" hreflang="de">Deutsch</a></li>
+          <li><a href="/es/privacy" lang="es" hreflang="es">Español</a></li>
+          <li><a href="/zh/privacy" lang="zh-Hans" hreflang="zh-Hans" aria-current="true">简体中文</a></li>
+          <li><a href="/ja/privacy" lang="ja" hreflang="ja">日本語</a></li>
+        </ul>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap page-title">
+    <h1>隐私政策</h1>
+    <p class="meta">最后更新：2026 年 10 月 11 日</p>
+  </div>
+
+  <div class="wrap prose">
+    <div class="summary">
+      <p><strong>简而言之：</strong>WakeDeck 不收集、不分享、不出售任何个人数据，没有广告、统计或跟踪。你输入的所有内容都只保存在你的手机上。</p>
+    </div>
+    <p class="note">本译文仅供参考。如与英文版本有差异，以英文版本为准。</p>
+
+    <p>WakeDeck 是由 Diego Bergonsi 开发的 Android 版 Wake-on-LAN 应用。本政策说明应用如何处理你的数据。</p>
+
+    <h2>保存在你手机上的内容</h2>
+    <p>你在 WakeDeck 中输入的所有内容都只保存在你的手机上：</p>
+    <ul>
+      <li>你添加的设备：名称、MAC 地址、IP 地址或主机名、广播地址、端口、操作系统、分组，以及可选的 SSH 用户名和端口。</li>
+      <li>你的小组件、快捷方式和快速设置磁贴的设置。</li>
+      <li>设备最近一次已知的在线或离线状态。</li>
+      <li>可选的远程关机功能所用的 SSH 密钥对。私钥在 Android Keystore 内创建，无法从中读取或复制。应用从不索取也不保存密码。应用还会保存你选择信任的每台电脑的 SSH 主机密钥指纹。</li>
+    </ul>
+    <p>以上内容都不会发送给开发者，也不会发送到开发者运营的任何服务器。WakeDeck 没有账号、服务器或后端。应用数据不会参与 Android 云备份。</p>
+    <h2>网络流量</h2>
+    <p>WakeDeck 只会连接你配置的地址：</p>
+    <ul>
+      <li>向你为设备设置的广播地址发送 Wake-on-LAN 魔术包（UDP）。</li>
+      <li>在线或离线检测：对设备主机发起 TCP 连接尝试或 ping。</li>
+      <li>远程关机，仅在你点按并确认后进行：与你设置的电脑建立 SSH 连接。</li>
+    </ul>
+    <p>这些流量直接从你的手机发往你自己的设备，经由你的 Wi-Fi 或你自己运行的 VPN，不会经过开发者。</p>
+    <h2>你选择创建的文件</h2>
+    <p>导出功能会把你的设备列表写入你选择的文件。该文件不包含你的 SSH 密钥或已信任的主机密钥。WakeDeck 不会上传该文件。如何处理该文件由你决定。</p>
+    <p>导入功能会读取你选择的文件。在添加任何内容之前，WakeDeck 会向你显示文件中的设备，并对指向家庭网络之外的设备发出警告。</p>
+    <h2>权限</h2>
+    <ul>
+      <li><strong>互联网和网络状态：</strong>用于发送数据包和检测设备状态。</li>
+      <li><strong>唤醒锁：</strong>用于在屏幕关闭时完成唤醒或状态检测。</li>
+      <li><strong>通知：</strong>仅用于让系统允许应用在通过启动器快捷方式唤醒后显示简短的确认消息。WakeDeck 不会发送通知、提醒或推广信息。</li>
+    </ul>
+    <h2>第三方</h2>
+    <p>WakeDeck 不含任何会收集数据的广告、统计、崩溃报告或其他第三方服务。它使用在你手机上运行的开源库。</p>
+    <h2>本网站</h2>
+    <p>本网站不使用 Cookie、统计或脚本，也不从其他网站加载任何内容。网站托管在 GitHub Pages，域名通过 Cloudflare 管理。与任何网站托管方一样，它们可能依据各自的隐私政策保留标准服务器日志。开发者不会接收或使用这些数据。</p>
+    <h2>儿童</h2>
+    <p>WakeDeck 不面向儿童，也不收集任何人的数据。</p>
+    <h2>变更</h2>
+    <p>如本政策有变更，新版本将在此地址发布，并标注新的日期。</p>
+    <h2>联系方式</h2>
+    <p>Diego Bergonsi，<a href="mailto:diego.bergonsi@outlook.com">diego.bergonsi@outlook.com</a></p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>&copy; 2026 Diego Bergonsi</div>
+    <ul>
+      <li><a href="/zh/privacy">隐私</a></li>
+      <li><a href="mailto:diego.bergonsi@outlook.com">联系</a></li>
+    </ul>
+  </div>
+</footer>
+</body>
+</html>

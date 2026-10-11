@@ -8,6 +8,15 @@
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#161E56">
 <link rel="canonical" href="https://wakedeck.app/">
+<link rel="alternate" hreflang="en" href="https://wakedeck.app/">
+<link rel="alternate" hreflang="pt-BR" href="https://wakedeck.app/pt-br/">
+<link rel="alternate" hreflang="pt-PT" href="https://wakedeck.app/pt-pt/">
+<link rel="alternate" hreflang="fr" href="https://wakedeck.app/fr/">
+<link rel="alternate" hreflang="de" href="https://wakedeck.app/de/">
+<link rel="alternate" hreflang="es" href="https://wakedeck.app/es/">
+<link rel="alternate" hreflang="zh-Hans" href="https://wakedeck.app/zh/">
+<link rel="alternate" hreflang="ja" href="https://wakedeck.app/ja/">
+<link rel="alternate" hreflang="x-default" href="https://wakedeck.app/">
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta property="og:type" content="website">
@@ -15,7 +24,6 @@
 <meta property="og:description" content="Wake your devices from your smartphone. Customizable home-screen widgets. No ads, no analytics, no accounts.">
 <meta property="og:url" content="https://wakedeck.app/">
 <meta property="og:image" content="https://wakedeck.app/assets/og.png">
-<meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
@@ -23,12 +31,24 @@
 
 <header>
   <div class="wrap">
-    <a class="brand" href="/" aria-label="WakeDeck home"><b>Wake</b><span>Deck</span></a>
+    <a class="brand" href="/" aria-label="WakeDeck"><b>Wake</b><span>Deck</span></a>
     <nav aria-label="Main">
-      <a href="#features">Features</a>
-      <a href="#how">How it works</a>
+      <a class="opt" href="/#features">Features</a>
+      <a class="opt" href="/#how">How it works</a>
       <a href="/privacy">Privacy</a>
-      <a href="https://github.com/diegobergonsi/wakedeck">GitHub</a>
+      <details class="lang">
+        <summary aria-label="Language"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 4 5.6 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.6-4-9s1.4-6.4 4-9z"/></svg><span>English</span></summary>
+        <ul>
+          <li><a href="/" lang="en" hreflang="en" aria-current="true">English</a></li>
+          <li><a href="/pt-br/" lang="pt-BR" hreflang="pt-BR">Português (Brasil)</a></li>
+          <li><a href="/pt-pt/" lang="pt-PT" hreflang="pt-PT">Português (Portugal)</a></li>
+          <li><a href="/fr/" lang="fr" hreflang="fr">Français</a></li>
+          <li><a href="/de/" lang="de" hreflang="de">Deutsch</a></li>
+          <li><a href="/es/" lang="es" hreflang="es">Español</a></li>
+          <li><a href="/zh/" lang="zh-Hans" hreflang="zh-Hans">简体中文</a></li>
+          <li><a href="/ja/" lang="ja" hreflang="ja">日本語</a></li>
+        </ul>
+      </details>
     </nav>
   </div>
 </header>
@@ -39,12 +59,11 @@
       <h1>Wake your devices from your <em>smartphone</em></h1>
       <p class="lead">WakeDeck turns on your PCs with a Wake-on-LAN magic packet, straight from widgets you design yourself. One tap on your home screen, and the app does not even open.</p>
       <div class="actions">
-        <span class="btn primary" aria-disabled="true">Google Play: coming soon</span>
-        <a class="btn ghost" href="https://github.com/diegobergonsi/wakedeck">View the source</a>
+        <span class="btn primary" aria-disabled="true">Google Play Store: coming soon</span>
       </div>
       <p class="soon">Free for Android 8.0 and newer. No ads, no analytics, no accounts.</p>
     </div>
-    <img src="/assets/hero.webp" width="720" height="720" alt="The WakeDeck icon: a power symbol made of colorful rings on a navy background">
+    <img src="/assets/hero.webp" width="720" height="720" alt="WakeDeck">
   </div>
 
   <section id="features" class="wrap">
@@ -111,7 +130,6 @@
     <div>&copy; 2026 Diego Bergonsi</div>
     <ul>
       <li><a href="/privacy">Privacy</a></li>
-      <li><a href="https://github.com/diegobergonsi/wakedeck">GitHub</a></li>
       <li><a href="mailto:diego.bergonsi@outlook.com">Contact</a></li>
     </ul>
   </div>

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Política de privacidade | WakeDeck</title>
+<meta name="description" content="O WakeDeck não coleta, compartilha nem vende dados pessoais. Não tem anúncios, análise de uso nem rastreamento. Esta política explica o que fica no seu celular.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#161E56">
+<link rel="canonical" href="https://wakedeck.app/pt-br/privacy">
+<link rel="alternate" hreflang="en" href="https://wakedeck.app/privacy">
+<link rel="alternate" hreflang="pt-BR" href="https://wakedeck.app/pt-br/privacy">
+<link rel="alternate" hreflang="pt-PT" href="https://wakedeck.app/pt-pt/privacy">
+<link rel="alternate" hreflang="fr" href="https://wakedeck.app/fr/privacy">
+<link rel="alternate" hreflang="de" href="https://wakedeck.app/de/privacy">
+<link rel="alternate" hreflang="es" href="https://wakedeck.app/es/privacy">
+<link rel="alternate" hreflang="zh-Hans" href="https://wakedeck.app/zh/privacy">
+<link rel="alternate" hreflang="ja" href="https://wakedeck.app/ja/privacy">
+<link rel="alternate" hreflang="x-default" href="https://wakedeck.app/privacy">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Política de privacidade | WakeDeck">
+<meta property="og:description" content="Sem anúncios, sem análise de uso, sem contas. Seus dados ficam no seu celular.">
+<meta property="og:url" content="https://wakedeck.app/pt-br/privacy">
+<meta property="og:image" content="https://wakedeck.app/assets/og.png">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Ir para o conteúdo</a>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="/pt-br/" aria-label="WakeDeck"><b>Wake</b><span>Deck</span></a>
+    <nav aria-label="Main">
+      <a class="opt" href="/pt-br/#features">Recursos</a>
+      <a class="opt" href="/pt-br/#how">Como funciona</a>
+      <a href="/pt-br/privacy" aria-current="page">Privacidade</a>
+      <details class="lang">
+        <summary aria-label="Idioma"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 4 5.6 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.6-4-9s1.4-6.4 4-9z"/></svg><span>Português (Brasil)</span></summary>
+        <ul>
+          <li><a href="/privacy" lang="en" hreflang="en">English</a></li>
+          <li><a href="/pt-br/privacy" lang="pt-BR" hreflang="pt-BR" aria-current="true">Português (Brasil)</a></li>
+          <li><a href="/pt-pt/privacy" lang="pt-PT" hreflang="pt-PT">Português (Portugal)</a></li>
+          <li><a href="/fr/privacy" lang="fr" hreflang="fr">Français</a></li>
+          <li><a href="/de/privacy" lang="de" hreflang="de">Deutsch</a></li>
+          <li><a href="/es/privacy" lang="es" hreflang="es">Español</a></li>
+          <li><a href="/zh/privacy" lang="zh-Hans" hreflang="zh-Hans">简体中文</a></li>
+          <li><a href="/ja/privacy" lang="ja" hreflang="ja">日本語</a></li>
+        </ul>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap page-title">
+    <h1>Política de privacidade</h1>
+    <p class="meta">Última atualização: 11 de outubro de 2026</p>
+  </div>
+
+  <div class="wrap prose">
+    <div class="summary">
+      <p><strong>Em resumo:</strong> o WakeDeck não coleta, compartilha nem vende dados pessoais e não tem anúncios, análise de uso nem rastreamento. Tudo o que você informa fica no seu celular.</p>
+    </div>
+    <p class="note">Esta tradução é oferecida por conveniência. Se houver diferença em relação à versão em inglês, vale a versão em inglês.</p>
+
+    <p>O WakeDeck é um app Wake-on-LAN para Android criado por Diego Bergonsi. Esta política explica o que o app faz com os seus dados.</p>
+
+    <h2>O que fica no seu celular</h2>
+    <p>Tudo o que você informa no WakeDeck é guardado somente no seu celular:</p>
+    <ul>
+      <li>Os dispositivos que você adiciona: nome, endereço MAC, endereço IP ou nome do host, endereço de broadcast, portas, sistema operacional, grupo e, opcionalmente, usuário e porta SSH.</li>
+      <li>Os ajustes dos seus widgets, atalhos e botões de Configurações rápidas.</li>
+      <li>O último status online ou offline conhecido dos seus dispositivos.</li>
+      <li>Para o desligamento remoto opcional, um par de chaves SSH. A chave privada é criada dentro do Android Keystore e não pode ser lida nem copiada de lá. O app nunca pede nem guarda senhas. Ele também guarda a impressão digital da chave de host SSH de cada PC em que você escolheu confiar.</li>
+    </ul>
+    <p>Nada disso é enviado ao desenvolvedor nem a qualquer servidor do desenvolvedor. O WakeDeck não tem conta, servidor nem back-end. Os dados do app ficam fora do backup na nuvem do Android.</p>
+    <h2>Tráfego de rede</h2>
+    <p>O WakeDeck só se conecta aos endereços que você configura:</p>
+    <ul>
+      <li>Um pacote mágico Wake-on-LAN (UDP) para o endereço de broadcast que você definiu para o dispositivo.</li>
+      <li>Verificações online ou offline: uma tentativa de conexão TCP ou um ping ao host do dispositivo.</li>
+      <li>Desligamento remoto, somente quando você toca e confirma: uma conexão SSH com o PC que você configurou.</li>
+    </ul>
+    <p>Esse tráfego vai direto do seu celular para os seus próprios dispositivos, pelo seu Wi-Fi ou por uma VPN que você mantém. Ele não passa pelo desenvolvedor.</p>
+    <h2>Arquivos que você escolhe criar</h2>
+    <p>A função de exportar grava a lista de dispositivos em um arquivo que você escolhe. O arquivo não contém a sua chave SSH nem as chaves de host confiáveis. O WakeDeck não o envia para lugar nenhum. O que fazer com o arquivo fica por sua conta.</p>
+    <p>A função de importar lê um arquivo que você escolhe. Antes de adicionar qualquer coisa, o WakeDeck mostra os dispositivos do arquivo e avisa sobre os que apontam para fora da sua rede doméstica.</p>
+    <h2>Permissões</h2>
+    <ul>
+      <li><strong>Internet e estado da rede:</strong> para enviar o pacote e verificar o status dos dispositivos.</li>
+      <li><strong>Wake lock:</strong> para concluir um comando de ligar ou uma verificação de status com a tela apagada.</li>
+      <li><strong>Notificações:</strong> apenas para que o sistema deixe o app mostrar a breve mensagem de confirmação após ligar por um atalho do launcher. O WakeDeck não envia notificações, lembretes nem promoções.</li>
+    </ul>
+    <h2>Terceiros</h2>
+    <p>O WakeDeck não contém publicidade, análise de uso, relatório de falhas nem outros serviços de terceiros que coletem dados. Ele usa bibliotecas de código aberto que rodam no seu celular.</p>
+    <h2>Este site</h2>
+    <p>Este site não usa cookies, análise de uso nem scripts e não carrega nada de outros sites. Ele está hospedado no GitHub Pages e o domínio é gerenciado pela Cloudflare. Como qualquer servidor web, eles podem manter registros padrão sob as próprias políticas de privacidade. O desenvolvedor não recebe nem usa esses dados.</p>
+    <h2>Crianças</h2>
+    <p>O WakeDeck não é voltado a crianças e não coleta dados de ninguém.</p>
+    <h2>Alterações</h2>
+    <p>Se esta política mudar, a nova versão será publicada neste endereço com uma nova data.</p>
+    <h2>Contato</h2>
+    <p>Diego Bergonsi, <a href="mailto:diego.bergonsi@outlook.com">diego.bergonsi@outlook.com</a></p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>&copy; 2026 Diego Bergonsi</div>
+    <ul>
+      <li><a href="/pt-br/privacy">Privacidade</a></li>
+      <li><a href="mailto:diego.bergonsi@outlook.com">Contato</a></li>
+    </ul>
+  </div>
+</footer>
+</body>
+</html>
