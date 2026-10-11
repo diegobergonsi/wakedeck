@@ -58,6 +58,8 @@
     <string name="theme_material_you">Material You</string>
     <string name="theme_light">浅色</string>
     <string name="theme_dark">深色</string>
+    <string name="theme_wallpaper_colors">使用壁纸颜色</string>
+    <string name="theme_wallpaper_hint">跟随壁纸颜色，而不是 WakeDeck 蓝色。</string>
     <string name="config_background">背景颜色</string>
     <string name="config_accent">强调色</string>
     <string name="color_theme_default">主题默认</string>

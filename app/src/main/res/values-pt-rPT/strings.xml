@@ -58,6 +58,8 @@
     <string name="theme_material_you">Material You</string>
     <string name="theme_light">Claro</string>
     <string name="theme_dark">Escuro</string>
+    <string name="theme_wallpaper_colors">Usar cores do fundo de ecrã</string>
+    <string name="theme_wallpaper_hint">Segue o fundo de ecrã em vez do azul do WakeDeck.</string>
     <string name="config_background">Cor de fundo</string>
     <string name="config_accent">Cor de destaque</string>
     <string name="color_theme_default">Predefinição do tema</string>

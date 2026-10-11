@@ -62,7 +62,7 @@ class WidgetConfigCodecTest {
             ),
         )
         assertEquals(listOf(1L, 5L), decoded.deviceIds)
-        assertEquals(WidgetThemeMode.MATERIAL_YOU, decoded.themeMode)
+        assertEquals(WidgetThemeMode.BRAND, decoded.themeMode)
         assertNull(decoded.backgroundColor)
         assertEquals(1f, decoded.backgroundAlpha)
         assertEquals(WidgetConfig.DEFAULT_CORNER_RADIUS_DP, decoded.cornerRadiusDp)

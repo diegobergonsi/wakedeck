@@ -58,6 +58,8 @@
     <string name="theme_material_you">Material You</string>
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
+    <string name="theme_wallpaper_colors">Use wallpaper colors</string>
+    <string name="theme_wallpaper_hint">Follows your wallpaper instead of the WakeDeck blue.</string>
     <string name="config_background">Background color</string>
     <string name="config_accent">Accent color</string>
     <string name="color_theme_default">Theme default</string>

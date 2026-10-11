@@ -1,12 +1,15 @@
 package com.diegobergonsi.wakedeck.ui.theme
 
+import android.os.Build
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -38,6 +41,19 @@ fun ThemeDialog(onDismiss: () -> Unit) {
                     ) {
                         RadioButton(selected = ThemePreference.mode == mode, onClick = choose)
                         Text(stringResource(labels.getValue(mode)), Modifier.padding(start = 8.dp))
+                    }
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    Row(Modifier.fillMaxWidth().padding(top = 12.dp), verticalAlignment = Alignment.CenterVertically) {
+                        Column(Modifier.weight(1f)) {
+                            Text(stringResource(R.string.theme_wallpaper_colors))
+                            Text(
+                                stringResource(R.string.theme_wallpaper_hint),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                        Switch(checked = ThemePreference.wallpaperColors, onCheckedChange = { ThemePreference.setWallpaperColors(context, it) })
                     }
                 }
             }

@@ -58,6 +58,8 @@
     <string name="theme_material_you">Material You</string>
     <string name="theme_light">ライト</string>
     <string name="theme_dark">ダーク</string>
+    <string name="theme_wallpaper_colors">壁紙の色を使う</string>
+    <string name="theme_wallpaper_hint">WakeDeck のブルーの代わりに壁紙の色に合わせます。</string>
     <string name="config_background">背景色</string>
     <string name="config_accent">アクセントカラー</string>
     <string name="color_theme_default">テーマの既定</string>

@@ -58,6 +58,8 @@
     <string name="theme_material_you">Material You</string>
     <string name="theme_light">Hell</string>
     <string name="theme_dark">Dunkel</string>
+    <string name="theme_wallpaper_colors">Hintergrundfarben verwenden</string>
+    <string name="theme_wallpaper_hint">Folgt Ihrem Hintergrundbild statt dem WakeDeck-Blau.</string>
     <string name="config_background">Hintergrundfarbe</string>
     <string name="config_accent">Akzentfarbe</string>
     <string name="color_theme_default">Design-Standard</string>

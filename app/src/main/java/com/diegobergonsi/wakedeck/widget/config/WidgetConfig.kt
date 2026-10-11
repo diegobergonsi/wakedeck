@@ -1,6 +1,7 @@
 package com.diegobergonsi.wakedeck.widget.config
 
-enum class WidgetThemeMode { MATERIAL_YOU, LIGHT, DARK }
+/** [BRAND] is the WakeDeck navy, always dark. [LIGHT] and [DARK] are the WakeDeck light and dark schemes. [MATERIAL_YOU] follows the wallpaper. */
+enum class WidgetThemeMode { BRAND, MATERIAL_YOU, LIGHT, DARK }
 
 enum class TextSizeOption(val scale: Float) { SMALL(0.85f), MEDIUM(1f), LARGE(1.2f) }
 
@@ -16,7 +17,7 @@ enum class WidgetIcon { POWER, DESKTOP, LAPTOP, SERVER, TV, GAMEPAD, HOME, BOLT,
  */
 data class WidgetConfig(
     val deviceIds: List<Long> = emptyList(),
-    val themeMode: WidgetThemeMode = WidgetThemeMode.MATERIAL_YOU,
+    val themeMode: WidgetThemeMode = WidgetThemeMode.BRAND,
     val backgroundColor: Int? = null,
     val accentColor: Int? = null,
     /** 0f = fully transparent, 1f = opaque. Applies to the background only. */

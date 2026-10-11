@@ -167,6 +167,7 @@ fun WidgetConfigScreen(
                                 Text(
                                     stringResource(
                                         when (mode) {
+                                            WidgetThemeMode.BRAND -> R.string.app_name
                                             WidgetThemeMode.MATERIAL_YOU -> R.string.theme_material_you
                                             WidgetThemeMode.LIGHT -> R.string.theme_light
                                             WidgetThemeMode.DARK -> R.string.theme_dark

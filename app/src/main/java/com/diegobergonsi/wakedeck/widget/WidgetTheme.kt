@@ -1,7 +1,5 @@
 package com.diegobergonsi.wakedeck.widget
 
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
@@ -9,6 +7,8 @@ import androidx.glance.GlanceTheme
 import androidx.glance.LocalContext
 import androidx.glance.material3.ColorProviders
 import androidx.glance.unit.ColorProvider
+import com.diegobergonsi.wakedeck.ui.theme.BrandDarkColors
+import com.diegobergonsi.wakedeck.ui.theme.BrandLightColors
 import com.diegobergonsi.wakedeck.widget.config.WidgetConfig
 import com.diegobergonsi.wakedeck.widget.config.WidgetThemeMode
 
@@ -32,8 +32,8 @@ private val OfflineRed = Color(0xFFD64545)
 fun WidgetTheme(mode: WidgetThemeMode, content: @Composable () -> Unit) {
     when (mode) {
         WidgetThemeMode.MATERIAL_YOU -> GlanceTheme(content = content)
-        WidgetThemeMode.LIGHT -> GlanceTheme(colors = ColorProviders(lightColorScheme()), content = content)
-        WidgetThemeMode.DARK -> GlanceTheme(colors = ColorProviders(darkColorScheme()), content = content)
+        WidgetThemeMode.LIGHT -> GlanceTheme(colors = ColorProviders(BrandLightColors), content = content)
+        WidgetThemeMode.DARK, WidgetThemeMode.BRAND -> GlanceTheme(colors = ColorProviders(BrandDarkColors), content = content)
     }
 }
 
