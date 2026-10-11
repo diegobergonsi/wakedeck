@@ -194,6 +194,7 @@
     <string name="export_failed">No se pudieron exportar los dispositivos</string>
     <string name="import_done">Importación terminada. Añadidos: %1$d. Ya guardados: %2$d. Inutilizables: %3$d.</string>
     <string name="import_failed">No se pudo importar: este no es un archivo de WakeDeck</string>
+    <string name="import_too_many">No se pudo importar: WakeDeck admite como máximo %1$d dispositivos</string>
     <plurals name="group_device_count">
         <item quantity="one">%1$d dispositivo</item>
         <item quantity="many">%1$d de dispositivos</item>

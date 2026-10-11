@@ -190,6 +190,7 @@
     <string name="export_failed">デバイスをエクスポートできませんでした</string>
     <string name="import_done">インポートが完了しました。追加：%1$d。保存済み：%2$d。使用不可：%3$d。</string>
     <string name="import_failed">インポートできません：WakeDeck のファイルではありません</string>
+    <string name="import_too_many">インポートできません：WakeDeck が扱えるデバイスは最大 %1$d 台です</string>
     <plurals name="group_device_count">
         <item quantity="other">%1$d 台のデバイス</item>
     </plurals>

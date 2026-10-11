@@ -13,6 +13,7 @@ import javax.inject.Singleton
 sealed interface ImportOutcome {
     data class Done(val added: Int, val skipped: Int, val invalid: Int) : ImportOutcome
     data class Failed(val reason: String) : ImportOutcome
+    data object TooMany : ImportOutcome
 }
 
 @Singleton
@@ -30,9 +31,12 @@ class TransferRepository @Inject constructor(
     suspend fun import(text: String): ImportOutcome {
         val decoded = when (val d = DeviceTransfer.decode(text)) {
             is DecodeResult.Failure -> return ImportOutcome.Failed(d.reason)
+            DecodeResult.TooMany -> return ImportOutcome.TooMany
             is DecodeResult.Success -> d
         }
-        val plan = DeviceTransfer.plan(devices.observeAll().first(), decoded.devices, decoded.invalid)
+        val existing = devices.observeAll().first()
+        val plan = DeviceTransfer.plan(existing, decoded.devices, decoded.invalid)
+        if (existing.size + plan.toAdd.size > DeviceTransfer.MAX_DEVICES) return ImportOutcome.TooMany
 
         // One transaction: a failure part-way leaves nothing half-imported.
         db.withTransaction {

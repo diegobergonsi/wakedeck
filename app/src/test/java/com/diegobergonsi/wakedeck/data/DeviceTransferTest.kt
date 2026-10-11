@@ -113,4 +113,18 @@ class DeviceTransferTest {
         assertTrue(result.devices.isEmpty())
         assertEquals(3, result.invalid)
     }
+
+    @Test
+    fun importRejectsMoreThanTheDeviceCap() {
+        val one = """{"name":"A","mac":"00:11:22:33:44:55"}"""
+        val many = List(DeviceTransfer.MAX_DEVICES + 1) { one }.joinToString(",")
+        assertEquals(DecodeResult.TooMany, DeviceTransfer.decode(file(many)))
+    }
+
+    @Test
+    fun importAcceptsExactlyTheDeviceCap() {
+        val one = """{"name":"A","mac":"00:11:22:33:44:55"}"""
+        val full = List(DeviceTransfer.MAX_DEVICES) { one }.joinToString(",")
+        assertTrue(DeviceTransfer.decode(file(full)) is DecodeResult.Success)
+    }
 }

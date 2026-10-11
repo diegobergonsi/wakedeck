@@ -28,6 +28,7 @@ sealed interface DecodeResult {
     /** [invalid] counts entries that were skipped because they were unusable (no name, bad MAC, ...). */
     data class Success(val devices: List<TransferDevice>, val invalid: Int) : DecodeResult
     data class Failure(val reason: String) : DecodeResult
+    data object TooMany : DecodeResult
 }
 
 data class ImportPlan(val toAdd: List<TransferDevice>, val skippedExisting: Int, val invalid: Int)
@@ -38,6 +39,9 @@ data class ImportPlan(val toAdd: List<TransferDevice>, val skippedExisting: Int,
  */
 object DeviceTransfer {
     const val FORMAT_VERSION = 1
+
+    /** Most devices the app holds, and most a file may carry. Every device is checked on the network every few seconds. */
+    const val MAX_DEVICES = 200
     private const val APP = "WakeDeck"
 
     fun encode(devices: List<Device>, groups: List<Group>): String {
@@ -76,6 +80,7 @@ object DeviceTransfer {
         if (root.optString("app") != APP) return DecodeResult.Failure("not a WakeDeck file")
         if (root.optInt("version", 0) > FORMAT_VERSION) return DecodeResult.Failure("file is from a newer WakeDeck")
         val array = root.optJSONArray("devices") ?: return DecodeResult.Failure("no devices")
+        if (array.length() > MAX_DEVICES) return DecodeResult.TooMany
 
         val devices = mutableListOf<TransferDevice>()
         var invalid = 0

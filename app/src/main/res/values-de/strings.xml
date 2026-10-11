@@ -192,6 +192,7 @@
     <string name="export_failed">Geräte konnten nicht exportiert werden</string>
     <string name="import_done">Import abgeschlossen. Hinzugefügt: %1$d. Bereits gespeichert: %2$d. Unbrauchbar: %3$d.</string>
     <string name="import_failed">Import nicht möglich: Das ist keine WakeDeck-Datei</string>
+    <string name="import_too_many">Import nicht möglich: WakeDeck verwaltet höchstens %1$d Geräte</string>
     <plurals name="group_device_count">
         <item quantity="one">%1$d Gerät</item>
         <item quantity="other">%1$d Geräte</item>

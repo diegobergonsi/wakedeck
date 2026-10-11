@@ -194,6 +194,7 @@
     <string name="export_failed">Impossible d’exporter les appareils</string>
     <string name="import_done">Importation terminée. Ajoutés : %1$d. Déjà enregistrés : %2$d. Inutilisables : %3$d.</string>
     <string name="import_failed">Importation impossible : ce n’est pas un fichier WakeDeck</string>
+    <string name="import_too_many">Impossible d’importer : WakeDeck accepte au maximum %1$d appareils</string>
     <plurals name="group_device_count">
         <item quantity="one">%1$d appareil</item>
         <item quantity="many">%1$d d’appareils</item>

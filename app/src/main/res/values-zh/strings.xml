@@ -190,6 +190,7 @@
     <string name="export_failed">无法导出设备</string>
     <string name="import_done">导入完成。已添加：%1$d。已存在：%2$d。无法使用：%3$d。</string>
     <string name="import_failed">无法导入：这不是 WakeDeck 文件</string>
+    <string name="import_too_many">无法导入：WakeDeck 最多支持 %1$d 台设备</string>
     <plurals name="group_device_count">
         <item quantity="other">%1$d 台设备</item>
     </plurals>

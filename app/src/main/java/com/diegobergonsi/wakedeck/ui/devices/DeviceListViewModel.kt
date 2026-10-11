@@ -10,6 +10,7 @@ import com.diegobergonsi.wakedeck.data.GroupRepository
 import com.diegobergonsi.wakedeck.data.WakeCoordinator
 import com.diegobergonsi.wakedeck.data.WakeOutcome
 import com.diegobergonsi.wakedeck.data.messageRes
+import com.diegobergonsi.wakedeck.data.transfer.DeviceTransfer
 import com.diegobergonsi.wakedeck.data.transfer.ImportOutcome
 import com.diegobergonsi.wakedeck.data.transfer.TransferRepository
 import com.diegobergonsi.wakedeck.domain.Device
@@ -23,6 +24,8 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -115,6 +118,7 @@ class DeviceListViewModel @Inject constructor(
                     when (val outcome = transfer.import(text)) {
                         is ImportOutcome.Done -> UiMessage(R.string.import_done, listOf(outcome.added, outcome.skipped, outcome.invalid))
                         is ImportOutcome.Failed -> UiMessage(R.string.import_failed)
+                        ImportOutcome.TooMany -> UiMessage(R.string.import_too_many, listOf(DeviceTransfer.MAX_DEVICES))
                     }
                 }.getOrElse { UiMessage(R.string.import_failed) }
             }
@@ -149,10 +153,12 @@ class DeviceListViewModel @Inject constructor(
     private suspend fun checkAll() {
         val current = repository.observeAll().first()
         _statuses.update { old -> old.filterKeys { id -> current.any { it.id == id } } }
+        // A cap on parallel checks: a long list must not open hundreds of connections at once.
+        val limit = Semaphore(MAX_PARALLEL_CHECKS)
         coroutineScope {
             current.forEach { device ->
                 launch {
-                    val status = statusChecker.check(device)
+                    val status = limit.withPermit { statusChecker.check(device) }
                     _statuses.update { it + (device.id to status) }
                 }
             }
@@ -161,6 +167,7 @@ class DeviceListViewModel @Inject constructor(
 
     private companion object {
         const val POLL_INTERVAL_MS = 5_000L
+        const val MAX_PARALLEL_CHECKS = 8
         const val MAX_IMPORT_CHARS = 1_000_000
         const val MAX_IMPORT_BYTES = 4_000_000
     }
