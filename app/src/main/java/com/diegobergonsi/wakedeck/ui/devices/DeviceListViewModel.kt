@@ -86,8 +86,9 @@ class DeviceListViewModel @Inject constructor(
     fun wakeAll(section: DeviceSection) {
         viewModelScope.launch {
             val sent = section.devices.count { d ->
-                (coordinator.wake(d.id).outcome == WakeOutcome.SENT).also { coordinator.clearFeedbackLater(d.id) }
+                (coordinator.wake(d.id, updateWidgets = false).outcome == WakeOutcome.SENT).also { coordinator.clearFeedbackLater(d.id) }
             }
+            coordinator.refreshWidgets()
             messageChannel.send(UiMessage(R.plurals.wake_all_result, listOf(sent, section.devices.size), quantity = section.devices.size))
         }
     }

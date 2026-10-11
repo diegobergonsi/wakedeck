@@ -40,12 +40,13 @@ class WakeCoordinator @Inject constructor(
     private val statuses: StatusStore,
     @ApplicationScope private val scope: CoroutineScope,
 ) {
-    suspend fun wake(deviceId: Long): WakeResult {
+    /** [updateWidgets] is false for a batch: the caller then calls [refreshWidgets] once at the end. */
+    suspend fun wake(deviceId: Long, updateWidgets: Boolean = true): WakeResult {
         val device = devices.get(deviceId) ?: return WakeResult(WakeOutcome.NOT_FOUND, null)
         val sent = wakeOnLan.send(device)
         val ok = sent.isSuccess
         statuses.recordWake(deviceId, ok)
-        WidgetUpdater.updateAll(context)
+        if (updateWidgets) refreshWidgets()
         if (ok) StatusScheduler.startBurst(context, deviceId)
         return WakeResult(
             if (ok) WakeOutcome.SENT else WakeOutcome.FAILED,
@@ -53,6 +54,8 @@ class WakeCoordinator @Inject constructor(
             sent.exceptionOrNull()?.let(WakeFailure::from),
         )
     }
+
+    suspend fun refreshWidgets() = WidgetUpdater.updateAll(context)
 
     suspend fun clearFeedback(deviceId: Long) {
         statuses.clearWake(deviceId)
