@@ -98,7 +98,7 @@ fun HelpScreen(onBack: () -> Unit, openSection: String? = null, viewModel: HelpV
 
             Section(R.string.help_s1, open == HELP_SECTION_WOL, { open = if (open == HELP_SECTION_WOL) "" else HELP_SECTION_WOL }) {
                 Body(R.string.help_wol_intro)
-                Body(R.string.help_wol_bios)
+                if (os != HelpOs.MACOS) Body(R.string.help_wol_bios)
                 if (os == HelpOs.LINUX) {
                     Body(R.string.help_wol_l1); Command(stringResource(R.string.cmd_linux_list_ifaces), copy)
                     Body(R.string.help_wol_l2); Command(stringResource(R.string.cmd_linux_check_wol), copy)
