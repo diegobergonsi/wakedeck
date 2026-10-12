@@ -17,7 +17,7 @@ INDEX = dict(
         ("Tắt máy từ xa qua SSH", "Tùy chọn. WakeDeck đăng nhập bằng khóa lưu trong Android Keystore. Ứng dụng không bao giờ hỏi hay lưu mật khẩu, và ghim khóa máy chủ của từng máy tính."),
         ("Riêng tư từ thiết kế", "Không quảng cáo, không phân tích, không tài khoản. Thiết bị và cài đặt của bạn nằm trên điện thoại, và ứng dụng chỉ kết nối tới những địa chỉ bạn thêm."),
     ],
-    how_h="Ba bước", how_sub="Hướng dẫn trong ứng dụng sẽ chỉ bạn cách thiết lập phía máy tính, cho Windows và Linux.",
+    how_h="Ba bước", how_sub="Hướng dẫn trong ứng dụng sẽ chỉ bạn cách thiết lập phía máy tính, cho Windows, Linux và macOS.",
     steps=[
         ("Bật Wake-on-LAN", "Bật trong BIOS hoặc UEFI của máy tính và trong cài đặt card mạng. Ethernet có dây hoạt động tốt nhất."),
         ("Thêm thiết bị", "Nhập tên và địa chỉ MAC. Thêm địa chỉ IP nếu bạn muốn xem trạng thái trực tuyến."),

@@ -17,7 +17,7 @@ INDEX = dict(
         ("SSH ile uzaktan kapatma", "İsteğe bağlı. WakeDeck, Android Keystore’da tutulan bir anahtarla oturum açar. Hiçbir zaman parola istemez ya da saklamaz ve her bilgisayarın ana makine anahtarını sabitler."),
         ("Tasarımdan gizli", "Reklam yok, analiz yok, hesap yok. Cihazlarınız ve ayarlarınız telefonunuzda kalır, uygulama yalnızca eklediğiniz adreslerle konuşur."),
     ],
-    how_h="Üç adım", how_sub="Uygulama içi bir kılavuz, Windows ve Linux için bilgisayar tarafında size yol gösterir.",
+    how_h="Üç adım", how_sub="Uygulama içi bir kılavuz, Windows, Linux ve macOS için bilgisayar tarafında size yol gösterir.",
     steps=[
         ("Wake-on-LAN’ı açın", "Bilgisayarınızın BIOS veya UEFI ayarlarında ve ağ kartı ayarlarında etkinleştirin. Kablolu Ethernet en iyi sonucu verir."),
         ("Cihazınızı ekleyin", "Bir ad ve MAC adresi girin. Çevrimiçi durumunu görmek istiyorsanız IP adresini de ekleyin."),

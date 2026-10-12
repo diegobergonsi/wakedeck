@@ -47,7 +47,7 @@ INDEX = {
             ("Remote shutdown over SSH", "Optional. WakeDeck signs in with a key kept in the Android Keystore. It never asks for or stores a password, and it pins each PC's host key."),
             ("Private by design", "No ads, no analytics, no accounts. Your devices and settings stay on your phone, and the app only talks to the addresses you add."),
         ],
-        how_h="Three steps", how_sub="An in-app guide walks you through the PC side, for Windows and Linux.",
+        how_h="Three steps", how_sub="An in-app guide walks you through the PC side, for Windows, Linux and macOS.",
         steps=[
             ("Turn on Wake-on-LAN", "Enable it in your PC's BIOS or UEFI and in the network card settings. Wired Ethernet works best."),
             ("Add your device", "Enter a name and the MAC address. Add the IP address if you want to see its online status."),
@@ -73,7 +73,7 @@ INDEX = {
             ("Desligamento remoto por SSH", "Opcional. O WakeDeck entra com uma chave guardada no Android Keystore. Ele nunca pede nem guarda senha e fixa a chave de host de cada PC."),
             ("Privado por princípio", "Sem anúncios, sem análise de uso, sem contas. Seus dispositivos e ajustes ficam no seu celular, e o app só fala com os endereços que você adiciona."),
         ],
-        how_h="Três passos", how_sub="Um guia no app explica o lado do PC, para Windows e Linux.",
+        how_h="Três passos", how_sub="Um guia no app explica o lado do PC, para Windows, Linux e macOS.",
         steps=[
             ("Ative o Wake-on-LAN", "Ative-o na BIOS ou UEFI do PC e nas configurações da placa de rede. A conexão por cabo Ethernet funciona melhor."),
             ("Adicione seu dispositivo", "Informe um nome e o endereço MAC. Adicione o endereço IP se quiser ver o status online."),
@@ -99,7 +99,7 @@ INDEX = {
             ("Encerramento remoto por SSH", "Opcional. A WakeDeck autentica-se com uma chave guardada no Android Keystore. Nunca pede nem guarda palavras-passe e fixa a chave de anfitrião de cada PC."),
             ("Privada por princípio", "Sem anúncios, sem análise de utilização, sem contas. Os seus dispositivos e definições ficam no telemóvel, e a aplicação só comunica com os endereços que adicionar."),
         ],
-        how_h="Três passos", how_sub="Um guia na aplicação explica o lado do PC, para Windows e Linux.",
+        how_h="Três passos", how_sub="Um guia na aplicação explica o lado do PC, para Windows, Linux e macOS.",
         steps=[
             ("Ative o Wake-on-LAN", "Ative-o na BIOS ou UEFI do PC e nas definições da placa de rede. A ligação por cabo Ethernet funciona melhor."),
             ("Adicione o seu dispositivo", "Indique um nome e o endereço MAC. Adicione o endereço IP se quiser ver o estado online."),
@@ -125,7 +125,7 @@ INDEX = {
             ("Arrêt à distance par SSH", "Facultatif. WakeDeck se connecte avec une clé conservée dans l’Android Keystore. Il ne demande ni ne stocke jamais de mot de passe, et il épingle la clé d’hôte de chaque PC."),
             ("Confidentiel par conception", "Sans publicité, sans analyse, sans compte. Vos appareils et vos réglages restent sur votre téléphone, et l’application ne contacte que les adresses que vous ajoutez."),
         ],
-        how_h="Trois étapes", how_sub="Un guide intégré à l’appli vous accompagne côté PC, pour Windows et Linux.",
+        how_h="Trois étapes", how_sub="Un guide intégré à l’appli vous accompagne côté PC, pour Windows, Linux et macOS.",
         steps=[
             ("Activez le Wake-on-LAN", "Activez-le dans le BIOS ou l’UEFI du PC et dans les réglages de la carte réseau. Une connexion Ethernet filaire donne les meilleurs résultats."),
             ("Ajoutez votre appareil", "Saisissez un nom et l’adresse MAC. Ajoutez l’adresse IP si vous voulez voir son état en ligne."),
@@ -151,7 +151,7 @@ INDEX = {
             ("Fernabschaltung per SSH", "Optional. WakeDeck meldet sich mit einem Schlüssel an, der im Android Keystore liegt. Es fragt nie nach einem Passwort, speichert keines und merkt sich den Host-Schlüssel jedes PCs."),
             ("Privat von Grund auf", "Keine Werbung, keine Analyse, keine Konten. Deine Geräte und Einstellungen bleiben auf deinem Telefon, und die App spricht nur mit den Adressen, die du hinzufügst."),
         ],
-        how_h="Drei Schritte", how_sub="Eine Anleitung in der App führt dich durch die PC-Seite, für Windows und Linux.",
+        how_h="Drei Schritte", how_sub="Eine Anleitung in der App führt dich durch die PC-Seite, für Windows, Linux und macOS.",
         steps=[
             ("Wake-on-LAN aktivieren", "Aktiviere es im BIOS oder UEFI deines PCs und in den Einstellungen der Netzwerkkarte. Kabelgebundenes Ethernet funktioniert am besten."),
             ("Gerät hinzufügen", "Gib einen Namen und die MAC-Adresse ein. Füge die IP-Adresse hinzu, wenn du den Online-Status sehen möchtest."),
@@ -177,7 +177,7 @@ INDEX = {
             ("Apagado remoto por SSH", "Opcional. WakeDeck inicia sesión con una clave guardada en el Android Keystore. Nunca pide ni guarda contraseñas, y fija la clave de host de cada PC."),
             ("Privado por diseño", "Sin anuncios, sin analítica, sin cuentas. Tus dispositivos y ajustes se quedan en tu teléfono, y la app solo se comunica con las direcciones que añades."),
         ],
-        how_h="Tres pasos", how_sub="Una guía dentro de la app te acompaña en el lado del PC, para Windows y Linux.",
+        how_h="Tres pasos", how_sub="Una guía dentro de la app te acompaña en el lado del PC, para Windows, Linux y macOS.",
         steps=[
             ("Activa Wake-on-LAN", "Actívalo en la BIOS o UEFI del PC y en los ajustes de la tarjeta de red. La conexión Ethernet por cable funciona mejor."),
             ("Añade tu dispositivo", "Introduce un nombre y la dirección MAC. Añade la dirección IP si quieres ver su estado en línea."),
@@ -203,7 +203,7 @@ INDEX = {
             ("通过 SSH 远程关机", "可选功能。WakeDeck 使用保存在 Android Keystore 中的密钥登录，从不索取也不保存密码，并会固定每台电脑的主机密钥。"),
             ("隐私优先", "无广告、无统计、无需账号。你的设备和设置只保存在手机上，应用只会连接你添加的地址。"),
         ],
-        how_h="三个步骤", how_sub="应用内的指南会带你完成电脑端的设置，支持 Windows 和 Linux。",
+        how_h="三个步骤", how_sub="应用内的指南会带你完成电脑端的设置，支持 Windows、Linux 和 macOS。",
         steps=[
             ("开启 Wake-on-LAN", "在电脑的 BIOS 或 UEFI 以及网卡设置中启用。有线以太网效果最好。"),
             ("添加你的设备", "输入名称和 MAC 地址。若想查看在线状态，请再添加 IP 地址。"),
@@ -229,7 +229,7 @@ INDEX = {
             ("SSH によるリモートシャットダウン", "任意の機能です。WakeDeck は Android Keystore に保管した鍵でログインします。パスワードを求めることも保存することもなく、各 PC のホスト鍵を固定します。"),
             ("プライバシー重視の設計", "広告なし、分析なし、アカウント不要。デバイスと設定はスマートフォンの中に残り、アプリは追加したアドレスにしか接続しません。"),
         ],
-        how_h="3 つのステップ", how_sub="PC 側の設定は、Windows と Linux に対応したアプリ内ガイドが案内します。",
+        how_h="3 つのステップ", how_sub="PC 側の設定は、Windows、Linux、macOS に対応したアプリ内ガイドが案内します。",
         steps=[
             ("Wake-on-LAN を有効にする", "PC の BIOS または UEFI と、ネットワークカードの設定で有効にします。有線 LAN での接続がおすすめです。"),
             ("デバイスを追加する", "名前と MAC アドレスを入力します。オンライン状態を見たい場合は IP アドレスも追加します。"),

@@ -17,7 +17,7 @@ INDEX = dict(
         ("Fjärravstängning via SSH", "Valfritt. WakeDeck loggar in med en nyckel som ligger i Android Keystore. Appen frågar aldrig efter och sparar aldrig ett lösenord, och fäster värdnyckeln för varje dator."),
         ("Privat från grunden", "Inga annonser, ingen analys, inga konton. Dina enheter och inställningar stannar i telefonen, och appen pratar bara med de adresser du lägger till."),
     ],
-    how_h="Tre steg", how_sub="En guide i appen går igenom datorsidan, för Windows och Linux.",
+    how_h="Tre steg", how_sub="En guide i appen går igenom datorsidan, för Windows, Linux och macOS.",
     steps=[
         ("Aktivera Wake-on-LAN", "Aktivera det i datorns BIOS eller UEFI och i nätverkskortets inställningar. Trådbundet Ethernet fungerar bäst."),
         ("Lägg till din enhet", "Ange ett namn och MAC-adressen. Lägg till IP-adressen om du vill se status online."),

@@ -17,7 +17,7 @@ INDEX = dict(
         ("Spegnimento remoto via SSH", "Facoltativo. WakeDeck accede con una chiave conservata nell’Android Keystore. Non chiede né salva mai una password e fissa la chiave host di ogni PC."),
         ("Privato per progetto", "Nessuna pubblicità, nessuna analisi, nessun account. I tuoi dispositivi e le impostazioni restano sul telefono, e l’app comunica solo con gli indirizzi che aggiungi."),
     ],
-    how_h="Tre passaggi", how_sub="Una guida nell’app ti accompagna lato PC, per Windows e Linux.",
+    how_h="Tre passaggi", how_sub="Una guida nell’app ti accompagna lato PC, per Windows, Linux e macOS.",
     steps=[
         ("Attiva il Wake-on-LAN", "Abilitalo nel BIOS o UEFI del PC e nelle impostazioni della scheda di rete. L’Ethernet via cavo funziona meglio."),
         ("Aggiungi il dispositivo", "Inserisci un nome e l’indirizzo MAC. Aggiungi l’indirizzo IP se vuoi vedere lo stato online."),

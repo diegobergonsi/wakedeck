@@ -17,7 +17,7 @@ INDEX = dict(
         ("Fjernlukning via SSH", "Valgfrit. WakeDeck logger ind med en nøgle, der ligger i Android Keystore. Appen beder aldrig om og gemmer aldrig en adgangskode, og den fastlåser værtsnøglen for hver pc."),
         ("Privat fra bunden", "Ingen reklamer, ingen analyse, ingen konti. Dine enheder og indstillinger bliver på telefonen, og appen taler kun med de adresser, du tilføjer."),
     ],
-    how_h="Tre trin", how_sub="En guide i appen fører dig igennem pc-siden, til Windows og Linux.",
+    how_h="Tre trin", how_sub="En guide i appen fører dig igennem pc-siden, til Windows, Linux og macOS.",
     steps=[
         ("Slå Wake-on-LAN til", "Slå det til i pc’ens BIOS eller UEFI og i netværkskortets indstillinger. Kablet Ethernet virker bedst."),
         ("Tilføj din enhed", "Skriv et navn og MAC-adressen. Tilføj IP-adressen, hvis du vil se status online."),

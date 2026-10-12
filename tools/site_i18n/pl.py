@@ -17,7 +17,7 @@ INDEX = dict(
         ("Zdalne wyłączanie przez SSH", "Opcjonalne. WakeDeck loguje się kluczem przechowywanym w Android Keystore. Nigdy nie prosi o hasło ani go nie zapisuje i przypina klucz hosta każdego komputera."),
         ("Prywatność od podstaw", "Bez reklam, bez analityki, bez kont. Twoje urządzenia i ustawienia zostają w telefonie, a aplikacja łączy się tylko z adresami, które dodasz."),
     ],
-    how_h="Trzy kroki", how_sub="Przewodnik w aplikacji prowadzi przez konfigurację komputera, dla Windows i Linuksa.",
+    how_h="Trzy kroki", how_sub="Przewodnik w aplikacji prowadzi przez konfigurację komputera, dla Windows, Linuksa i macOS.",
     steps=[
         ("Włącz Wake-on-LAN", "Włącz go w BIOS lub UEFI komputera oraz w ustawieniach karty sieciowej. Najlepiej działa przewodowy Ethernet."),
         ("Dodaj urządzenie", "Wpisz nazwę i adres MAC. Dodaj adres IP, jeśli chcesz widzieć stan online."),

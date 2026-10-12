@@ -17,7 +17,7 @@ INDEX = dict(
         ("Etäsammutus SSH:lla", "Valinnainen. WakeDeck kirjautuu Android Keystoreen tallennetulla avaimella. Se ei koskaan pyydä tai tallenna salasanaa, ja se kiinnittää jokaisen tietokoneen isäntäavaimen."),
         ("Yksityinen alusta asti", "Ei mainoksia, ei analytiikkaa, ei tilejä. Laitteesi ja asetuksesi pysyvät puhelimessa, ja sovellus keskustelee vain lisäämiesi osoitteiden kanssa."),
     ],
-    how_h="Kolme vaihetta", how_sub="Sovelluksen sisäinen opas opastaa tietokoneen puolella, Windowsille ja Linuxille.",
+    how_h="Kolme vaihetta", how_sub="Sovelluksen sisäinen opas opastaa tietokoneen puolella, Windowsille, Linuxille ja macOS:lle.",
     steps=[
         ("Ota Wake-on-LAN käyttöön", "Ota se käyttöön tietokoneen BIOSissa tai UEFIssa ja verkkokortin asetuksissa. Langallinen Ethernet toimii parhaiten."),
         ("Lisää laitteesi", "Anna nimi ja MAC-osoite. Lisää IP-osoite, jos haluat nähdä verkkotilan."),

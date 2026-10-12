@@ -17,7 +17,7 @@ INDEX = dict(
         ("Pematian jarak jauh lewat SSH", "Opsional. WakeDeck masuk dengan kunci yang disimpan di Android Keystore. Aplikasi tidak pernah meminta atau menyimpan kata sandi, dan menyematkan kunci host setiap PC."),
         ("Privat sejak awal", "Tanpa iklan, tanpa analitik, tanpa akun. Perangkat dan pengaturan Anda tetap di ponsel, dan aplikasi hanya berkomunikasi dengan alamat yang Anda tambahkan."),
     ],
-    how_h="Tiga langkah", how_sub="Panduan di dalam aplikasi mengarahkan Anda menyiapkan sisi PC, untuk Windows dan Linux.",
+    how_h="Tiga langkah", how_sub="Panduan di dalam aplikasi mengarahkan Anda menyiapkan sisi PC, untuk Windows, Linux, dan macOS.",
     steps=[
         ("Aktifkan Wake-on-LAN", "Aktifkan di BIOS atau UEFI PC Anda dan di pengaturan kartu jaringan. Ethernet berkabel bekerja paling baik."),
         ("Tambahkan perangkat", "Masukkan nama dan alamat MAC. Tambahkan alamat IP jika ingin melihat status online."),
