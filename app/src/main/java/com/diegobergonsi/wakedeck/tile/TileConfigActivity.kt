@@ -23,6 +23,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Icon
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -55,8 +60,8 @@ class TileConfigActivity : ComponentActivity() {
                     topBar = {
                         TopAppBar(
                             title = { Text(stringResource(R.string.tile_config_title, slot)) },
-                            navigationIcon = { TextButton(onClick = { finish() }) { Text(stringResource(R.string.cancel)) } },
-                            actions = { TextButton(onClick = { viewModel.save { finish() } }) { Text(stringResource(R.string.save)) } },
+                            navigationIcon = { IconButton(onClick = { finish() }) { Icon(Icons.Filled.Close, stringResource(R.string.cancel)) } },
+                            actions = { IconButton(onClick = { viewModel.save { finish() } }) { Icon(Icons.Filled.Check, stringResource(R.string.save)) } },
                         )
                     },
                 ) { padding ->

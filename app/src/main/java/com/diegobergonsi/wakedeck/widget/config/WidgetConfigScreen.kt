@@ -31,6 +31,10 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.IconButton
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -107,10 +111,12 @@ fun WidgetConfigScreen(
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(R.string.config_title)) },
-                navigationIcon = { TextButton(onClick = onCancel) { Text(stringResource(R.string.cancel)) } },
+                navigationIcon = {
+                    IconButton(onClick = onCancel) { Icon(Icons.Filled.Close, stringResource(R.string.cancel)) }
+                },
                 actions = {
-                    TextButton(onClick = { viewModel.save(onSaved) }, enabled = viewModel.canSave) {
-                        Text(stringResource(R.string.save))
+                    IconButton(onClick = { viewModel.save(onSaved) }, enabled = viewModel.canSave) {
+                        Icon(Icons.Filled.Check, stringResource(R.string.save))
                     }
                 },
             )
@@ -131,7 +137,7 @@ fun WidgetConfigScreen(
                         WidgetPreview(widgetId, config, type, options[previewIndex.coerceAtMost(options.lastIndex)].size)
                     }
                 }
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     options.forEachIndexed { index, option ->
                         FilterChip(
                             selected = previewIndex == index,
@@ -253,7 +259,7 @@ fun WidgetConfigScreen(
 
             if (type != WidgetType.SINGLE) {
                 Section(R.string.config_density) {
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         DensityOption.entries.forEach { option ->
                             FilterChip(
                                 selected = config.density == option,
@@ -268,7 +274,7 @@ fun WidgetConfigScreen(
             }
             if (type == WidgetType.LIST) {
                 Section(R.string.config_row_style) {
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         ListRowStyle.entries.forEach { option ->
                             FilterChip(
                                 selected = config.rowStyle == option,
@@ -283,7 +289,7 @@ fun WidgetConfigScreen(
             }
             if (type == WidgetType.GRID) {
                 Section(R.string.config_columns) {
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         (0..WidgetConfig.MAX_GRID_COLUMNS).forEach { n ->
                             FilterChip(
                                 selected = config.gridColumns == n,
@@ -296,7 +302,7 @@ fun WidgetConfigScreen(
             }
 
             Section(R.string.config_text_size) {
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     TextSizeOption.entries.forEach { option ->
                         FilterChip(
                             selected = config.textSize == option,
@@ -330,7 +336,7 @@ fun WidgetConfigScreen(
                     ColorPicker(config.sentColor, StateSwatches, R.string.color_default) { c -> viewModel.update { it.copy(sentColor = c) } }
                 }
                 Section(R.string.config_border) {
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         (0..WidgetConfig.MAX_BORDER_WIDTH_DP).forEach { w ->
                             FilterChip(
                                 selected = config.borderWidthDp == w,
