@@ -30,6 +30,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.material3.Surface
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.semantics.contentDescription
@@ -147,7 +150,7 @@ fun DeviceListScreen(
         },
         snackbarHost = { SnackbarHost(snackbar) },
         floatingActionButton = {
-            ExtendedFloatingActionButton(onClick = onAdd) { Text(stringResource(R.string.add_device)) }
+            if (hasDevices) ExtendedFloatingActionButton(onClick = onAdd) { Text(stringResource(R.string.add_device)) }
         },
     ) { padding ->
         Box(Modifier.fillMaxSize()) {
@@ -165,11 +168,26 @@ fun DeviceListScreen(
             ) {
                 val muted = MaterialTheme.colorScheme.onSurfaceVariant
                 val center = TextAlign.Center
-                Image(painterResource(R.drawable.bg_power_ring), contentDescription = null, modifier = Modifier.size(200.dp), alpha = 0.5f)
-                Text(stringResource(R.string.empty_devices), style = MaterialTheme.typography.bodyLarge, color = muted, textAlign = center)
-                Text(stringResource(R.string.empty_devices_prereq), style = MaterialTheme.typography.bodyMedium, color = muted, textAlign = center)
-                TextButton(onClick = onOpenHelp) { Text(stringResource(R.string.empty_devices_help)) }
-                Text(stringResource(R.string.empty_devices_widgets), style = MaterialTheme.typography.bodyMedium, color = muted, textAlign = center)
+                Image(painterResource(R.drawable.bg_power_ring), contentDescription = null, modifier = Modifier.size(160.dp), alpha = 0.5f)
+                Text(stringResource(R.string.empty_devices_title), style = MaterialTheme.typography.headlineSmall, textAlign = center)
+                Text(stringResource(R.string.empty_devices_hint), style = MaterialTheme.typography.bodyLarge, color = muted, textAlign = center)
+                FilledTonalButton(onClick = onAdd, modifier = Modifier.padding(top = 8.dp)) { Text(stringResource(R.string.add_device)) }
+                Surface(
+                    color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+                    shape = MaterialTheme.shapes.large,
+                    modifier = Modifier.padding(top = 24.dp).fillMaxWidth(),
+                ) {
+                    Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                        Text(stringResource(R.string.empty_helper_title), style = MaterialTheme.typography.titleSmall, color = muted, modifier = Modifier.padding(bottom = 8.dp))
+                        HelperStep(1) {
+                            Text(stringResource(R.string.empty_devices_prereq), style = MaterialTheme.typography.bodyMedium, color = muted)
+                            TextButton(onClick = onOpenHelp, contentPadding = PaddingValues(0.dp)) { Text(stringResource(R.string.empty_devices_help)) }
+                        }
+                        HelperStep(2) {
+                            Text(stringResource(R.string.empty_devices_widgets), style = MaterialTheme.typography.bodyMedium, color = muted)
+                        }
+                    }
+                }
             }
         } else {
             PullToRefreshBox(isRefreshing = refreshing, onRefresh = viewModel::refresh, modifier = Modifier.fillMaxSize().padding(padding)) {
@@ -302,3 +320,10 @@ private fun MenuItem(label: Int, onClick: () -> Unit) {
     DropdownMenuItem(text = { Text(stringResource(label)) }, onClick = onClick)
 }
 
+@Composable
+private fun HelperStep(number: Int, content: @Composable ColumnScope.() -> Unit) {
+    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        Text("$number", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(top = 1.dp))
+        Column(Modifier.weight(1f), content = content)
+    }
+}

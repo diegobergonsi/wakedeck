@@ -14,9 +14,12 @@
     <string name="discard_keep">Continuar editando</string>
     <string name="wake">Ligar</string>
     <string name="empty_devices">Nenhum dispositivo ainda. Toque em \"Adicionar dispositivo\" para criar um.</string>
-    <string name="empty_devices_prereq">Seu PC precisa ter o Wake-on-LAN ativado antes.</string>
+    <string name="empty_devices_title">Nenhum dispositivo ainda</string>
+    <string name="empty_devices_hint">Toque em Adicionar dispositivo para criar um.</string>
+    <string name="empty_helper_title">Antes de começar</string>
+    <string name="empty_devices_prereq">Primeiro, seu PC precisa ter o Wake-on-LAN ativado. O guia de configuração mostra como.</string>
     <string name="empty_devices_help">Abrir o guia de configuração</string>
-    <string name="empty_devices_widgets">Depois adicione um widget do WakeDeck na tela inicial.</string>
+    <string name="empty_devices_widgets">Depois, adicione um widget do WakeDeck na tela inicial para ligar seu PC com um toque.</string>
     <string name="broadcast_summary">%1$s : %2$d</string>
     <string name="wake_sent">Pacote mágico enviado para %1$s</string>
     <string name="wake_sent_off_lan">Pacote mágico enviado para %1$s, mas o celular não está no Wi-Fi nem em uma VPN. O PC pode não recebê-lo.</string>

@@ -14,9 +14,12 @@
     <string name="discard_keep">Weiter bearbeiten</string>
     <string name="wake">Aufwecken</string>
     <string name="empty_devices">Noch keine Geräte. Tippe auf „Gerät hinzufügen“, um eines anzulegen.</string>
-    <string name="empty_devices_prereq">Auf deinem PC muss zuerst Wake-on-LAN aktiviert sein.</string>
+    <string name="empty_devices_title">Noch keine Geräte</string>
+    <string name="empty_devices_hint">Tippe auf Gerät hinzufügen, um eines anzulegen.</string>
+    <string name="empty_helper_title">Bevor du loslegst</string>
+    <string name="empty_devices_prereq">Zuerst muss auf deinem PC Wake-on-LAN aktiviert sein. Die Einrichtungsanleitung zeigt dir, wie.</string>
     <string name="empty_devices_help">Einrichtungsanleitung öffnen</string>
-    <string name="empty_devices_widgets">Füge danach ein WakeDeck-Widget zu deinem Startbildschirm hinzu.</string>
+    <string name="empty_devices_widgets">Füge danach ein WakeDeck-Widget zu deinem Startbildschirm hinzu, um deinen PC mit einem Tipp aufzuwecken.</string>
     <string name="broadcast_summary">%1$s : %2$d</string>
     <string name="wake_sent">Magic Packet an %1$s gesendet</string>
     <string name="wake_sent_off_lan">Magic Packet an %1$s gesendet, aber das Telefon ist weder im WLAN noch in einem VPN. Der PC erhält es möglicherweise nicht.</string>

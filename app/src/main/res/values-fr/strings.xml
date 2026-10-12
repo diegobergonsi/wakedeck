@@ -14,9 +14,12 @@
     <string name="discard_keep">Continuer à modifier</string>
     <string name="wake">Allumer</string>
     <string name="empty_devices">Aucun appareil pour l’instant. Touchez « Ajouter un appareil » pour en créer un.</string>
-    <string name="empty_devices_prereq">Votre PC doit d’abord avoir le Wake-on-LAN activé.</string>
+    <string name="empty_devices_title">Aucun appareil pour l’instant</string>
+    <string name="empty_devices_hint">Touchez Ajouter un appareil pour en créer un.</string>
+    <string name="empty_helper_title">Avant de commencer</string>
+    <string name="empty_devices_prereq">Pour commencer, votre PC doit avoir le Wake-on-LAN activé. Le guide de configuration vous explique comment faire.</string>
     <string name="empty_devices_help">Ouvrir le guide de configuration</string>
-    <string name="empty_devices_widgets">Ajoutez ensuite un widget WakeDeck à votre écran d’accueil.</string>
+    <string name="empty_devices_widgets">Ajoutez ensuite un widget WakeDeck à votre écran d’accueil pour allumer votre PC d’une simple pression.</string>
     <string name="broadcast_summary">%1$s : %2$d</string>
     <string name="wake_sent">Paquet magique envoyé à %1$s</string>
     <string name="wake_sent_off_lan">Paquet magique envoyé à %1$s, mais le téléphone n’est pas sur le Wi-Fi ni sur un VPN. Le PC risque de ne pas le recevoir.</string>

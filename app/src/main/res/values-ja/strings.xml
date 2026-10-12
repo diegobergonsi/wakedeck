@@ -14,9 +14,12 @@
     <string name="discard_keep">編集を続ける</string>
     <string name="wake">起動</string>
     <string name="empty_devices">デバイスがまだありません。「デバイスを追加」をタップして作成してください。</string>
-    <string name="empty_devices_prereq">先に PC で Wake-on-LAN を有効にしてください。</string>
+    <string name="empty_devices_title">デバイスがまだありません</string>
+    <string name="empty_devices_hint">「デバイスを追加」をタップして作成します。</string>
+    <string name="empty_helper_title">はじめる前に</string>
+    <string name="empty_devices_prereq">まず、PC で Wake-on-LAN を有効にしてください。セットアップガイドで手順を確認できます。</string>
     <string name="empty_devices_help">セットアップガイドを開く</string>
-    <string name="empty_devices_widgets">そのあと、ホーム画面に WakeDeck ウィジェットを追加します。</string>
+    <string name="empty_devices_widgets">そのあと、ホーム画面に WakeDeck ウィジェットを追加すると、ワンタップで PC を起動できます。</string>
     <string name="broadcast_summary">%1$s : %2$d</string>
     <string name="wake_sent">%1$s にマジックパケットを送信しました</string>
     <string name="wake_sent_off_lan">%1$s にマジックパケットを送信しましたが、スマートフォンが Wi-Fi にも VPN にも接続されていません。PC が受信できない可能性があります。</string>
