@@ -35,6 +35,18 @@ private val languages = listOf(
     AppLanguage("es", R.string.language_es),
     AppLanguage("zh", R.string.language_zh),
     AppLanguage("ja", R.string.language_ja),
+    AppLanguage("it", R.string.language_it),
+    AppLanguage("ru", R.string.language_ru),
+    AppLanguage("ko", R.string.language_ko),
+    AppLanguage("ar", R.string.language_ar),
+    AppLanguage("tr", R.string.language_tr),
+    AppLanguage("vi", R.string.language_vi),
+    AppLanguage("id", R.string.language_id),
+    AppLanguage("pl", R.string.language_pl),
+    AppLanguage("sv", R.string.language_sv),
+    AppLanguage("da", R.string.language_da),
+    AppLanguage("nb", R.string.language_nb),
+    AppLanguage("fi", R.string.language_fi),
 )
 
 /** Per-app language needs the system feature that arrived with Android 13. */
