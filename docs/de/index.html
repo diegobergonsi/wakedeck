@@ -36,7 +36,7 @@
 <meta property="og:description" content="Wecke deine Geräte mit deinem Smartphone. Anpassbare Widgets für den Startbildschirm. Keine Werbung, keine Analyse, keine Konten.">
 <meta property="og:url" content="https://wakedeck.app/de/">
 <meta property="og:image" content="https://wakedeck.app/assets/og.png">
-<link rel="stylesheet" href="/assets/site.css?v=90440331">
+<link rel="stylesheet" href="/assets/site.css?v=1885b360">
 </head>
 <body>
 <a class="skip" href="#main">Zum Inhalt springen</a>
@@ -50,8 +50,10 @@
       <a class="opt" href="/de/#how">So funktioniert’s</a>
       <a href="/de/guide">Einrichtungsanleitung</a>
       <a href="/de/privacy">Datenschutz</a>
-      <details class="lang">
-        <summary aria-label="Sprache"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 4 5.6 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.6-4-9s1.4-6.4 4-9z"/></svg><span>Deutsch</span></summary>
+      <div class="lang">
+        <input type="checkbox" id="lang-t" class="lang-t" aria-label="Sprache">
+        <label for="lang-t" class="lang-btn"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 4 5.6 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.6-4-9s1.4-6.4 4-9z"/></svg><span>Deutsch</span></label>
+        <label for="lang-t" class="lang-backdrop" aria-hidden="true"></label>
         <ul>
           <li><a href="/ar/" lang="ar" hreflang="ar">العربية</a></li>
           <li><a href="/zh/" lang="zh-Hans" hreflang="zh-Hans">简体中文</a></li>
@@ -74,7 +76,7 @@
           <li><a href="/tr/" lang="tr" hreflang="tr">Türkçe</a></li>
           <li><a href="/vi/" lang="vi" hreflang="vi">Tiếng Việt</a></li>
         </ul>
-      </details>
+      </div>
     </nav>
   </div>
 </header>

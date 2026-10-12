@@ -769,12 +769,14 @@ def header(t, folder, page):
       <a class="opt" href="{b}#how">{t["how"]}</a>
       <a href="{b}guide"{cur_guide}>{t["guide"]}</a>
       <a href="{b}privacy"{cur_priv}>{t["privacy"]}</a>
-      <details class="lang">
-        <summary aria-label="{t["language"]}"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 4 5.6 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.6-4-9s1.4-6.4 4-9z"/></svg><span>{current}</span></summary>
+      <div class="lang">
+        <input type="checkbox" id="lang-t" class="lang-t" aria-label="{t["language"]}">
+        <label for="lang-t" class="lang-btn"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 4 5.6 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.6-4-9s1.4-6.4 4-9z"/></svg><span>{current}</span></label>
+        <label for="lang-t" class="lang-backdrop" aria-hidden="true"></label>
         <ul>
           {chr(10).join("          " + i for i in items).strip()}
         </ul>
-      </details>
+      </div>
     </nav>
   </div>
 </header>
