@@ -283,7 +283,7 @@ PRIVACY = {
             ("h2", "Changes"),
             ("p", "If this policy changes, the new version will be published at this address with a new date."),
             ("h2", "Contact"),
-            ("p", 'Diego Bergonsi, <a href="mailto:diego.bergonsi@outlook.com">diego.bergonsi@outlook.com</a>'),
+            ("p", 'Diego Bergonsi, <a href="mailto:contact@wakedeck.app">contact@wakedeck.app</a>'),
         ],
     ),
     "pt-br": dict(
@@ -329,7 +329,7 @@ PRIVACY = {
             ("h2", "Alterações"),
             ("p", "Se esta política mudar, a nova versão será publicada neste endereço com uma nova data."),
             ("h2", "Contato"),
-            ("p", 'Diego Bergonsi, <a href="mailto:diego.bergonsi@outlook.com">diego.bergonsi@outlook.com</a>'),
+            ("p", 'Diego Bergonsi, <a href="mailto:contact@wakedeck.app">contact@wakedeck.app</a>'),
         ],
     ),
     "pt-pt": dict(
@@ -375,7 +375,7 @@ PRIVACY = {
             ("h2", "Alterações"),
             ("p", "Se esta política mudar, a nova versão será publicada neste endereço com uma nova data."),
             ("h2", "Contacto"),
-            ("p", 'Diego Bergonsi, <a href="mailto:diego.bergonsi@outlook.com">diego.bergonsi@outlook.com</a>'),
+            ("p", 'Diego Bergonsi, <a href="mailto:contact@wakedeck.app">contact@wakedeck.app</a>'),
         ],
     ),
     "fr": dict(
@@ -421,7 +421,7 @@ PRIVACY = {
             ("h2", "Modifications"),
             ("p", "Si cette politique change, la nouvelle version sera publiée à cette adresse avec une nouvelle date."),
             ("h2", "Contact"),
-            ("p", 'Diego Bergonsi, <a href="mailto:diego.bergonsi@outlook.com">diego.bergonsi@outlook.com</a>'),
+            ("p", 'Diego Bergonsi, <a href="mailto:contact@wakedeck.app">contact@wakedeck.app</a>'),
         ],
     ),
     "de": dict(
@@ -467,7 +467,7 @@ PRIVACY = {
             ("h2", "Änderungen"),
             ("p", "Wenn sich diese Erklärung ändert, wird die neue Fassung unter dieser Adresse mit neuem Datum veröffentlicht."),
             ("h2", "Kontakt"),
-            ("p", 'Diego Bergonsi, <a href="mailto:diego.bergonsi@outlook.com">diego.bergonsi@outlook.com</a>'),
+            ("p", 'Diego Bergonsi, <a href="mailto:contact@wakedeck.app">contact@wakedeck.app</a>'),
         ],
     ),
     "es": dict(
@@ -513,7 +513,7 @@ PRIVACY = {
             ("h2", "Cambios"),
             ("p", "Si esta política cambia, la nueva versión se publicará en esta dirección con una nueva fecha."),
             ("h2", "Contacto"),
-            ("p", 'Diego Bergonsi, <a href="mailto:diego.bergonsi@outlook.com">diego.bergonsi@outlook.com</a>'),
+            ("p", 'Diego Bergonsi, <a href="mailto:contact@wakedeck.app">contact@wakedeck.app</a>'),
         ],
     ),
     "zh": dict(
@@ -559,7 +559,7 @@ PRIVACY = {
             ("h2", "变更"),
             ("p", "如本政策有变更，新版本将在此地址发布，并标注新的日期。"),
             ("h2", "联系方式"),
-            ("p", 'Diego Bergonsi，<a href="mailto:diego.bergonsi@outlook.com">diego.bergonsi@outlook.com</a>'),
+            ("p", 'Diego Bergonsi，<a href="mailto:contact@wakedeck.app">contact@wakedeck.app</a>'),
         ],
     ),
     "ja": dict(
@@ -605,7 +605,7 @@ PRIVACY = {
             ("h2", "変更"),
             ("p", "このポリシーが変更された場合は、新しい版を新しい日付とともにこのアドレスで公開します。"),
             ("h2", "お問い合わせ"),
-            ("p", 'Diego Bergonsi、<a href="mailto:diego.bergonsi@outlook.com">diego.bergonsi@outlook.com</a>'),
+            ("p", 'Diego Bergonsi、<a href="mailto:contact@wakedeck.app">contact@wakedeck.app</a>'),
         ],
     ),
 }
@@ -713,7 +713,7 @@ def footer(t, folder):
     <ul>
       <li><a href="{b}privacy">{t["privacy"]}</a></li>
       <li><a href="{KOFI}" rel="noopener noreferrer">{SUPPORT[folder or "en"][2]}</a></li>
-      <li><a href="mailto:diego.bergonsi@outlook.com">{t["contact"]}</a></li>
+      <li><a href="mailto:contact@wakedeck.app">{t["contact"]}</a></li>
     </ul>
   </div>
 </footer>
