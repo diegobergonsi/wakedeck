@@ -55,6 +55,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
@@ -150,11 +151,11 @@ fun DeviceListScreen(
         },
     ) { padding ->
         Box(Modifier.fillMaxSize()) {
-        Image(
+        if (hasDevices) Image(
             painterResource(R.drawable.bg_power_ring),
             contentDescription = null,
-            modifier = Modifier.align(if (hasDevices) Alignment.BottomCenter else Alignment.Center).padding(padding).size(if (hasDevices) 300.dp else 340.dp),
-            alpha = if (hasDevices) 0.10f else 0.22f,
+            modifier = Modifier.align(Alignment.BottomCenter).padding(padding).size(300.dp),
+            alpha = 0.10f,
         )
         if (!hasDevices) {
             Column(
@@ -163,10 +164,12 @@ fun DeviceListScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 val muted = MaterialTheme.colorScheme.onSurfaceVariant
-                Text(stringResource(R.string.empty_devices), style = MaterialTheme.typography.bodyLarge, color = muted)
-                Text(stringResource(R.string.empty_devices_prereq), style = MaterialTheme.typography.bodyMedium, color = muted)
+                val center = TextAlign.Center
+                Image(painterResource(R.drawable.bg_power_ring), contentDescription = null, modifier = Modifier.size(200.dp), alpha = 0.5f)
+                Text(stringResource(R.string.empty_devices), style = MaterialTheme.typography.bodyLarge, color = muted, textAlign = center)
+                Text(stringResource(R.string.empty_devices_prereq), style = MaterialTheme.typography.bodyMedium, color = muted, textAlign = center)
                 TextButton(onClick = onOpenHelp) { Text(stringResource(R.string.empty_devices_help)) }
-                Text(stringResource(R.string.empty_devices_widgets), style = MaterialTheme.typography.bodyMedium, color = muted)
+                Text(stringResource(R.string.empty_devices_widgets), style = MaterialTheme.typography.bodyMedium, color = muted, textAlign = center)
             }
         } else {
             PullToRefreshBox(isRefreshing = refreshing, onRefresh = viewModel::refresh, modifier = Modifier.fillMaxSize().padding(padding)) {
