@@ -764,7 +764,6 @@ def header(t, folder, page):
   <div class="wrap">
     <a class="brand" href="{b}" aria-label="WakeDeck"><b>Wake</b><span>Deck</span></a>
     <nav aria-label="Main">
-      <a class="btn donate nav-donate" href="{KOFI}" rel="noopener noreferrer">{SUPPORT[folder or "en"][2]}</a>
       <a class="opt" href="{b}#features">{t["features"]}</a>
       <a class="opt" href="{b}#how">{t["how"]}</a>
       <a href="{b}guide"{cur_guide}>{t["guide"]}</a>
