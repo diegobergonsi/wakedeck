@@ -17,8 +17,8 @@
     <string name="empty_devices_title">Noch keine Geräte</string>
     <string name="empty_devices_hint">Tippe auf Gerät hinzufügen, um eines anzulegen.</string>
     <string name="empty_helper_title">Bevor du loslegst</string>
-    <string name="empty_devices_prereq">Zuerst muss auf deinem PC Wake-on-LAN aktiviert sein. Die Einrichtungsanleitung zeigt dir, wie.</string>
-    <string name="empty_devices_help">Einrichtungsanleitung öffnen</string>
+    <string name="empty_devices_prereq">Zuerst muss auf deinem PC Wake-on-LAN aktiviert sein. Die %1$s zeigt dir, wie.</string>
+    <string name="empty_devices_help">Einrichtungsanleitung</string>
     <string name="empty_devices_widgets">Füge danach ein WakeDeck-Widget zu deinem Startbildschirm hinzu, um deinen PC mit einem Tipp aufzuwecken.</string>
     <string name="broadcast_summary">%1$s : %2$d</string>
     <string name="wake_sent">Magic Packet an %1$s gesendet</string>

@@ -59,6 +59,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
+import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
@@ -177,11 +182,27 @@ fun DeviceListScreen(
                     shape = MaterialTheme.shapes.large,
                     modifier = Modifier.padding(top = 24.dp).fillMaxWidth(),
                 ) {
-                    Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                        Text(stringResource(R.string.empty_helper_title), style = MaterialTheme.typography.titleSmall, color = muted, modifier = Modifier.padding(bottom = 8.dp))
+                    Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                        Text(stringResource(R.string.empty_helper_title), style = MaterialTheme.typography.titleSmall, color = muted)
                         HelperStep(1) {
-                            Text(stringResource(R.string.empty_devices_prereq), style = MaterialTheme.typography.bodyMedium, color = muted)
-                            TextButton(onClick = onOpenHelp, contentPadding = PaddingValues(0.dp)) { Text(stringResource(R.string.empty_devices_help)) }
+                            val link = stringResource(R.string.empty_devices_help)
+                            val text = stringResource(R.string.empty_devices_prereq, link)
+                            val primary = MaterialTheme.colorScheme.primary
+                            Text(
+                                buildAnnotatedString {
+                                    append(text)
+                                    val start = text.indexOf(link)
+                                    if (start >= 0) addLink(
+                                        LinkAnnotation.Clickable(
+                                            "help",
+                                            TextLinkStyles(SpanStyle(color = primary, textDecoration = TextDecoration.Underline)),
+                                        ) { onOpenHelp() },
+                                        start, start + link.length,
+                                    )
+                                },
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = muted,
+                            )
                         }
                         HelperStep(2) {
                             Text(stringResource(R.string.empty_devices_widgets), style = MaterialTheme.typography.bodyMedium, color = muted)

@@ -17,8 +17,8 @@
     <string name="empty_devices_title">デバイスがまだありません</string>
     <string name="empty_devices_hint">「デバイスを追加」をタップして作成します。</string>
     <string name="empty_helper_title">はじめる前に</string>
-    <string name="empty_devices_prereq">まず、PC で Wake-on-LAN を有効にしてください。セットアップガイドで手順を確認できます。</string>
-    <string name="empty_devices_help">セットアップガイドを開く</string>
+    <string name="empty_devices_prereq">まず、PC で Wake-on-LAN を有効にしてください。手順は%1$sで確認できます。</string>
+    <string name="empty_devices_help">セットアップガイド</string>
     <string name="empty_devices_widgets">そのあと、ホーム画面に WakeDeck ウィジェットを追加すると、ワンタップで PC を起動できます。</string>
     <string name="broadcast_summary">%1$s : %2$d</string>
     <string name="wake_sent">%1$s にマジックパケットを送信しました</string>

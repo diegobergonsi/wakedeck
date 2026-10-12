@@ -17,8 +17,8 @@
     <string name="empty_devices_title">Aún no hay dispositivos</string>
     <string name="empty_devices_hint">Toca Añadir dispositivo para crear uno.</string>
     <string name="empty_helper_title">Antes de empezar</string>
-    <string name="empty_devices_prereq">Primero, tu PC necesita tener Wake-on-LAN activado. La guía de configuración te explica cómo.</string>
-    <string name="empty_devices_help">Abrir la guía de configuración</string>
+    <string name="empty_devices_prereq">Primero, tu PC necesita tener Wake-on-LAN activado. La %1$s te explica cómo.</string>
+    <string name="empty_devices_help">guía de configuración</string>
     <string name="empty_devices_widgets">Después añade un widget de WakeDeck a la pantalla de inicio para encender tu PC con un toque.</string>
     <string name="broadcast_summary">%1$s : %2$d</string>
     <string name="wake_sent">Paquete mágico enviado a %1$s</string>

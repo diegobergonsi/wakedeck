@@ -17,8 +17,8 @@
     <string name="empty_devices_title">No devices yet</string>
     <string name="empty_devices_hint">Tap Add device to create one.</string>
     <string name="empty_helper_title">Before you start</string>
-    <string name="empty_devices_prereq">First, your PC needs Wake-on-LAN turned on. The setup guide walks you through it.</string>
-    <string name="empty_devices_help">Open the setup guide</string>
+    <string name="empty_devices_prereq">First, your PC needs Wake-on-LAN turned on. The %1$s walks you through it.</string>
+    <string name="empty_devices_help">setup guide</string>
     <string name="empty_devices_widgets">Then add a WakeDeck widget to your home screen, so you can wake your PC with a single tap.</string>
     <string name="broadcast_summary">%1$s : %2$d</string>
     <string name="wake_sent">Magic packet sent to %1$s</string>
