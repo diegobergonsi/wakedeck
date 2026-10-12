@@ -642,6 +642,8 @@ THIRD_PARTIES = {"Third parties", "Terceiros", "Tiers", "Dritte", "Terceros", "ç
 
 # Further languages live one per file in tools/site_i18n/. Each defines KEY, CODE, NAME, INDEX, PRIVACY, THIRD,
 # SUPPORT, TIPS, GUIDE and optionally RTL.
+# Language menu order: alphabetical by English name (folder keys).
+MENU_ORDER = ["ar", "zh", "da", "", "fi", "fr", "de", "id", "it", "ja", "ko", "nb", "pl", "pt-br", "pt-pt", "ru", "es", "sv", "tr", "vi"]
 RTL_LANGS = set()
 
 
@@ -747,7 +749,8 @@ def head(lang_code, folder, page, title, desc, ogdesc):
 def header(t, folder, page):
     b = base(folder)
     items = []
-    for f, code, name in LANGS:
+    by_folder = {f: (f, c, n) for f, c, n in LANGS}
+    for f, code, name in (by_folder[k] for k in MENU_ORDER):
         href = base(f) + PAGE_SUFFIX[page]
         cur = ' aria-current="true"' if f == folder else ""
         items.append(f'<li><a href="{href}" lang="{code}" hreflang="{code}"{cur}>{name}</a></li>')
