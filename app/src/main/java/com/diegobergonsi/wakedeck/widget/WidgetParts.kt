@@ -1,5 +1,6 @@
 package com.diegobergonsi.wakedeck.widget
 
+import android.content.Intent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -9,24 +10,34 @@ import androidx.glance.GlanceModifier
 import androidx.glance.Image
 import androidx.glance.ImageProvider
 import androidx.glance.LocalContext
+import androidx.glance.LocalSize
 import androidx.glance.action.ActionParameters
 import androidx.glance.action.actionParametersOf
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.action.actionRunCallback
+import androidx.glance.appwidget.action.actionStartActivity
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
 import androidx.glance.layout.Column
 import androidx.glance.layout.Row
+import androidx.glance.layout.fillMaxHeight
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.fillMaxWidth
+import androidx.glance.layout.height
 import androidx.glance.layout.padding
 import androidx.glance.layout.size
+import androidx.glance.layout.width
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
+import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
+import com.diegobergonsi.wakedeck.MainActivity
 import com.diegobergonsi.wakedeck.R
 import com.diegobergonsi.wakedeck.domain.DeviceStatus
 import com.diegobergonsi.wakedeck.widget.config.WidgetConfig
+
+/** Minimum touch target size (Android accessibility guidance). */
+val TOUCH_TARGET = 48.dp
 
 /** Small refresh icon shared by all widget types. [params] say which device(s) to re-check. */
 @Composable
@@ -34,9 +45,10 @@ fun RefreshIconButton(
     params: ActionParameters,
     palette: WidgetPalette,
     config: WidgetConfig,
-    size: Dp = 36.dp,
+    size: Dp = TOUCH_TARGET,
 ) {
     if (!config.showRefresh) return
+    // The tap area is the full 48 dp; the icon inside stays small.
     Box(
         GlanceModifier.size(size).clickable(actionRunCallback<RefreshAction>(params), R.drawable.ripple_circle),
         contentAlignment = Alignment.Center,
@@ -44,7 +56,7 @@ fun RefreshIconButton(
         Image(
             provider = ImageProvider(R.drawable.ic_widget_refresh),
             contentDescription = LocalContext.current.getString(R.string.widget_refresh),
-            modifier = GlanceModifier.size(size * 0.62f),
+            modifier = GlanceModifier.size(22.dp),
             colorFilter = ColorFilter.tint(palette.subtext),
         )
     }
@@ -62,8 +74,7 @@ fun StatusDot(status: DeviceStatus, palette: WidgetPalette) {
 
 /**
  * Body of the list and grid widgets. With a title: a header row (title + refresh) above the content.
- * Without one: the grid puts the refresh icon in a thin column on the right ([refreshInColumn]) so no height is
- * wasted; the list uses a thin header row so its Wake buttons stay flush with the right edge.
+ * Without one, a header row still appears when [refreshInColumn] is false and refresh is on, so refresh never floats loose.
  */
 @Composable
 fun MultiBody(
@@ -74,6 +85,7 @@ fun MultiBody(
     refreshInColumn: Boolean,
     centerContent: Boolean,
     preview: Boolean = false,
+    headerIcon: Boolean = false,
     content: @Composable () -> Unit,
 ) {
     val titled = config.label.isNotBlank()
@@ -82,13 +94,21 @@ fun MultiBody(
     Column(GlanceModifier.fillMaxSize()) {
         if (header) {
             Row(GlanceModifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                if (headerIcon) {
+                    Image(
+                        provider = ImageProvider(R.drawable.ic_widget_power),
+                        contentDescription = null,
+                        modifier = GlanceModifier.padding(start = 4.dp).size(20.dp),
+                        colorFilter = ColorFilter.tint(palette.accent),
+                    )
+                }
                 Text(
                     config.label,
                     maxLines = 1,
-                    modifier = GlanceModifier.defaultWeight().padding(start = 4.dp),
+                    modifier = GlanceModifier.defaultWeight().padding(start = if (headerIcon) 8.dp else 4.dp),
                     style = TextStyle(color = palette.text, fontSize = (14 * scale).sp, fontWeight = FontWeight.Bold),
                 )
-                RefreshIconButton(refresh, palette, config, size = if (titled) 36.dp else 28.dp)
+                RefreshIconButton(refresh, palette, config)
             }
         }
         Row(
@@ -97,7 +117,32 @@ fun MultiBody(
             verticalAlignment = if (centerContent) Alignment.CenterVertically else Alignment.Top,
         ) {
             Box(GlanceModifier.defaultWeight()) { content() }
-            if (!header) RefreshIconButton(refresh, palette, config, size = 28.dp)
+        }
+    }
+}
+
+/** Shown when the widget has nothing to show: the message, plus an "Add device" button when the widget is tall enough. */
+@Composable
+fun WidgetEmptyState(notConfigured: Boolean, palette: WidgetPalette, scale: Float) {
+    val context = LocalContext.current
+    val message = context.getString(if (notConfigured) R.string.widget_not_configured else R.string.widget_device_missing)
+    val textStyle = TextStyle(color = palette.text, fontSize = (13 * scale).sp, textAlign = TextAlign.Center)
+    Column(GlanceModifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically, horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(message, maxLines = 2, modifier = GlanceModifier.fillMaxWidth(), style = textStyle)
+        // A 2x1 has no room for a 48 dp button under the message.
+        if (LocalSize.current.height >= 110.dp) {
+            Box(
+                GlanceModifier.height(TOUCH_TARGET).clickable(actionStartActivity(Intent(context, MainActivity::class.java)), R.drawable.ripple_rounded),
+                contentAlignment = Alignment.Center,
+            ) {
+                Box(GlanceModifier.roundedBackground(20, palette.accent).padding(horizontal = 16.dp, vertical = 8.dp)) {
+                    Text(
+                        context.getString(R.string.add_device),
+                        maxLines = 1,
+                        style = TextStyle(color = palette.onAccent, fontSize = (13 * scale).sp, fontWeight = FontWeight.Medium),
+                    )
+                }
+            }
         }
     }
 }

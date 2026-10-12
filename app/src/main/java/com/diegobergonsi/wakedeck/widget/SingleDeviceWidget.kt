@@ -57,8 +57,8 @@ import kotlinx.coroutines.flow.flowOf
 // Layout tiers. Glance picks the largest of these that fits the real widget size.
 private val Small = DpSize(60.dp, 60.dp) // icon button only
 private val Compact = DpSize(110.dp, 60.dp) // icon button + name + status
-private val CompactPlus = DpSize(150.dp, 60.dp) // same, plus the refresh icon
-private val Wide = DpSize(200.dp, 60.dp) // icon + name + status + "Wake" button
+private val CompactPlus = DpSize(190.dp, 60.dp) // same, plus the refresh icon
+private val Wide = DpSize(250.dp, 60.dp) // icon + name + status + "Wake" button
 private val Tall = DpSize(110.dp, 130.dp) // column
 private val Large = DpSize(200.dp, 130.dp) // column, more room
 
@@ -160,12 +160,7 @@ fun SingleDeviceContent(state: SingleWidgetState) {
 
         val device = state.device
         if (state.config == null || device == null) {
-            Box(root.padding(8.dp), contentAlignment = Alignment.Center) {
-                Text(
-                    context.getString(if (state.config == null) R.string.widget_not_configured else R.string.widget_device_missing),
-                    style = TextStyle(color = palette.text, fontSize = (13 * scale).sp),
-                )
-            }
+            Box(root.padding(8.dp)) { WidgetEmptyState(state.config == null, palette, scale) }
             return@WidgetTheme
         }
 
@@ -200,6 +195,14 @@ internal fun buttonColor(spec: WakeButtonSpec) = when (spec.feedback) {
     WakeFeedback.NONE -> spec.palette.accent
 }
 
+/** Text or icon color that stays readable on the button's current fill (the sent and failed fills are not the accent). */
+@Composable
+internal fun buttonTextColor(spec: WakeButtonSpec) = when (spec.feedback) {
+    WakeFeedback.SENT -> spec.palette.onSent
+    WakeFeedback.FAILED -> spec.palette.onOffline
+    WakeFeedback.NONE -> spec.palette.onAccent
+}
+
 @Composable
 private fun IconOnlyLayout(spec: WakeButtonSpec) {
     // Fixed square so the button keeps its shape in tall or wide slots instead of stretching into a pill.
@@ -214,34 +217,43 @@ private fun IconOnlyLayout(spec: WakeButtonSpec) {
             provider = ImageProvider(spec.config.icon.drawableRes()),
             contentDescription = LocalContext.current.getString(R.string.wake),
             modifier = GlanceModifier.size(28.dp),
-            colorFilter = ColorFilter.tint(spec.palette.onAccent),
+            colorFilter = ColorFilter.tint(buttonTextColor(spec)),
         )
     }
 }
 
 @Composable
-internal fun WakeButton(spec: WakeButtonSpec, modifier: GlanceModifier = GlanceModifier) {
+internal fun WakeButton(spec: WakeButtonSpec, modifier: GlanceModifier = GlanceModifier, dense: Boolean = false) {
     val context = LocalContext.current
     val label = when (spec.feedback) {
         WakeFeedback.SENT -> R.string.widget_sent
         WakeFeedback.FAILED -> R.string.widget_failed
         WakeFeedback.NONE -> R.string.wake
     }
-    Box(
-        modifier
-            .roundedBackground(spec.config.cornerRadiusDp / 2, buttonColor(spec))
-            .padding(horizontal = 14.dp, vertical = 10.dp)
-            .clickable(actionRunCallback<WakeAction>(actionParametersOf(DeviceIdKey to spec.deviceId)), R.drawable.ripple_rounded),
-        contentAlignment = Alignment.Center,
-    ) {
+    // Dense buttons (list rows) are tonal at rest so a column of them stays quiet; feedback states stay solid.
+    val tonal = dense && spec.feedback == WakeFeedback.NONE
+    val wake = actionRunCallback<WakeAction>(actionParametersOf(DeviceIdKey to spec.deviceId))
+    val text: @Composable () -> Unit = {
         Text(
             context.getString(label),
             style = TextStyle(
-                color = spec.palette.onAccent,
-                fontSize = (14 * spec.config.textSize.scale).sp,
-                fontWeight = FontWeight.Bold,
+                color = if (tonal) spec.palette.onAccentSoft else buttonTextColor(spec),
+                fontSize = ((if (dense) 13 else 14) * spec.config.textSize.scale).sp,
+                fontWeight = if (dense) FontWeight.Medium else FontWeight.Bold,
             ),
         )
+    }
+    val shape = GlanceModifier.roundedBackground(spec.config.cornerRadiusDp / 2, if (tonal) spec.palette.accentSoft else buttonColor(spec))
+    if (dense) {
+        // The visible pill is slim; the tap area around it is a full 48 dp tall.
+        Box(modifier.height(TOUCH_TARGET).clickable(wake, R.drawable.ripple_rounded), contentAlignment = Alignment.Center) {
+            Box(shape.padding(horizontal = 12.dp, vertical = 8.dp), contentAlignment = Alignment.Center) { text() }
+        }
+    } else {
+        Box(
+            modifier.height(TOUCH_TARGET).then(shape).padding(horizontal = 14.dp).clickable(wake, R.drawable.ripple_rounded),
+            contentAlignment = Alignment.Center,
+        ) { text() }
     }
 }
 
@@ -277,6 +289,7 @@ internal fun StatusLine(
     scale: Float,
     iconColumn: Boolean = true,
     checkedAtMs: Long? = null,
+    maxLines: Int = 1,
 ) {
     val context = LocalContext.current
     val (color, label) = when (status) {
@@ -300,7 +313,7 @@ internal fun StatusLine(
             ?.takeIf { status == DeviceStatus.ONLINE || status == DeviceStatus.OFFLINE || status == DeviceStatus.STALE }
             ?.let { DateUtils.formatSameDayTime(it, System.currentTimeMillis(), DateFormat.SHORT, DateFormat.SHORT) }
         val text = if (checked != null) "${context.getString(label)} · $checked" else context.getString(label)
-        Text(text, maxLines = 1, style = TextStyle(color = palette.subtext, fontSize = (12 * scale).sp))
+        Text(text, maxLines = maxLines, style = TextStyle(color = palette.subtext, fontSize = (12 * scale).sp))
     }
 }
 
@@ -341,7 +354,7 @@ private fun CompactLayout(
     Row(GlanceModifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically) {
         Box(
             GlanceModifier
-                .size(44.dp)
+                .size(TOUCH_TARGET)
                 .roundedBackground(minOf(config.cornerRadiusDp, 14), buttonColor(button))
                 .clickable(actionRunCallback<WakeAction>(actionParametersOf(DeviceIdKey to button.deviceId)), R.drawable.ripple_rounded),
             contentAlignment = Alignment.Center,
@@ -350,7 +363,7 @@ private fun CompactLayout(
                 provider = ImageProvider(config.icon.drawableRes()),
                 contentDescription = context.getString(R.string.wake),
                 modifier = GlanceModifier.size(24.dp),
-                colorFilter = ColorFilter.tint(palette.onAccent),
+                colorFilter = ColorFilter.tint(buttonTextColor(button)),
             )
         }
         Spacer(GlanceModifier.width(8.dp))
@@ -363,13 +376,13 @@ private fun CompactLayout(
             when (button.feedback) {
                 WakeFeedback.SENT -> Text(
                     context.getString(R.string.widget_sent),
-                    style = TextStyle(color = palette.online, fontSize = (12 * scale).sp),
+                    style = TextStyle(color = palette.text, fontSize = (12 * scale).sp),
                 )
                 WakeFeedback.FAILED -> Text(
                     context.getString(R.string.widget_failed),
-                    style = TextStyle(color = palette.offline, fontSize = (12 * scale).sp),
+                    style = TextStyle(color = palette.text, fontSize = (12 * scale).sp),
                 )
-                WakeFeedback.NONE -> if (config.showStatus) StatusLine(state.status, palette, scale, iconColumn = false)
+                WakeFeedback.NONE -> if (config.showStatus) StatusLine(state.status, palette, scale, iconColumn = false, maxLines = 2)
             }
         }
         if (withRefresh) RefreshButton(button.deviceId, palette, config)

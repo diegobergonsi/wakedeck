@@ -9,7 +9,7 @@ object GridLayout {
     private const val AUTO_CELL_DP = 72f
     private const val MIN_CELL_DP = 56f
     private const val WANTED_ASPECT = 1.3f
-    private const val MIN_TILE_HEIGHT_DP = 66f
+    private const val MIN_TILE_HEIGHT_DP = 76f
     private const val MAX_TILE_HEIGHT_DP = 120f
 
     /** Requested columns (0 = auto), limited so each column keeps at least [MIN_CELL_DP]. */

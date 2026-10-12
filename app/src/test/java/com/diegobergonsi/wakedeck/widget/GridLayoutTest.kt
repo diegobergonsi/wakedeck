@@ -48,9 +48,9 @@ class GridLayoutTest {
 
     @Test
     fun tileHeightSharesHeightWithinLimits() {
-        assertEquals(66f, GridLayout.tileHeightDp(120f, 2), 0.01f)
+        assertEquals(76f, GridLayout.tileHeightDp(120f, 2), 0.01f)
         assertEquals(100f, GridLayout.tileHeightDp(200f, 2), 0.01f)
         assertEquals(120f, GridLayout.tileHeightDp(400f, 1), 0.01f)
-        assertEquals(66f, GridLayout.tileHeightDp(60f, 3), 0.01f)
+        assertEquals(76f, GridLayout.tileHeightDp(60f, 3), 0.01f)
     }
 }

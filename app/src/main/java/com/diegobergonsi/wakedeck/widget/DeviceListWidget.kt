@@ -43,6 +43,8 @@ import com.diegobergonsi.wakedeck.di.widgetEntryPoint
 import com.diegobergonsi.wakedeck.widget.config.ListRowStyle
 import com.diegobergonsi.wakedeck.widget.config.WidgetConfig
 
+private const val CARD_PADDING_DP = 2f
+
 /** Several devices in a scrolling list, each with its own Wake button. */
 class DeviceListWidget : GlanceAppWidget() {
     override val sizeMode = SizeMode.Exact
@@ -77,10 +79,12 @@ class DeviceListWidget : GlanceAppWidget() {
 
 @Composable
 fun DeviceListContent(state: MultiWidgetState, preview: Boolean = false) {
-    val config = state.config ?: WidgetConfig()
+    val context = LocalContext.current
+    // The list always has a title row (it carries the refresh button), so an unset title falls back to "Devices".
+    val saved = state.config ?: WidgetConfig()
+    val config = if (saved.label.isBlank()) saved.copy(label = context.getString(R.string.config_devices)) else saved
     WidgetTheme(config.themeMode) {
         val palette = widgetPalette(config)
-        val context = LocalContext.current
         val scale = config.textSize.scale
         val size = LocalSize.current
         val openApp = actionStartActivity(Intent(context, MainActivity::class.java))
@@ -94,29 +98,29 @@ fun DeviceListContent(state: MultiWidgetState, preview: Boolean = false) {
             BorderOverlay(config, palette)
             Box(GlanceModifier.fillMaxSize().padding(8.dp)) {
             if (state.config == null || state.rows.isEmpty()) {
-                Box(GlanceModifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text(
-                        context.getString(if (state.config == null) R.string.widget_not_configured else R.string.widget_device_missing),
-                        style = TextStyle(color = palette.text, fontSize = (13 * scale).sp),
-                    )
-                }
+                WidgetEmptyState(state.config == null, palette, scale)
             } else {
-                val headerHeight = when {
-                    config.label.isNotBlank() -> 36
-                    config.showRefresh -> 28
-                    else -> 0
-                }
-                val usableHeight = size.height.value - 8 - headerHeight
-                val rowHeight = ListLayout.rowHeightDp(usableHeight, state.rows.size, config.density).dp
-                MultiBody(config, state, palette, scale, refreshInColumn = false, centerContent = false, preview = preview) {
-                    if (preview) {
-                        Column(GlanceModifier.fillMaxWidth()) {
-                            state.rows.forEach { row -> ListRow(row, config, palette, scale, rowHeight) }
-                        }
-                    } else {
-                        LazyColumn(GlanceModifier.fillMaxWidth()) {
-                            items(state.rows, itemId = { it.device.id }) { row ->
-                                ListRow(row, config, palette, scale, rowHeight)
+                val headerHeight = TOUCH_TARGET.value.toInt()
+                // The rows sit in their own card; refresh and title stay outside it, on the widget background. Its corners are
+                // concentric with the widget's (outer radius minus the 8 dp padding), as Material widget guidance asks.
+                val cardHeight = size.height.value - 8 - headerHeight
+                val rowHeight = ListLayout.rowHeightDp(cardHeight - CARD_PADDING_DP * 2, state.rows.size, config.density)
+                val cardModifier = GlanceModifier
+                    .fillMaxWidth()
+                    .roundedBackground((config.cornerRadiusDp - 8).coerceAtLeast(4), palette.card)
+                    .padding(horizontal = 4.dp, vertical = CARD_PADDING_DP.dp)
+                MultiBody(config, state, palette, scale, refreshInColumn = false, centerContent = false, preview = preview, headerIcon = true) {
+                    // LocalSize can read smaller than the drawn widget, so the card fills the space rather than hugging rows.
+                    Box(if (preview) cardModifier else cardModifier.fillMaxSize()) {
+                        if (preview) {
+                            Column(GlanceModifier.fillMaxWidth()) {
+                                state.rows.forEach { row -> ListRow(row, config, palette, scale, rowHeight.dp) }
+                            }
+                        } else {
+                            LazyColumn(GlanceModifier.fillMaxWidth()) {
+                                items(state.rows, itemId = { it.device.id }) { row ->
+                                    ListRow(row, config, palette, scale, rowHeight.dp)
+                                }
                             }
                         }
                     }
@@ -149,6 +153,6 @@ private fun ListRow(row: DeviceRowState, config: WidgetConfig, palette: WidgetPa
             StatusDot(row.status, palette)
             Spacer(GlanceModifier.width(8.dp))
         }
-        WakeButton(button)
+        WakeButton(button, dense = true)
     }
 }

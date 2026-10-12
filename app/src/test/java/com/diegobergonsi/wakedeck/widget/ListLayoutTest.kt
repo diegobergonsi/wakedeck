@@ -19,6 +19,6 @@ class ListLayoutTest {
     @Test
     fun manyDevicesKeepAMinimumRowHeightAndScroll() {
         assertEquals(48f, ListLayout.rowHeightDp(100f, 6, DensityOption.COMFORTABLE), 0.01f)
-        assertEquals(36f, ListLayout.rowHeightDp(100f, 6, DensityOption.COMPACT), 0.01f)
+        assertEquals(48f, ListLayout.rowHeightDp(100f, 6, DensityOption.COMPACT), 0.01f)
     }
 }

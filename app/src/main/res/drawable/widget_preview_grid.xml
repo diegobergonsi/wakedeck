@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Static picker preview for launchers that ignore generated previews: a grid of three tiles. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="200dp"
-    android:height="80dp"
-    android:viewportWidth="200"
-    android:viewportHeight="80">
+    android:width="150dp"
+    android:height="60dp"
+    android:viewportWidth="150"
+    android:viewportHeight="60">
+    <group android:scaleX="0.75" android:scaleY="0.75">
     <path android:fillColor="#E4E1E9" android:pathData="M16,0 H184 A16,16 0 0 1 200,16 V64 A16,16 0 0 1 184,80 H16 A16,16 0 0 1 0,64 V16 A16,16 0 0 1 16,0 Z" />
     <path android:fillColor="#3F4F86" android:pathData="M20,10 H52 A12,12 0 0 1 64,22 V58 A12,12 0 0 1 52,70 H20 A12,12 0 0 1 8,58 V22 A12,12 0 0 1 20,10 Z" />
     <path android:fillColor="#FFFFFF" android:pathData="M36,28 m-7,0 a7,7 0 1,0 14,0 a7,7 0 1,0 -14,0" />
@@ -18,4 +19,5 @@
     <path android:fillColor="#FFFFFF" android:pathData="M160,28 m-7,0 a7,7 0 1,0 14,0 a7,7 0 1,0 -14,0" />
     <path android:fillColor="#FFFFFF" android:pathData="M145,42 H175 A3,3 0 0 1 178,45 V45 A3,3 0 0 1 175,48 H145 A3,3 0 0 1 142,45 V45 A3,3 0 0 1 145,42 Z" />
     <path android:fillColor="#CFD3E8" android:pathData="M148.5,54 H171.5 A2.5,2.5 0 0 1 174,56.5 V56.5 A2.5,2.5 0 0 1 171.5,59 H148.5 A2.5,2.5 0 0 1 146,56.5 V56.5 A2.5,2.5 0 0 1 148.5,54 Z" />
+    </group>
 </vector>

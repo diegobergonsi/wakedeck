@@ -41,13 +41,21 @@ import androidx.glance.layout.size
 import androidx.glance.layout.width
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
+import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
+import androidx.glance.unit.ColorProvider
 import com.diegobergonsi.wakedeck.MainActivity
 import com.diegobergonsi.wakedeck.R
 import com.diegobergonsi.wakedeck.di.widgetEntryPoint
 import com.diegobergonsi.wakedeck.domain.DeviceStatus
 import com.diegobergonsi.wakedeck.widget.config.WidgetConfig
 import kotlin.math.ceil
+
+/** Below this tile width the status label would be cut, so the tile drops its dot and tightens its padding. */
+private const val NARROW_TILE_DP = 84f
+
+/** Least height the tiles need; a grid shorter than this plus the 48 dp header has no header. */
+private const val MIN_BODY_DP = 76f
 
 /** Several devices as tiles. Tapping a tile wakes that device. */
 class DeviceGridWidget : GlanceAppWidget() {
@@ -100,38 +108,53 @@ fun DeviceGridContent(state: MultiWidgetState, preview: Boolean = false) {
             BorderOverlay(config, palette)
             Box(GlanceModifier.fillMaxSize().padding(4.dp)) {
             if (state.config == null || state.rows.isEmpty()) {
-                Box(GlanceModifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text(
-                        context.getString(if (state.config == null) R.string.widget_not_configured else R.string.widget_device_missing),
-                        style = TextStyle(color = palette.text, fontSize = (13 * scale).sp),
-                    )
-                }
+                WidgetEmptyState(state.config == null, palette, scale)
             } else {
-                val titled = config.label.isNotBlank()
-                val usableWidth = size.width.value - 8 - if (titled) 0 else 28
-                val usableHeight = size.height.value - 8 - if (titled) 36 else 0
+                // Refresh lives in a header row (like the list); a grid too short for one simply has no refresh button.
+                val touch = TOUCH_TARGET.value
+                val headerFits = size.height.value - 8 - touch >= MIN_BODY_DP
+                val titled = config.label.isNotBlank() && headerFits
+                val withHeader = titled || (config.showRefresh && headerFits)
+                val shown = when {
+                    withHeader && config.label.isBlank() -> config.copy(label = context.getString(R.string.config_devices))
+                    withHeader -> config
+                    else -> config.copy(label = "", showRefresh = false)
+                }
+                // The tiles sit in an inner card with 4 dp padding, like the list.
+                val usableHeight = size.height.value - 8 - 8 - if (withHeader) touch else 0f
+                val usableWidth = size.width.value - 8 - 8
                 val columns = if (config.gridColumns > 0) {
                     GridLayout.columnsFor(usableWidth, config.gridColumns)
                 } else {
                     GridLayout.autoColumns(usableWidth, usableHeight, state.rows.size)
                 }.coerceAtMost(state.rows.size)
                 val tileHeight = GridLayout.tileHeightDp(usableHeight, ceil(state.rows.size / columns.toFloat()).toInt()).dp
-                MultiBody(config, state, palette, scale, refreshInColumn = true, centerContent = true, preview = preview) {
-                    if (preview) {
-                        Column(GlanceModifier.fillMaxWidth()) {
-                            state.rows.chunked(columns).forEach { chunk ->
-                                Row(GlanceModifier.fillMaxWidth()) {
-                                    chunk.forEach { row ->
-                                        Box(GlanceModifier.defaultWeight()) { GridTile(row, config, palette, scale, columns, tileHeight) }
+                // LocalSize can read wider than the drawn widget (seen on a foldable), so 3+ columns counts as narrow too.
+                val narrow = columns >= 3 || usableWidth / columns < NARROW_TILE_DP
+                MultiBody(
+                    shown, state, palette, scale, refreshInColumn = false, centerContent = true, preview = preview, headerIcon = true,
+                ) {
+                    val card = GlanceModifier
+                        .fillMaxWidth()
+                        .roundedBackground((config.cornerRadiusDp - 8).coerceAtLeast(4), palette.card)
+                        .padding(4.dp)
+                    Box(if (preview) card else card.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        if (preview) {
+                            Column(GlanceModifier.fillMaxWidth()) {
+                                state.rows.chunked(columns).forEach { chunk ->
+                                    Row(GlanceModifier.fillMaxWidth()) {
+                                        chunk.forEach { row ->
+                                            Box(GlanceModifier.defaultWeight()) { GridTile(row, config, palette, scale, columns, tileHeight, narrow) }
+                                        }
+                                        repeat(columns - chunk.size) { Spacer(GlanceModifier.defaultWeight()) }
                                     }
-                                    repeat(columns - chunk.size) { Spacer(GlanceModifier.defaultWeight()) }
                                 }
                             }
-                        }
-                    } else {
-                        LazyVerticalGrid(GridCells.Fixed(columns), GlanceModifier.fillMaxWidth()) {
-                            items(state.rows, itemId = { it.device.id }) { row ->
-                                GridTile(row, config, palette, scale, columns, tileHeight)
+                        } else {
+                            LazyVerticalGrid(GridCells.Fixed(columns), GlanceModifier.fillMaxWidth()) {
+                                items(state.rows, itemId = { it.device.id }) { row ->
+                                    GridTile(row, config, palette, scale, columns, tileHeight, narrow)
+                                }
                             }
                         }
                     }
@@ -150,41 +173,47 @@ private fun GridTile(
     scale: Float,
     columns: Int,
     tileHeight: Dp,
+    narrow: Boolean,
 ) {
     val context = LocalContext.current
     val spec = WakeButtonSpec(row.device.id, row.feedback, palette, config)
     val wake = actionRunCallback<WakeAction>(actionParametersOf(DeviceIdKey to row.device.id))
+    // A long localized status wraps to a second line when the tile is tall enough; otherwise it is cut with an ellipsis.
+    val captionLines = if (tileHeight.value >= 76f * scale) 2 else 1
     Box(GlanceModifier.fillMaxWidth().padding(2.dp)) {
         val tile = GlanceModifier
             .fillMaxWidth()
             .height(tileHeight - 4.dp)
-            .roundedBackground(minOf(config.cornerRadiusDp, 16), buttonColor(spec))
+            .roundedBackground((config.cornerRadiusDp - 12).coerceIn(4, 12), buttonColor(spec))
             .clickable(wake, R.drawable.ripple_rounded)
-            .padding(horizontal = 6.dp)
+            .padding(horizontal = if (narrow) 2.dp else 6.dp)
         val icon: @Composable () -> Unit = {
             Image(
                 provider = ImageProvider(config.icon.drawableRes()),
                 contentDescription = null,
                 modifier = GlanceModifier.size((22 * scale).dp),
-                colorFilter = ColorFilter.tint(palette.onAccent),
+                colorFilter = ColorFilter.tint(buttonTextColor(spec)),
             )
         }
         val name: @Composable () -> Unit = {
             Text(
                 row.device.name,
                 maxLines = 1,
-                style = TextStyle(color = palette.onAccent, fontSize = (13 * scale).sp, fontWeight = FontWeight.Bold),
+                style = TextStyle(color = buttonTextColor(spec), fontSize = ((if (narrow) 12 else 13) * scale).sp, fontWeight = FontWeight.Bold),
             )
         }
         val caption: @Composable () -> Unit = {
             when (row.feedback) {
-                WakeFeedback.SENT -> TileCaption(context.getString(R.string.widget_sent), palette, scale)
-                WakeFeedback.FAILED -> TileCaption(context.getString(R.string.widget_failed), palette, scale)
+                WakeFeedback.SENT -> TileCaption(context.getString(R.string.widget_sent), buttonTextColor(spec), scale, captionLines)
+                WakeFeedback.FAILED -> TileCaption(context.getString(R.string.widget_failed), buttonTextColor(spec), scale, captionLines)
                 WakeFeedback.NONE -> if (config.showStatus) {
+                    // The label always stays (never color alone); the dot is dropped when the tile is too narrow for both.
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        StatusDot(row.status, palette)
-                        Spacer(GlanceModifier.width(4.dp))
-                        TileCaption(statusLabel(context, row.status), palette, scale)
+                        if (!narrow) {
+                            StatusDot(row.status, palette)
+                            Spacer(GlanceModifier.width(4.dp))
+                        }
+                        TileCaption(statusLabel(context, row.status), buttonTextColor(spec), scale, captionLines, center = narrow && columns > 1)
                     }
                 }
             }
@@ -204,8 +233,13 @@ private fun GridTile(
 }
 
 @Composable
-private fun TileCaption(text: String, palette: WidgetPalette, scale: Float) {
-    Text(text, maxLines = 1, style = TextStyle(color = palette.onAccent, fontSize = (11 * scale).sp))
+private fun TileCaption(text: String, color: ColorProvider, scale: Float, maxLines: Int, center: Boolean = false) {
+    Text(
+        text,
+        maxLines = maxLines,
+        modifier = if (center) GlanceModifier.fillMaxWidth() else GlanceModifier,
+        style = TextStyle(color = color, fontSize = (11 * scale).sp, textAlign = if (center) TextAlign.Center else null),
+    )
 }
 
 private fun statusLabel(context: Context, status: DeviceStatus): String = context.getString(
