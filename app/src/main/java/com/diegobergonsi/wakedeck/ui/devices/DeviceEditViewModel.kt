@@ -10,6 +10,7 @@ import com.diegobergonsi.wakedeck.data.DeviceRepository
 import androidx.annotation.StringRes
 import com.diegobergonsi.wakedeck.R
 import com.diegobergonsi.wakedeck.data.GroupRepository
+import com.diegobergonsi.wakedeck.data.WakeCoordinator
 import com.diegobergonsi.wakedeck.domain.BroadcastAddress
 import com.diegobergonsi.wakedeck.domain.Device
 import com.diegobergonsi.wakedeck.domain.Group
@@ -61,6 +62,7 @@ class DeviceEditViewModel @Inject constructor(
     private val repository: DeviceRepository,
     private val ssh: SshShutdown,
     private val groupRepository: GroupRepository,
+    private val coordinator: WakeCoordinator,
 ) : ViewModel() {
     val groups: StateFlow<List<Group>> = groupRepository.observeAll()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
@@ -166,6 +168,7 @@ class DeviceEditViewModel @Inject constructor(
         val device = validatedDevice() ?: return
         viewModelScope.launch {
             repository.save(device)
+            coordinator.refreshWidgets()
             finished = true
         }
     }
@@ -233,6 +236,7 @@ class DeviceEditViewModel @Inject constructor(
         if (isNew) return
         viewModelScope.launch {
             repository.delete(deviceId)
+            coordinator.refreshWidgets()
             finished = true
         }
     }
