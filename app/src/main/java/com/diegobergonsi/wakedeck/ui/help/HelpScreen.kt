@@ -54,6 +54,8 @@ import kotlinx.coroutines.launch
 const val HELP_SECTION_WOL = "wol"
 const val HELP_SECTION_SSH = "ssh"
 
+private enum class HelpOs { LINUX, WINDOWS, MACOS }
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HelpScreen(onBack: () -> Unit, openSection: String? = null, viewModel: HelpViewModel = hiltViewModel()) {
@@ -61,7 +63,7 @@ fun HelpScreen(onBack: () -> Unit, openSection: String? = null, viewModel: HelpV
     val snackbar = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val copiedText = stringResource(R.string.help_copied)
-    var linux by rememberSaveable { mutableStateOf(true) }
+    var os by rememberSaveable { mutableStateOf(HelpOs.LINUX) }
     var open by rememberSaveable { mutableStateOf(openSection ?: HELP_SECTION_WOL) }
     val key = viewModel.publicKeyLine
 
@@ -89,37 +91,47 @@ fun HelpScreen(onBack: () -> Unit, openSection: String? = null, viewModel: HelpV
             Text(stringResource(R.string.help_intro), style = MaterialTheme.typography.bodyMedium)
             Text(stringResource(R.string.help_os_pick), style = MaterialTheme.typography.labelLarge)
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                FilterChip(selected = linux, onClick = { linux = true }, label = { Text(stringResource(R.string.help_os_linux)) })
-                FilterChip(selected = !linux, onClick = { linux = false }, label = { Text(stringResource(R.string.help_os_windows)) })
+                FilterChip(selected = os == HelpOs.LINUX, onClick = { os = HelpOs.LINUX }, label = { Text(stringResource(R.string.help_os_linux)) })
+                FilterChip(selected = os == HelpOs.WINDOWS, onClick = { os = HelpOs.WINDOWS }, label = { Text(stringResource(R.string.help_os_windows)) })
+                FilterChip(selected = os == HelpOs.MACOS, onClick = { os = HelpOs.MACOS }, label = { Text(stringResource(R.string.help_os_macos)) })
             }
 
             Section(R.string.help_s1, open == HELP_SECTION_WOL, { open = if (open == HELP_SECTION_WOL) "" else HELP_SECTION_WOL }) {
                 Body(R.string.help_wol_intro)
                 Body(R.string.help_wol_bios)
-                if (linux) {
+                if (os == HelpOs.LINUX) {
                     Body(R.string.help_wol_l1); Command(stringResource(R.string.cmd_linux_list_ifaces), copy)
                     Body(R.string.help_wol_l2); Command(stringResource(R.string.cmd_linux_check_wol), copy)
                     Body(R.string.help_wol_l3); Command(stringResource(R.string.cmd_linux_set_wol), copy)
                     Body(R.string.help_wol_l4); Command(stringResource(R.string.cmd_linux_persist_wol), copy)
-                } else {
+                } else if (os == HelpOs.WINDOWS) {
                     Body(R.string.help_wol_w1)
                     Body(R.string.help_wol_w2)
                     Body(R.string.help_wol_w3)
+                } else {
+                    Body(R.string.help_wol_m1)
+                    Body(R.string.help_wol_m2)
                 }
                 Body(R.string.help_wol_app)
-                Command(stringResource(if (linux) R.string.cmd_linux_list_ifaces else R.string.cmd_win_ipconfig), copy)
+                Command(stringResource(when (os) { HelpOs.LINUX -> R.string.cmd_linux_list_ifaces; HelpOs.WINDOWS -> R.string.cmd_win_ipconfig; HelpOs.MACOS -> R.string.cmd_mac_networksetup }), copy)
                 Body(R.string.help_wol_app2)
             }
 
             Section(R.string.help_s2, open == HELP_SECTION_SSH, { open = if (open == HELP_SECTION_SSH) "" else HELP_SECTION_SSH }) {
                 Body(R.string.help_ssh_intro)
-                if (linux) {
+                if (os == HelpOs.LINUX) {
                     Body(R.string.help_ssh_l1); Command(stringResource(R.string.cmd_linux_install_ssh), copy)
                     Body(R.string.help_ssh_l1b); Command(stringResource(R.string.cmd_linux_enable_sshd), copy)
                     Body(R.string.help_ssh_l2); Command(stringResource(R.string.cmd_linux_add_key, viewModel.linuxKeyLine), copy)
                     Body(R.string.help_ssh_l3)
                     Command(stringResource(R.string.cmd_linux_sudoers), copy)
                     Command(stringResource(R.string.cmd_linux_sudoers_line), copy)
+                } else if (os == HelpOs.MACOS) {
+                    Body(R.string.help_ssh_m1)
+                    Body(R.string.help_ssh_l2); Command(stringResource(R.string.cmd_linux_add_key, viewModel.linuxKeyLine), copy)
+                    Body(R.string.help_ssh_m3)
+                    Command(stringResource(R.string.cmd_linux_sudoers), copy)
+                    Command(stringResource(R.string.cmd_mac_sudoers_line), copy)
                 } else {
                     Body(R.string.help_ssh_w1); Command(stringResource(R.string.cmd_win_install_ssh), copy)
                     Body(R.string.help_ssh_w2)
@@ -129,7 +141,7 @@ fun HelpScreen(onBack: () -> Unit, openSection: String? = null, viewModel: HelpV
                     Body(R.string.help_ssh_w4)
                 }
                 Body(R.string.help_ssh_app)
-                Command(stringResource(if (linux) R.string.cmd_linux_hostkey else R.string.cmd_win_hostkey), copy)
+                Command(stringResource(if (os == HelpOs.WINDOWS) R.string.cmd_win_hostkey else R.string.cmd_linux_hostkey), copy)
                 Body(R.string.help_ssh_trouble)
             }
 

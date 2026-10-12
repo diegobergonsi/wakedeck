@@ -1,6 +1,6 @@
 package com.diegobergonsi.wakedeck.domain
 
-enum class OsType { WINDOWS, LINUX }
+enum class OsType { WINDOWS, LINUX, MACOS }
 
 data class Device(
     val id: Long = 0,

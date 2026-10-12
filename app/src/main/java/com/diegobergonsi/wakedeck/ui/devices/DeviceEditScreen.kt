@@ -143,7 +143,7 @@ fun DeviceEditScreen(onDone: () -> Unit, onOpenSshHelp: () -> Unit, viewModel: D
                         FilterChip(
                             selected = form.os == os,
                             onClick = { viewModel.update { it.copy(os = os) } },
-                            label = { Text(stringResource(if (os == OsType.WINDOWS) R.string.os_windows else R.string.os_linux)) },
+                            label = { Text(stringResource(when (os) { OsType.WINDOWS -> R.string.os_windows; OsType.LINUX -> R.string.os_linux; OsType.MACOS -> R.string.os_macos })) },
                         )
                     }
                 }

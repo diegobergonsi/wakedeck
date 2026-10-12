@@ -250,4 +250,8 @@
     <string name="groups_tap_hint">Tippe auf eine Gruppe, um ihre Geräte auszuwählen.</string>
     <string name="group_devices_title">Geräte in %1$s</string>
     <string name="group_device_in_other">in %1$s</string>
+    <string name="help_wol_m1">Öffne Systemeinstellungen \u2192 Batterie (MacBook) oder Energie (Desktop-Mac) \u2192 Optionen und aktiviere \u201cAufwecken für Netzwerkzugriff\u201d. Das Aufwecken klappt am besten per Ethernet: Nutze am MacBook einen USB-C- oder Thunderbolt-Ethernet-Adapter und lass ihn am Strom. Ein schlafender Mac im WLAN ignoriert das Magic Packet oft.</string>
+    <string name="help_wol_m2">Schalte im WLAN auch \u201cPrivate WLAN-Adresse\u201d für dein Netzwerk aus (Systemeinstellungen \u2192 WLAN \u2192 Details), sonst bekommt der Mac eine andere MAC-Adresse. In der Liste unten ist \u201cEthernet Address\u201d die MAC-Adresse des jeweiligen Anschlusses.</string>
+    <string name="help_ssh_m1">Schalte den SSH-Server ein: Systemeinstellungen \u2192 Allgemein \u2192 Teilen \u2192 Entfernte Anmeldung, und erlaube deinen Benutzer.</string>
+    <string name="help_ssh_m3">Erlaube das Herunterfahren ohne Passwort. Führe dies aus und füge dann die Zeile darunter hinzu (ersetze youruser):</string>
 </resources>

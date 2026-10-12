@@ -253,4 +253,8 @@
     <string name="groups_tap_hint">Toca un grupo para elegir sus dispositivos.</string>
     <string name="group_devices_title">Dispositivos en %1$s</string>
     <string name="group_device_in_other">en %1$s</string>
+    <string name="help_wol_m1">Abre Ajustes del Sistema \u2192 Batería (MacBook) o Energía (Mac de sobremesa) \u2192 Opciones y activa \u201cActivar para acceso a la red\u201d. El encendido funciona mejor por cable: en un MacBook usa un adaptador Ethernet USB-C o Thunderbolt y déjalo enchufado a la corriente. Un Mac suspendido por Wi-Fi suele ignorar el paquete mágico.</string>
+    <string name="help_wol_m2">Si usas Wi-Fi, desactiva también \u201cDirección Wi-Fi privada\u201d para tu red (Ajustes del Sistema \u2192 Wi-Fi \u2192 Detalles), o el Mac tendrá otra dirección MAC. En la lista de abajo, \u201cEthernet Address\u201d es la dirección MAC de cada puerto.</string>
+    <string name="help_ssh_m1">Activa el servidor SSH: Ajustes del Sistema \u2192 General \u2192 Compartir \u2192 Sesión remota, y permite a tu usuario.</string>
+    <string name="help_ssh_m3">Permite apagar sin contraseña. Ejecuta esto y después añade la línea de debajo (sustituye youruser):</string>
 </resources>

@@ -14,4 +14,9 @@ class ShutdownCommandTest {
     fun windowsUsesShutdownExe() {
         assertEquals("shutdown /s /t 0", ShutdownCommand.forOs(OsType.WINDOWS))
     }
+
+    @Test
+    fun macosUsesNonInteractiveSudo() {
+        assertEquals("sudo -n shutdown -h now", ShutdownCommand.forOs(OsType.MACOS))
+    }
 }

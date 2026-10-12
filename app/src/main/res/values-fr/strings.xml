@@ -253,4 +253,8 @@
     <string name="groups_tap_hint">Touchez un groupe pour choisir ses appareils.</string>
     <string name="group_devices_title">Appareils dans %1$s</string>
     <string name="group_device_in_other">dans %1$s</string>
+    <string name="help_wol_m1">Ouvrez Réglages Système \u2192 Batterie (MacBook) ou Énergie (Mac de bureau) \u2192 Options, et activez \u00ab Réactiver pour l’accès au réseau \u00bb. Le réveil fonctionne mieux en Ethernet : sur un MacBook, utilisez un adaptateur Ethernet USB-C ou Thunderbolt et laissez-le branché sur le secteur. Un Mac en veille sur Wi-Fi ignore souvent le paquet magique.</string>
+    <string name="help_wol_m2">En Wi-Fi, désactivez aussi \u00ab Adresse Wi-Fi privée \u00bb pour votre réseau (Réglages Système \u2192 Wi-Fi \u2192 Détails), sinon le Mac reçoit une autre adresse MAC. Dans la liste ci-dessous, \u00ab Ethernet Address \u00bb est l’adresse MAC de chaque port.</string>
+    <string name="help_ssh_m1">Activez le serveur SSH : Réglages Système \u2192 Général \u2192 Partage \u2192 Session à distance, et autorisez votre utilisateur.</string>
+    <string name="help_ssh_m3">Autorisez l’extinction sans mot de passe. Exécutez ceci, puis ajoutez la ligne en dessous (remplacez youruser) :</string>
 </resources>

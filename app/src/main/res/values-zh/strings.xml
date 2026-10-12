@@ -247,4 +247,8 @@
     <string name="groups_tap_hint">点按分组以选择其中的设备。</string>
     <string name="group_devices_title">%1$s 中的设备</string>
     <string name="group_device_in_other">在 %1$s 中</string>
+    <string name="help_wol_m1">打开“系统设置” \u2192 “电池”（MacBook）或“节能”（台式 Mac）\u2192 “选项”，开启“网络唤醒”。使用有线网络唤醒效果最好：MacBook 请用 USB-C 或雷雳以太网适配器，并保持接通电源。通过 Wi-Fi 睡眠的 Mac 常常会忽略魔术包。</string>
+    <string name="help_wol_m2">使用 Wi-Fi 时，还要为你的网络关闭“私有 Wi-Fi 地址”（系统设置 \u2192 Wi-Fi \u2192 详细信息），否则 Mac 会使用另一个 MAC 地址。下面列表中的“Ethernet Address”就是各端口的 MAC 地址。</string>
+    <string name="help_ssh_m1">开启 SSH 服务器：系统设置 \u2192 通用 \u2192 共享 \u2192 远程登录，并允许你的用户。</string>
+    <string name="help_ssh_m3">允许无需密码关机。运行下面的命令，然后添加其下方的那一行（替换 youruser）：</string>
 </resources>

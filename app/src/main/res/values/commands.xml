@@ -16,4 +16,6 @@
     <string name="cmd_win_add_admin_key" translatable="false">Add-Content -Force -Path \"$env:ProgramData\\ssh\\administrators_authorized_keys\" -Value \'%1$s\'</string>
     <string name="cmd_win_lock_admin_keys" translatable="false">icacls.exe \"$env:ProgramData\\ssh\\administrators_authorized_keys\" /inheritance:r /grant \"Administrators:F\" /grant \"SYSTEM:F\"</string>
     <string name="cmd_win_hostkey" translatable="false">ssh-keygen -lf $env:ProgramData\\ssh\\ssh_host_ecdsa_key.pub</string>
+    <string name="cmd_mac_networksetup" translatable="false">networksetup -listallhardwareports</string>
+    <string name="cmd_mac_sudoers_line" translatable="false">youruser ALL=(ALL) NOPASSWD: /sbin/shutdown</string>
 </resources>

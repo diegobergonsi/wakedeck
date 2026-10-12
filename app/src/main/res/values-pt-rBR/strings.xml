@@ -253,4 +253,8 @@
     <string name="groups_tap_hint">Toque em um grupo para escolher os dispositivos dele.</string>
     <string name="group_devices_title">Dispositivos em %1$s</string>
     <string name="group_device_in_other">em %1$s</string>
+    <string name="help_wol_m1">Abra Ajustes do Sistema \u2192 Bateria (MacBook) ou Economia de Energia (Mac de mesa) \u2192 Opções e ative \u201cAtivar para acesso à rede\u201d. Ligar funciona melhor por cabo: no MacBook, use um adaptador Ethernet USB-C ou Thunderbolt e deixe na tomada. Um Mac em suspensão no Wi-Fi costuma ignorar o pacote mágico.</string>
+    <string name="help_wol_m2">No Wi-Fi, desative também \u201cEndereço Wi-Fi privado\u201d da sua rede (Ajustes do Sistema \u2192 Wi-Fi \u2192 Detalhes), senão o Mac recebe outro endereço MAC. Na lista abaixo, \u201cEthernet Address\u201d é o endereço MAC de cada porta.</string>
+    <string name="help_ssh_m1">Ative o servidor SSH: Ajustes do Sistema \u2192 Geral \u2192 Compartilhamento \u2192 Login Remoto, e permita o seu usuário.</string>
+    <string name="help_ssh_m3">Permita desligar sem senha. Execute isto e depois adicione a linha abaixo (troque youruser):</string>
 </resources>

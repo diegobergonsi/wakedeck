@@ -247,4 +247,8 @@
     <string name="groups_tap_hint">グループをタップして、そのデバイスを選択します。</string>
     <string name="group_devices_title">%1$s のデバイス</string>
     <string name="group_device_in_other">%1$s 内</string>
+    <string name="help_wol_m1">システム設定 \u2192 バッテリー（MacBook）またはエネルギー（デスクトップ Mac）\u2192 オプションで、「ネットワークアクセスによるスリープ解除」をオンにします。起動はイーサネット接続が最適です。MacBook では USB-C または Thunderbolt のイーサネットアダプタを使い、電源につないでおいてください。Wi-Fi 接続でスリープ中の Mac は、マジックパケットを無視することがよくあります。</string>
+    <string name="help_wol_m2">Wi-Fi を使う場合は、お使いのネットワークの「プライベート Wi-Fi アドレス」もオフにしてください（システム設定 \u2192 Wi-Fi \u2192 詳細）。オフにしないと Mac の MAC アドレスが変わります。下の一覧の「Ethernet Address」が各ポートの MAC アドレスです。</string>
+    <string name="help_ssh_m1">SSH サーバーをオンにします：システム設定 \u2192 一般 \u2192 共有 \u2192 リモートログイン。そしてお使いのユーザーを許可します。</string>
+    <string name="help_ssh_m3">パスワードなしでシャットダウンできるようにします。次を実行し、その下の行を追加してください（youruser を置き換えます）：</string>
 </resources>

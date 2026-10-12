@@ -32,6 +32,7 @@
     <string name="field_status_port">Status check port (optional)</string>
     <string name="os_windows">Windows</string>
     <string name="os_linux">Linux</string>
+    <string name="os_macos" translatable="false">macOS</string>
     <string name="hint_host">Needed for online/offline checks</string>
     <string name="hint_broadcast">Use your subnet broadcast (e.g. 192.168.1.255) to wake over a VPN</string>
     <string name="hint_status_port">TCP port to test, e.g. 22 for SSH. Leave empty to use ping</string>
@@ -210,6 +211,7 @@
     <string name="help_intro">Setup guide for the PC. Waking needs the settings in section 1. Remote shutdown over SSH (section 2) is optional.</string>
     <string name="help_os_linux">Linux</string>
     <string name="help_os_windows">Windows</string>
+    <string name="help_os_macos" translatable="false">macOS</string>
     <string name="help_os_pick">Show steps for</string>
     <string name="help_s1">1. Wake-on-LAN (PC settings)</string>
     <string name="help_wol_intro">A magic packet wakes a PC that is off or asleep, but only if its network card still has power and is listening. Use a network cable: Wi-Fi rarely works for wake-up.</string>
@@ -250,4 +252,8 @@
     <string name="groups_tap_hint">Tap a group to choose its devices.</string>
     <string name="group_devices_title">Devices in %1$s</string>
     <string name="group_device_in_other">in %1$s</string>
+    <string name="help_wol_m1">Open System Settings \u2192 Battery (MacBook) or Energy (desktop Mac) \u2192 Options, and turn on \u201cWake for network access\u201d. Waking works best over Ethernet: on a MacBook use a USB-C or Thunderbolt Ethernet adapter, and keep it plugged into power. A sleeping Mac on Wi-Fi often ignores the magic packet.</string>
+    <string name="help_wol_m2">On Wi-Fi, also turn off \u201cPrivate Wi-Fi address\u201d for your network (System Settings \u2192 Wi-Fi \u2192 Details), or the Mac gets a different MAC address. In the list below, \u201cEthernet Address\u201d is the MAC address of each port.</string>
+    <string name="help_ssh_m1">Turn on the SSH server: System Settings \u2192 General \u2192 Sharing \u2192 Remote Login, and allow your user.</string>
+    <string name="help_ssh_m3">Allow shutdown without a password. Run this, then add the line below it (replace youruser):</string>
 </resources>
