@@ -15,7 +15,6 @@
     <string name="wake">Encender</string>
     <string name="empty_devices">Aún no hay dispositivos. Toca «Añadir dispositivo» para crear uno.</string>
     <string name="empty_devices_title">Aún no hay dispositivos</string>
-    <string name="empty_devices_hint">Toca Añadir dispositivo para crear uno.</string>
     <string name="empty_helper_title">Antes de empezar</string>
     <string name="empty_devices_prereq">Primero, tu PC necesita tener Wake-on-LAN activado. La %1$s te explica cómo.</string>
     <string name="empty_devices_help">guía de configuración</string>

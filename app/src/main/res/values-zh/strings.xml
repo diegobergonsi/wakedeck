@@ -15,7 +15,6 @@
     <string name="wake">唤醒</string>
     <string name="empty_devices">还没有设备。点按“添加设备”来创建一个。</string>
     <string name="empty_devices_title">还没有设备</string>
-    <string name="empty_devices_hint">点按“添加设备”来创建一个。</string>
     <string name="empty_helper_title">开始之前</string>
     <string name="empty_devices_prereq">首先，你的电脑需要开启 Wake-on-LAN。%1$s会一步步教你。</string>
     <string name="empty_devices_help">设置指南</string>

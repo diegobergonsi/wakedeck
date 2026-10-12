@@ -15,7 +15,6 @@
     <string name="wake">Wake</string>
     <string name="empty_devices">No devices yet. Tap \"Add device\" to create one.</string>
     <string name="empty_devices_title">No devices yet</string>
-    <string name="empty_devices_hint">Tap Add device to create one.</string>
     <string name="empty_helper_title">Before you start</string>
     <string name="empty_devices_prereq">First, your PC needs Wake-on-LAN turned on. The %1$s walks you through it.</string>
     <string name="empty_devices_help">setup guide</string>

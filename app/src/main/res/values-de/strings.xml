@@ -15,7 +15,6 @@
     <string name="wake">Aufwecken</string>
     <string name="empty_devices">Noch keine Geräte. Tippe auf „Gerät hinzufügen“, um eines anzulegen.</string>
     <string name="empty_devices_title">Noch keine Geräte</string>
-    <string name="empty_devices_hint">Tippe auf Gerät hinzufügen, um eines anzulegen.</string>
     <string name="empty_helper_title">Bevor du loslegst</string>
     <string name="empty_devices_prereq">Zuerst muss auf deinem PC Wake-on-LAN aktiviert sein. Die %1$s zeigt dir, wie.</string>
     <string name="empty_devices_help">Einrichtungsanleitung</string>

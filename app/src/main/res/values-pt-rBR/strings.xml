@@ -15,7 +15,6 @@
     <string name="wake">Ligar</string>
     <string name="empty_devices">Nenhum dispositivo ainda. Toque em \"Adicionar dispositivo\" para criar um.</string>
     <string name="empty_devices_title">Nenhum dispositivo ainda</string>
-    <string name="empty_devices_hint">Toque em Adicionar dispositivo para criar um.</string>
     <string name="empty_helper_title">Antes de começar</string>
     <string name="empty_devices_prereq">Primeiro, seu PC precisa ter o Wake-on-LAN ativado. O %1$s mostra como.</string>
     <string name="empty_devices_help">guia de configuração</string>

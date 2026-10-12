@@ -15,7 +15,6 @@
     <string name="wake">起動</string>
     <string name="empty_devices">デバイスがまだありません。「デバイスを追加」をタップして作成してください。</string>
     <string name="empty_devices_title">デバイスがまだありません</string>
-    <string name="empty_devices_hint">「デバイスを追加」をタップして作成します。</string>
     <string name="empty_helper_title">はじめる前に</string>
     <string name="empty_devices_prereq">まず、PC で Wake-on-LAN を有効にしてください。手順は%1$sで確認できます。</string>
     <string name="empty_devices_help">セットアップガイド</string>

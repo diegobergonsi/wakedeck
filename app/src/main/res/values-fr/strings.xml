@@ -15,7 +15,6 @@
     <string name="wake">Allumer</string>
     <string name="empty_devices">Aucun appareil pour l’instant. Touchez « Ajouter un appareil » pour en créer un.</string>
     <string name="empty_devices_title">Aucun appareil pour l’instant</string>
-    <string name="empty_devices_hint">Touchez Ajouter un appareil pour en créer un.</string>
     <string name="empty_helper_title">Avant de commencer</string>
     <string name="empty_devices_prereq">Pour commencer, votre PC doit avoir le Wake-on-LAN activé. Le %1$s vous explique comment faire.</string>
     <string name="empty_devices_help">guide de configuration</string>

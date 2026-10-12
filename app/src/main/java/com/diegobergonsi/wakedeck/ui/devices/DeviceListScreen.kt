@@ -175,7 +175,6 @@ fun DeviceListScreen(
                 val center = TextAlign.Center
                 Image(painterResource(R.drawable.bg_power_ring), contentDescription = null, modifier = Modifier.size(160.dp), alpha = 0.5f)
                 Text(stringResource(R.string.empty_devices_title), style = MaterialTheme.typography.headlineSmall, textAlign = center)
-                Text(stringResource(R.string.empty_devices_hint), style = MaterialTheme.typography.bodyLarge, color = muted, textAlign = center)
                 FilledTonalButton(onClick = onAdd, modifier = Modifier.padding(top = 8.dp)) { Text(stringResource(R.string.add_device)) }
                 Surface(
                     color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
