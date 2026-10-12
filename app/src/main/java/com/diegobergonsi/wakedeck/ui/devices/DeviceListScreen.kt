@@ -53,6 +53,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.ui.Alignment
@@ -169,26 +172,28 @@ fun DeviceListScreen(
         )
         if (!hasDevices) {
             val muted = MaterialTheme.colorScheme.onSurfaceVariant
-            Column(
-                Modifier.fillMaxSize().padding(padding).padding(start = contentSidePadding(32.dp), end = contentSidePadding(32.dp), bottom = 36.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
-                    Column(
-                        Modifier.verticalScroll(rememberScrollState()),
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
+            BoxWithConstraints(Modifier.fillMaxSize().padding(padding)) {
+                val viewport = maxHeight
+                Column(
+                    Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(rememberScrollState())
+                        .heightIn(min = viewport)
+                        .padding(start = contentSidePadding(32.dp), end = contentSidePadding(32.dp), bottom = 36.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Spacer(Modifier.weight(1f))
+                    Column(verticalArrangement = Arrangement.spacedBy(8.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                         Image(painterResource(R.drawable.bg_power_ring), contentDescription = null, modifier = Modifier.size(160.dp), alpha = 0.5f)
                         Text(stringResource(R.string.empty_devices_title), style = MaterialTheme.typography.headlineSmall, textAlign = TextAlign.Center)
                         FilledTonalButton(onClick = onAdd, modifier = Modifier.padding(top = 8.dp)) { Text(stringResource(R.string.add_device)) }
                     }
-                }
-                Surface(
-                    color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
-                    shape = MaterialTheme.shapes.large,
-                    modifier = Modifier.padding(top = 24.dp).fillMaxWidth(),
-                ) {
+                    Spacer(Modifier.weight(1f))
+                    Surface(
+                        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+                        shape = MaterialTheme.shapes.large,
+                        modifier = Modifier.padding(top = 24.dp).fillMaxWidth(),
+                    ) {
                         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                             Text(stringResource(R.string.empty_helper_title), style = MaterialTheme.typography.titleSmall, color = muted)
                             HelperStep(1) {
@@ -215,6 +220,7 @@ fun DeviceListScreen(
                                 Text(stringResource(R.string.empty_devices_widgets), style = MaterialTheme.typography.bodyMedium, color = muted)
                             }
                         }
+                    }
                 }
             }
         } else {
