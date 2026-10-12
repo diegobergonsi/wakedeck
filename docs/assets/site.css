@@ -91,10 +91,10 @@ footer ul { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; f
 .prose > * { max-width: 740px; }
 .prose h2 { font-size: 24px; margin: 48px 0 12px; color: var(--cream); }
 .prose p, .prose li { color: var(--text); }
-.prose ul { padding-left: 1.2em; margin: 12px 0; }
+.prose ul { padding-inline-start: 1.2em; margin: 12px 0; }
 .prose li { margin: 8px 0; }
 .prose li::marker { color: var(--amber); }
-.prose .summary { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--amber); border-radius: 18px; padding: 20px 24px; margin: 24px 0 8px; }
+.prose .summary { background: var(--card); border: 1px solid var(--line); border-inline-start: 4px solid var(--amber); border-radius: 18px; padding: 20px 24px; margin: 24px 0 8px; }
 .prose .summary p { margin: 0; }
 .prose strong { color: #fff; }
 
@@ -104,10 +104,10 @@ nav a[aria-current="page"] { color: #fff; text-decoration: underline; text-decor
 .lang { position: relative; }
 .lang summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 15px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; white-space: nowrap; }
 .lang summary::-webkit-details-marker { display: none; }
-.lang summary::after { content: ""; width: 7px; height: 7px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg) translateY(-2px); margin-left: 2px; }
+.lang summary::after { content: ""; width: 7px; height: 7px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg) translateY(-2px); margin-inline-start: 2px; }
 .lang[open] summary { color: #fff; border-color: var(--periwinkle); }
 .lang summary:hover { color: #fff; }
-.lang ul { position: absolute; right: 0; top: calc(100% + 8px); z-index: 20; list-style: none; margin: 0; padding: 6px; min-width: 210px; background: var(--navy-900); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 16px 40px rgba(8, 11, 40, .6); }
+.lang ul { position: absolute; inset-inline-end: 0; max-height: 70vh; overflow-y: auto; top: calc(100% + 8px); z-index: 20; list-style: none; margin: 0; padding: 6px; min-width: 210px; background: var(--navy-900); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 16px 40px rgba(8, 11, 40, .6); }
 .lang li a { display: block; padding: 9px 14px; border-radius: 10px; color: var(--text); text-decoration: none; font-size: 15px; }
 .lang li a:hover { background: var(--card); }
 .lang li a[aria-current="true"] { color: var(--amber); font-weight: 700; }
@@ -127,3 +127,6 @@ nav a[aria-current="page"] { color: #fff; text-decoration: underline; text-decor
 .prose h3 { font-size: 19px; margin: 32px 0 8px; color: var(--cream); }
 .prose pre { background: var(--navy-900); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; margin: 12px 0; white-space: pre-wrap; overflow-wrap: anywhere; }
 .prose code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 14px; color: var(--text); }
+
+/* Commands stay left-to-right on right-to-left pages. */
+.prose pre { direction: ltr; text-align: left; }

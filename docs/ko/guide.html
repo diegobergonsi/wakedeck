@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>설정 가이드 | WakeDeck</title>
+<meta name="description" content="Linux, Windows 또는 Mac PC에서 Wake-on-LAN과 원격 종료를 켜서 WakeDeck이 휴대폰으로 PC를 켤 수 있게 하세요.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#161E56">
+<link rel="canonical" href="https://wakedeck.app/ko/guide">
+<link rel="alternate" hreflang="en" href="https://wakedeck.app/guide">
+<link rel="alternate" hreflang="pt-BR" href="https://wakedeck.app/pt-br/guide">
+<link rel="alternate" hreflang="pt-PT" href="https://wakedeck.app/pt-pt/guide">
+<link rel="alternate" hreflang="fr" href="https://wakedeck.app/fr/guide">
+<link rel="alternate" hreflang="de" href="https://wakedeck.app/de/guide">
+<link rel="alternate" hreflang="es" href="https://wakedeck.app/es/guide">
+<link rel="alternate" hreflang="zh-Hans" href="https://wakedeck.app/zh/guide">
+<link rel="alternate" hreflang="ja" href="https://wakedeck.app/ja/guide">
+<link rel="alternate" hreflang="it" href="https://wakedeck.app/it/guide">
+<link rel="alternate" hreflang="ru" href="https://wakedeck.app/ru/guide">
+<link rel="alternate" hreflang="ko" href="https://wakedeck.app/ko/guide">
+<link rel="alternate" hreflang="ar" href="https://wakedeck.app/ar/guide">
+<link rel="alternate" hreflang="tr" href="https://wakedeck.app/tr/guide">
+<link rel="alternate" hreflang="vi" href="https://wakedeck.app/vi/guide">
+<link rel="alternate" hreflang="id" href="https://wakedeck.app/id/guide">
+<link rel="alternate" hreflang="pl" href="https://wakedeck.app/pl/guide">
+<link rel="alternate" hreflang="sv" href="https://wakedeck.app/sv/guide">
+<link rel="alternate" hreflang="da" href="https://wakedeck.app/da/guide">
+<link rel="alternate" hreflang="nb" href="https://wakedeck.app/nb/guide">
+<link rel="alternate" hreflang="fi" href="https://wakedeck.app/fi/guide">
+<link rel="alternate" hreflang="x-default" href="https://wakedeck.app/guide">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="설정 가이드 | WakeDeck">
+<meta property="og:description" content="Linux, Windows 또는 Mac PC에서 Wake-on-LAN과 원격 종료를 켜서 WakeDeck이 휴대폰으로 PC를 켤 수 있게 하세요.">
+<meta property="og:url" content="https://wakedeck.app/ko/guide">
+<meta property="og:image" content="https://wakedeck.app/assets/og.png">
+<link rel="stylesheet" href="/assets/site.css?v=90440331">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="/ko/" aria-label="WakeDeck"><b>Wake</b><span>Deck</span></a>
+    <nav aria-label="Main">
+      <a class="btn donate nav-donate" href="https://ko-fi.com/diegobergonsi" rel="noopener noreferrer">후원하기</a>
+      <a class="opt" href="/ko/#features">기능</a>
+      <a class="opt" href="/ko/#how">사용 방법</a>
+      <a href="/ko/guide" aria-current="page">설정 가이드</a>
+      <a href="/ko/privacy">개인정보처리방침</a>
+      <details class="lang">
+        <summary aria-label="언어"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 4 5.6 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.6-4-9s1.4-6.4 4-9z"/></svg><span>한국어</span></summary>
+        <ul>
+          <li><a href="/guide" lang="en" hreflang="en">English</a></li>
+          <li><a href="/pt-br/guide" lang="pt-BR" hreflang="pt-BR">Português (Brasil)</a></li>
+          <li><a href="/pt-pt/guide" lang="pt-PT" hreflang="pt-PT">Português (Portugal)</a></li>
+          <li><a href="/fr/guide" lang="fr" hreflang="fr">Français</a></li>
+          <li><a href="/de/guide" lang="de" hreflang="de">Deutsch</a></li>
+          <li><a href="/es/guide" lang="es" hreflang="es">Español</a></li>
+          <li><a href="/zh/guide" lang="zh-Hans" hreflang="zh-Hans">简体中文</a></li>
+          <li><a href="/ja/guide" lang="ja" hreflang="ja">日本語</a></li>
+          <li><a href="/it/guide" lang="it" hreflang="it">Italiano</a></li>
+          <li><a href="/ru/guide" lang="ru" hreflang="ru">Русский</a></li>
+          <li><a href="/ko/guide" lang="ko" hreflang="ko" aria-current="true">한국어</a></li>
+          <li><a href="/ar/guide" lang="ar" hreflang="ar">العربية</a></li>
+          <li><a href="/tr/guide" lang="tr" hreflang="tr">Türkçe</a></li>
+          <li><a href="/vi/guide" lang="vi" hreflang="vi">Tiếng Việt</a></li>
+          <li><a href="/id/guide" lang="id" hreflang="id">Bahasa Indonesia</a></li>
+          <li><a href="/pl/guide" lang="pl" hreflang="pl">Polski</a></li>
+          <li><a href="/sv/guide" lang="sv" hreflang="sv">Svenska</a></li>
+          <li><a href="/da/guide" lang="da" hreflang="da">Dansk</a></li>
+          <li><a href="/nb/guide" lang="nb" hreflang="nb">Norsk bokmål</a></li>
+          <li><a href="/fi/guide" lang="fi" hreflang="fi">Suomi</a></li>
+        </ul>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap page-title">
+    <h1>설정 가이드</h1>
+    <p class="meta">PC 설정 가이드입니다. 켜려면 섹션 1의 설정이 필요합니다. SSH를 통한 원격 종료(섹션 2)는 선택 사항입니다.</p>
+  </div>
+
+  <div class="wrap prose">
+    <h2 id="wol">1. Wake-on-LAN (PC 설정)</h2>
+    <p>매직 패킷은 꺼져 있거나 절전 상태인 PC를 깨우지만, 네트워크 카드에 전원이 계속 공급되고 신호를 기다리고 있어야 합니다. 네트워크 케이블을 사용하세요. Wi-Fi로는 켜기가 잘 되지 않습니다.</p>
+    <h3 id="wol-linux">Linux</h3>
+    <p>BIOS/UEFI에서 Wake on LAN을 켜세요 (이름은 다를 수 있습니다: Wake on LAN, Power On By PCI-E, Resume by PCI-E). ErP, EuP 또는 딥 슬립 옵션이 있으면 끄세요. 네트워크 카드의 전원을 차단하기 때문입니다.</p>
+    <p>네트워크 인터페이스 이름을 찾으세요 (예: enp8s0):</p>
+    <pre><code>ip -br link</code></pre>
+    <p>Wake-on 설정을 확인하세요. g로 표시되어야 합니다:</p>
+    <pre><code>sudo ethtool &lt;iface&gt; | grep Wake-on</code></pre>
+    <p>켜세요 (재부팅하면 초기화됩니다):</p>
+    <pre><code>sudo ethtool -s &lt;iface&gt; wol g</code></pre>
+    <p>NetworkManager로 재부팅 후에도 유지하려면 (연결 이름을 바꾸세요. nmcli connection show 참고):</p>
+    <pre><code>sudo nmcli connection modify &quot;&lt;connection&gt;&quot; 802-3-ethernet.wake-on-lan magic</code></pre>
+    <h3 id="wol-windows">Windows</h3>
+    <p>BIOS/UEFI에서 Wake on LAN을 켜세요 (이름은 다를 수 있습니다: Wake on LAN, Power On By PCI-E, Resume by PCI-E). ErP, EuP 또는 딥 슬립 옵션이 있으면 끄세요. 네트워크 카드의 전원을 차단하기 때문입니다.</p>
+    <p>장치 관리자를 열고 네트워크 어댑터를 두 번 클릭한 다음 전원 관리 탭에서 “이 장치가 컴퓨터의 대기 모드를 해제할 수 있음”과 “매직 패킷만 컴퓨터의 대기 모드를 해제할 수 있음”을 선택하세요.</p>
+    <p>같은 창의 고급 탭에서 “Wake on Magic Packet”을 사용으로 설정하세요 (목록에 있는 경우).</p>
+    <p>빠른 시작을 끄세요: 제어판 → 전원 옵션 → 전원 단추 동작 설정 → 현재 사용할 수 없는 설정 변경 → “빠른 시작 켜기” 체크 해제. 빠른 시작이 켜져 있으면 종료된 PC가 매직 패킷을 무시하는 경우가 많습니다.</p>
+    <h3 id="wol-macos">macOS</h3>
+    <p>시스템 설정 → 배터리(MacBook) 또는 에너지(데스크톱 Mac) → 옵션을 열고 “네트워크 접근 시 깨우기”를 켜세요. 켜기는 이더넷에서 가장 잘 작동합니다. MacBook에서는 USB-C 또는 Thunderbolt 이더넷 어댑터를 사용하고 전원에 연결해 두세요. Wi-Fi에 연결된 절전 상태의 Mac은 매직 패킷을 무시하는 경우가 많습니다.</p>
+    <p>Wi-Fi를 쓰는 경우 해당 네트워크의 “비공개 Wi-Fi 주소”도 끄세요 (시스템 설정 → Wi-Fi → 세부 사항). 그렇지 않으면 Mac의 MAC 주소가 달라집니다. 아래 목록에서 “Ethernet Address”가 각 포트의 MAC 주소입니다.</p>
+    <p>WakeDeck에서 PC의 MAC 주소로 기기를 추가하세요. 다음에서 확인할 수 있습니다:</p>
+    <p><strong>Linux</strong></p>
+    <pre><code>ip -br link</code></pre>
+    <p><strong>Windows</strong></p>
+    <pre><code>ipconfig /all</code></pre>
+    <p><strong>macOS</strong></p>
+    <pre><code>networksetup -listallhardwareports</code></pre>
+    <p>브로드캐스트 주소: 네트워크의 마지막 주소입니다. 예를 들어 192.168.1.x 네트워크는 192.168.1.255입니다 (같은 네트워크에서는 기본값 255.255.255.255도 작동합니다). 포트: 9.</p>
+
+    <h2 id="ssh">2. SSH를 통한 원격 종료 (선택)</h2>
+    <p class="note">PASTE_KEY_LINE_FROM_APP을 WakeDeck의 SSH 키 화면에 표시되는 키 줄로 바꾸세요.</p>
+    <p>앱은 비밀번호가 아닌 자체 키로 로그인합니다. PC에 SSH 서버가 있어야 하고 앱의 공개 키가 추가되어 있어야 합니다. 아래 명령에는 이미 사용자의 키가 들어 있습니다.</p>
+    <h3 id="ssh-linux">Linux</h3>
+    <p>SSH 서버를 설치하고 시작하세요 (Debian/Ubuntu 기준):</p>
+    <pre><code>sudo apt install openssh-server &amp;&amp; sudo systemctl enable --now ssh</code></pre>
+    <p>Fedora, Arch, SteamOS에서는 서비스 이름이 sshd입니다:</p>
+    <pre><code>sudo systemctl enable --now sshd</code></pre>
+    <p>앱의 키를 사용자에게 추가하세요. 이 줄은 키를 종료 명령으로만 제한합니다:</p>
+    <pre><code>mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; echo &#x27;PASTE_KEY_LINE_FROM_APP&#x27; &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys</code></pre>
+    <p>비밀번호 없이 종료할 수 있게 합니다. 다음을 실행한 다음 그 아래 줄을 추가하세요 (youruser를 바꾸고 which shutdown으로 경로를 확인하세요):</p>
+    <pre><code>sudo visudo -f /etc/sudoers.d/wakedeck</code></pre>
+    <pre><code>youruser ALL=(ALL) NOPASSWD: /usr/bin/shutdown</code></pre>
+    <h3 id="ssh-windows">Windows</h3>
+    <p>관리자 권한 PowerShell에서 OpenSSH 서버를 설치하고 시작하세요:</p>
+    <pre><code>Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0; Start-Service sshd; Set-Service -Name sshd -StartupType Automatic</code></pre>
+    <p>관리자 계정: 키를 추가하고 파일 권한을 제한하세요 (그렇지 않으면 SSH가 파일을 무시합니다):</p>
+    <pre><code>Add-Content -Force -Path &quot;$env:ProgramData\ssh\administrators_authorized_keys&quot; -Value &#x27;PASTE_KEY_LINE_FROM_APP&#x27;</code></pre>
+    <pre><code>icacls.exe &quot;$env:ProgramData\ssh\administrators_authorized_keys&quot; /inheritance:r /grant &quot;Administrators:F&quot; /grant &quot;SYSTEM:F&quot;</code></pre>
+    <p>일반 계정은 대신 키 줄을 C:\Users\이름\.ssh\authorized_keys에 넣으세요.</p>
+    <p>그래도 거부된다면: 방화벽이 TCP 포트 22를 허용하는지(OpenSSH 기능이 보통 규칙을 추가합니다), 그리고 키를 사용할 수 없는 Microsoft Entra ID 계정이 아닌지 확인하세요.</p>
+    <h3 id="ssh-macos">macOS</h3>
+    <p>SSH 서버를 켜세요: 시스템 설정 → 일반 → 공유 → 원격 로그인에서 사용자를 허용하세요.</p>
+    <p>앱의 키를 사용자에게 추가하세요. 이 줄은 키를 종료 명령으로만 제한합니다:</p>
+    <pre><code>mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; echo &#x27;PASTE_KEY_LINE_FROM_APP&#x27; &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys</code></pre>
+    <p>비밀번호 없이 종료할 수 있게 합니다. 다음을 실행한 다음 그 아래 줄을 추가하세요 (youruser를 바꾸세요):</p>
+    <pre><code>sudo visudo -f /etc/sudoers.d/wakedeck</code></pre>
+    <pre><code>youruser ALL=(ALL) NOPASSWD: /sbin/shutdown</code></pre>
+    <p>기기 편집 화면에서 호스트(IP 또는 이름), SSH 사용자(PC 계정 이름), 포트(22)를 입력하세요. 지금 종료를 누르세요. 처음에는 표시된 지문이 PC의 지문과 일치하는지 확인한 다음 신뢰를 누르세요. PC의 지문:</p>
+    <p><strong>Linux</strong></p>
+    <pre><code>ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub</code></pre>
+    <p><strong>Windows</strong></p>
+    <pre><code>ssh-keygen -lf $env:ProgramData\ssh\ssh_host_ecdsa_key.pub</code></pre>
+    <p><strong>macOS</strong></p>
+    <pre><code>ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub</code></pre>
+    <p>“PC가 SSH 키를 거부했습니다”: 키나 사용자 이름이 잘못되었습니다. “연결하지 못했습니다”: PC가 꺼져 있거나 호스트, 포트, 방화벽이 잘못되었습니다. “PC가 오류로 응답했습니다”: Linux나 macOS에서는 보통 sudoers 규칙 때문입니다. “PC의 SSH 키가 변경되었습니다”: PC를 다시 설치했거나 SSH 키를 다시 만들었습니다. 예상한 경우에만 새 키를 신뢰하세요.</p>
+
+    <h2 id="away">3. 집 밖에서 (VPN)</h2>
+    <p>집 밖에서는 먼저 홈 네트워크로 들어갈 방법이 필요합니다. 예를 들어 WireGuard나 Tailscale VPN입니다. 매직 패킷은 브로드캐스트이고, 많은 VPN은 브로드캐스트를 전달하지 않습니다. 기기에 네트워크의 브로드캐스트 주소(예: 192.168.1.255)를 입력하세요. 그래도 원격으로 켜지지 않으면, 집에 항상 켜져 있는 작은 기기가 대신 패킷을 보내 주는 방법이 일반적입니다 (Wake-on-LAN을 지원하는 공유기 또는 Raspberry Pi). SSH를 통한 원격 종료는 PC의 주소에 닿을 수 있다면 VPN으로도 작동합니다.</p>
+    <p>원격 문제: “네트워크 또는 VPN 연결이 없습니다”는 휴대전화에 해당 주소로 가는 경로가 없다는 뜻이므로 먼저 VPN을 연결하세요. “브로드캐스트 주소를 찾을 수 없습니다”는 기기에 입력한 이름이나 주소를 확인할 수 없다는 뜻입니다. VPN이 패킷을 받아 놓고 전달하지 않을 수도 있습니다. 매직 패킷에는 응답이 없어 앱이 이를 알 수 없습니다. PC가 켜지는지 확인하고 목록에서 상태를 살펴보세요.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>&copy; 2026 Diego Bergonsi</div>
+    <ul>
+      <li><a href="/ko/guide">설정 가이드</a></li>
+      <li><a href="/ko/privacy">개인정보처리방침</a></li>
+      <li><a href="https://ko-fi.com/diegobergonsi" rel="noopener noreferrer">후원하기</a></li>
+      <li><a href="mailto:contact@wakedeck.app">문의</a></li>
+    </ul>
+  </div>
+</footer>
+</body>
+</html>

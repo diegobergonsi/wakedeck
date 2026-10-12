@@ -640,6 +640,25 @@ TIPS_BLOCK = {
 
 THIRD_PARTIES = {"Third parties", "Terceiros", "Tiers", "Dritte", "Terceros", "第三方", "第三者"}
 
+# Further languages live one per file in tools/site_i18n/. Each defines KEY, CODE, NAME, INDEX, PRIVACY, THIRD,
+# SUPPORT, TIPS, GUIDE and optionally RTL.
+RTL_LANGS = set()
+
+
+def _load_extra_languages():
+    import importlib.util
+    order = "it ru ko ar tr vi id pl sv da nb fi".split()
+    for f in sorted((pathlib.Path(__file__).resolve().parent / "site_i18n").glob("*.py"), key=lambda f: order.index(f.stem)):
+        spec = importlib.util.spec_from_file_location(f"site_i18n_{f.stem}", f)
+        m = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(m)
+        LANGS.append((m.KEY, m.CODE, m.NAME))
+        INDEX[m.KEY], PRIVACY[m.KEY], SUPPORT[m.KEY], TIPS_BLOCK[m.KEY] = m.INDEX, m.PRIVACY, m.SUPPORT, m.TIPS
+        GUIDE_META[m.KEY] = m.GUIDE
+        THIRD_PARTIES.add(m.THIRD)
+        if getattr(m, "RTL", False):
+            RTL_LANGS.add(m.KEY)
+
 
 def base(folder):
     return f"/{folder}/" if folder else "/"
@@ -647,7 +666,7 @@ def base(folder):
 
 # ---------------------------------------------------------------- guide page (text comes from the app's Help screen)
 RES = pathlib.Path(__file__).resolve().parent.parent / "app" / "src" / "main" / "res"
-RES_DIR = {"": "values", "pt-br": "values-pt-rBR", "pt-pt": "values-pt-rPT"}
+RES_DIR = {"": "values", "pt-br": "values-pt-rBR", "pt-pt": "values-pt-rPT", "id": "values-in"}
 PAGE_SUFFIX = {"index": "", "privacy": "privacy", "guide": "guide"}
 
 GUIDE_META = {
@@ -669,6 +688,7 @@ GUIDE_META = {
            "PASTE_KEY_LINE_FROM_APP は、WakeDeck の SSH 鍵画面に表示される鍵の行に置き換えてください。"),
 }
 KEY_PLACEHOLDER = "PASTE_KEY_LINE_FROM_APP"
+_load_extra_languages()
 
 
 def _unescape(v):
@@ -703,7 +723,7 @@ def head(lang_code, folder, page, title, desc, ogdesc):
     )
     alternates += f'\n<link rel="alternate" hreflang="x-default" href="{SITE}/{suffix}">'
     return f"""<!doctype html>
-<html lang="{lang_code}">
+<html lang="{lang_code}"{' dir="rtl"' if folder in RTL_LANGS else ""}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">

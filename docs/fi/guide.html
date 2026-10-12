@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="fi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Asennusopas | WakeDeck</title>
+<meta name="description" content="Ota Wake-on-LAN ja etäsammutus käyttöön Linux-, Windows- tai Mac-tietokoneellasi, jotta WakeDeck voi herättää sen puhelimesta.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#161E56">
+<link rel="canonical" href="https://wakedeck.app/fi/guide">
+<link rel="alternate" hreflang="en" href="https://wakedeck.app/guide">
+<link rel="alternate" hreflang="pt-BR" href="https://wakedeck.app/pt-br/guide">
+<link rel="alternate" hreflang="pt-PT" href="https://wakedeck.app/pt-pt/guide">
+<link rel="alternate" hreflang="fr" href="https://wakedeck.app/fr/guide">
+<link rel="alternate" hreflang="de" href="https://wakedeck.app/de/guide">
+<link rel="alternate" hreflang="es" href="https://wakedeck.app/es/guide">
+<link rel="alternate" hreflang="zh-Hans" href="https://wakedeck.app/zh/guide">
+<link rel="alternate" hreflang="ja" href="https://wakedeck.app/ja/guide">
+<link rel="alternate" hreflang="it" href="https://wakedeck.app/it/guide">
+<link rel="alternate" hreflang="ru" href="https://wakedeck.app/ru/guide">
+<link rel="alternate" hreflang="ko" href="https://wakedeck.app/ko/guide">
+<link rel="alternate" hreflang="ar" href="https://wakedeck.app/ar/guide">
+<link rel="alternate" hreflang="tr" href="https://wakedeck.app/tr/guide">
+<link rel="alternate" hreflang="vi" href="https://wakedeck.app/vi/guide">
+<link rel="alternate" hreflang="id" href="https://wakedeck.app/id/guide">
+<link rel="alternate" hreflang="pl" href="https://wakedeck.app/pl/guide">
+<link rel="alternate" hreflang="sv" href="https://wakedeck.app/sv/guide">
+<link rel="alternate" hreflang="da" href="https://wakedeck.app/da/guide">
+<link rel="alternate" hreflang="nb" href="https://wakedeck.app/nb/guide">
+<link rel="alternate" hreflang="fi" href="https://wakedeck.app/fi/guide">
+<link rel="alternate" hreflang="x-default" href="https://wakedeck.app/guide">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Asennusopas | WakeDeck">
+<meta property="og:description" content="Ota Wake-on-LAN ja etäsammutus käyttöön Linux-, Windows- tai Mac-tietokoneellasi, jotta WakeDeck voi herättää sen puhelimesta.">
+<meta property="og:url" content="https://wakedeck.app/fi/guide">
+<meta property="og:image" content="https://wakedeck.app/assets/og.png">
+<link rel="stylesheet" href="/assets/site.css?v=90440331">
+</head>
+<body>
+<a class="skip" href="#main">Siirry sisältöön</a>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="/fi/" aria-label="WakeDeck"><b>Wake</b><span>Deck</span></a>
+    <nav aria-label="Main">
+      <a class="btn donate nav-donate" href="https://ko-fi.com/diegobergonsi" rel="noopener noreferrer">Lahjoita</a>
+      <a class="opt" href="/fi/#features">Ominaisuudet</a>
+      <a class="opt" href="/fi/#how">Näin se toimii</a>
+      <a href="/fi/guide" aria-current="page">Asennusopas</a>
+      <a href="/fi/privacy">Tietosuoja</a>
+      <details class="lang">
+        <summary aria-label="Kieli"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 4 5.6 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.6-4-9s1.4-6.4 4-9z"/></svg><span>Suomi</span></summary>
+        <ul>
+          <li><a href="/guide" lang="en" hreflang="en">English</a></li>
+          <li><a href="/pt-br/guide" lang="pt-BR" hreflang="pt-BR">Português (Brasil)</a></li>
+          <li><a href="/pt-pt/guide" lang="pt-PT" hreflang="pt-PT">Português (Portugal)</a></li>
+          <li><a href="/fr/guide" lang="fr" hreflang="fr">Français</a></li>
+          <li><a href="/de/guide" lang="de" hreflang="de">Deutsch</a></li>
+          <li><a href="/es/guide" lang="es" hreflang="es">Español</a></li>
+          <li><a href="/zh/guide" lang="zh-Hans" hreflang="zh-Hans">简体中文</a></li>
+          <li><a href="/ja/guide" lang="ja" hreflang="ja">日本語</a></li>
+          <li><a href="/it/guide" lang="it" hreflang="it">Italiano</a></li>
+          <li><a href="/ru/guide" lang="ru" hreflang="ru">Русский</a></li>
+          <li><a href="/ko/guide" lang="ko" hreflang="ko">한국어</a></li>
+          <li><a href="/ar/guide" lang="ar" hreflang="ar">العربية</a></li>
+          <li><a href="/tr/guide" lang="tr" hreflang="tr">Türkçe</a></li>
+          <li><a href="/vi/guide" lang="vi" hreflang="vi">Tiếng Việt</a></li>
+          <li><a href="/id/guide" lang="id" hreflang="id">Bahasa Indonesia</a></li>
+          <li><a href="/pl/guide" lang="pl" hreflang="pl">Polski</a></li>
+          <li><a href="/sv/guide" lang="sv" hreflang="sv">Svenska</a></li>
+          <li><a href="/da/guide" lang="da" hreflang="da">Dansk</a></li>
+          <li><a href="/nb/guide" lang="nb" hreflang="nb">Norsk bokmål</a></li>
+          <li><a href="/fi/guide" lang="fi" hreflang="fi" aria-current="true">Suomi</a></li>
+        </ul>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap page-title">
+    <h1>Asennusopas</h1>
+    <p class="meta">Tietokoneen asennusopas. Herättäminen vaatii luvun 1 asetukset. Etäsammutus SSH:lla (luku 2) on valinnainen.</p>
+  </div>
+
+  <div class="wrap prose">
+    <h2 id="wol">1. Wake-on-LAN (tietokoneen asetukset)</h2>
+    <p>Taikapaketti herättää sammutetun tai lepotilassa olevan tietokoneen, mutta vain jos verkkokortti saa edelleen virtaa ja kuuntelee. Käytä verkkokaapelia: Wi-Fi toimii herättämiseen harvoin.</p>
+    <h3 id="wol-linux">Linux</h3>
+    <p>Ota Wake on LAN käyttöön BIOSissa/UEFIssa (nimet vaihtelevat: Wake on LAN, Power On By PCI-E, Resume by PCI-E). Jos löytyy ErP-, EuP- tai syväunitila-asetus, poista se käytöstä, koska se katkaisee verkkokortin virran.</p>
+    <p>Selvitä verkkoliitännän nimi (esimerkiksi enp8s0):</p>
+    <pre><code>ip -br link</code></pre>
+    <p>Tarkista Wake-on-asetus. Sen pitäisi näyttää g:</p>
+    <pre><code>sudo ethtool &lt;iface&gt; | grep Wake-on</code></pre>
+    <p>Ota se käyttöön (nollautuu uudelleenkäynnistyksessä):</p>
+    <pre><code>sudo ethtool -s &lt;iface&gt; wol g</code></pre>
+    <p>Näin se säilyy uudelleenkäynnistysten yli NetworkManagerilla (korvaa yhteyden nimi, katso nmcli connection show):</p>
+    <pre><code>sudo nmcli connection modify &quot;&lt;connection&gt;&quot; 802-3-ethernet.wake-on-lan magic</code></pre>
+    <h3 id="wol-windows">Windows</h3>
+    <p>Ota Wake on LAN käyttöön BIOSissa/UEFIssa (nimet vaihtelevat: Wake on LAN, Power On By PCI-E, Resume by PCI-E). Jos löytyy ErP-, EuP- tai syväunitila-asetus, poista se käytöstä, koska se katkaisee verkkokortin virran.</p>
+    <p>Avaa Laitehallinta, kaksoisnapsauta verkkokorttiasi, Virranhallinta-välilehti: valitse “Salli tämän laitteen herättää tietokone” ja “Salli vain taikapaketin herättää tietokone”.</p>
+    <p>Samassa ikkunassa, Lisäasetukset-välilehti: aseta “Wake on Magic Packet” arvoon Enabled (jos se on luettelossa).</p>
+    <p>Poista Pikakäynnistys käytöstä: Ohjauspaneeli → Virranhallinta-asetukset → Valitse virtapainikkeiden toiminta → Muuta asetuksia, jotka eivät ole tällä hetkellä käytettävissä → poista valinta kohdasta “Ota pikakäynnistys käyttöön”. Kun Pikakäynnistys on päällä, sammutettu tietokone ohittaa taikapaketin usein.</p>
+    <h3 id="wol-macos">macOS</h3>
+    <p>Avaa Järjestelmäasetukset → Akku (MacBook) tai Virransäästö (pöytä-Mac) → Valinnat ja ota käyttöön “Herätä verkkoyhteyttä varten”. Herättäminen toimii parhaiten Ethernetin kautta: MacBookilla käytä USB-C- tai Thunderbolt-Ethernet-sovitinta ja jätä se kiinni virtaan. Wi-Fi-yhteydellä nukkuva Mac ohittaa taikapaketin usein.</p>
+    <p>Wi-Fi-yhteydellä poista myös verkostasi käytöstä “Yksityinen Wi-Fi-osoite” (Järjestelmäasetukset → Wi-Fi → Tiedot), muuten Macin MAC-osoite on toinen. Alla olevassa luettelossa “Ethernet Address” on kunkin portin MAC-osoite.</p>
+    <p>Lisää laite WakeDeckiin tietokoneen MAC-osoitteella. Löydät sen täältä:</p>
+    <p><strong>Linux</strong></p>
+    <pre><code>ip -br link</code></pre>
+    <p><strong>Windows</strong></p>
+    <pre><code>ipconfig /all</code></pre>
+    <p><strong>macOS</strong></p>
+    <pre><code>networksetup -listallhardwareports</code></pre>
+    <p>Yleislähetysosoite: verkon viimeinen osoite, esimerkiksi 192.168.1.255 verkolle 192.168.1.x (oletusarvo 255.255.255.255 toimii myös samassa verkossa). Portti: 9.</p>
+
+    <h2 id="ssh">2. Etäsammutus SSH:lla (valinnainen)</h2>
+    <p class="note">Korvaa PASTE_KEY_LINE_FROM_APP WakeDeckin SSH-avain-näkymässä näkyvällä avainrivillä.</p>
+    <p>Sovellus kirjautuu omalla avaimellaan, ei koskaan salasanalla. Tietokoneessa on oltava SSH-palvelin, ja sovelluksen julkinen avain on lisättävä sille. Alla olevat komennot sisältävät jo avaimesi.</p>
+    <h3 id="ssh-linux">Linux</h3>
+    <p>Asenna ja käynnistä SSH-palvelin (esimerkki Debianille/Ubuntulle):</p>
+    <pre><code>sudo apt install openssh-server &amp;&amp; sudo systemctl enable --now ssh</code></pre>
+    <p>Fedorassa, Archissa tai SteamOS:ssä palvelun nimi on sen sijaan sshd:</p>
+    <pre><code>sudo systemctl enable --now sshd</code></pre>
+    <p>Lisää sovelluksen avain käyttäjällesi. Rivi rajoittaa avaimen sammutuskomentoon:</p>
+    <pre><code>mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; echo &#x27;PASTE_KEY_LINE_FROM_APP&#x27; &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys</code></pre>
+    <p>Salli sammutus ilman salasanaa. Suorita tämä ja lisää sitten sen alla oleva rivi (korvaa youruser ja tarkista polku komennolla: which shutdown):</p>
+    <pre><code>sudo visudo -f /etc/sudoers.d/wakedeck</code></pre>
+    <pre><code>youruser ALL=(ALL) NOPASSWD: /usr/bin/shutdown</code></pre>
+    <h3 id="ssh-windows">Windows</h3>
+    <p>Asenna ja käynnistä OpenSSH Server PowerShellissä järjestelmänvalvojana:</p>
+    <pre><code>Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0; Start-Service sshd; Set-Service -Name sshd -StartupType Automatic</code></pre>
+    <p>Järjestelmänvalvojan tili: lisää avain ja lukitse tiedoston oikeudet (muuten SSH ohittaa tiedoston):</p>
+    <pre><code>Add-Content -Force -Path &quot;$env:ProgramData\ssh\administrators_authorized_keys&quot; -Value &#x27;PASTE_KEY_LINE_FROM_APP&#x27;</code></pre>
+    <pre><code>icacls.exe &quot;$env:ProgramData\ssh\administrators_authorized_keys&quot; /inheritance:r /grant &quot;Administrators:F&quot; /grant &quot;SYSTEM:F&quot;</code></pre>
+    <p>Tavallisella tilillä aseta avainrivi sen sijaan tiedostoon C:\Users\NIMI\.ssh\authorized_keys.</p>
+    <p>Jos se silti hylkää: tarkista, että palomuuri sallii TCP-portin 22 (OpenSSH-ominaisuus lisää säännön yleensä) ja että tili ei ole Microsoft Entra ID -tili, joka ei voi käyttää avaimia.</p>
+    <h3 id="ssh-macos">macOS</h3>
+    <p>Ota SSH-palvelin käyttöön: Järjestelmäasetukset → Yleiset → Jakaminen → Etäkirjautuminen ja salli käyttäjäsi.</p>
+    <p>Lisää sovelluksen avain käyttäjällesi. Rivi rajoittaa avaimen sammutuskomentoon:</p>
+    <pre><code>mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; echo &#x27;PASTE_KEY_LINE_FROM_APP&#x27; &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys</code></pre>
+    <p>Salli sammutus ilman salasanaa. Suorita tämä ja lisää sitten sen alla oleva rivi (korvaa youruser):</p>
+    <pre><code>sudo visudo -f /etc/sudoers.d/wakedeck</code></pre>
+    <pre><code>youruser ALL=(ALL) NOPASSWD: /sbin/shutdown</code></pre>
+    <p>Täytä laitteen muokkausnäkymässä isäntä (IP tai nimi), SSH-käyttäjä (tilisi nimi tietokoneella) ja portti (22). Napauta Sammuta nyt. Tarkista ensimmäisellä kerralla, että näytetty sormenjälki vastaa tietokoneen sormenjälkeä, ja napauta sitten Luota. Tietokoneen sormenjälki:</p>
+    <p><strong>Linux</strong></p>
+    <pre><code>ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub</code></pre>
+    <p><strong>Windows</strong></p>
+    <pre><code>ssh-keygen -lf $env:ProgramData\ssh\ssh_host_ecdsa_key.pub</code></pre>
+    <p><strong>macOS</strong></p>
+    <pre><code>ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub</code></pre>
+    <p>“Tietokone hylkäsi SSH-avaimen”: väärä avain tai käyttäjänimi. “Yhteyden muodostus epäonnistui”: tietokone on sammutettu tai isäntä, portti tai palomuuri on väärin. “Tietokone vastasi virheellä”: Linuxissa tai macOS:ssä syynä on yleensä sudoers-sääntö. “Tietokoneen SSH-avain on muuttunut”: tietokone on asennettu uudelleen tai sen SSH-avaimet on luotu uudelleen; luota uuteen avaimeen vain, jos odotit sitä.</p>
+
+    <h2 id="away">3. Poissa kotoa (VPN)</h2>
+    <p>Kotiverkon ulkopuolella tarvitset ensin reitin sisään, esimerkiksi WireGuard- tai Tailscale-VPN:n. Taikapaketti on yleislähetys, eivätkä monet VPN:t välitä yleislähetyksiä. Anna laitteelle verkkosi yleislähetysosoite (esimerkiksi 192.168.1.255). Jos herättäminen etäältä ei vieläkään toimi, tavallinen ratkaisu on pieni aina päällä oleva laite kotona, joka lähettää paketin puolestasi (reititin, jossa on Wake-on-LAN, tai Raspberry Pi). Etäsammutus SSH:lla toimii VPN:n kautta, kunhan tietokoneen osoite on tavoitettavissa.</p>
+    <p>Etäongelmat: “ei verkko- tai VPN-yhteyttä” tarkoittaa, ettei puhelimella ole reittiä osoitteeseen, joten yhdistä ensin VPN:ään. “Yleislähetysosoitetta ei löytynyt” tarkoittaa, että laitteen nimeä tai osoitetta ei voi selvittää. VPN voi myös ottaa paketin vastaan toimittamatta sitä perille: sovellus ei näe sitä, koska taikapaketilla ei ole vastausta. Tarkista, heräävätkö tietokone, ja katso sen tila luettelosta.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>&copy; 2026 Diego Bergonsi</div>
+    <ul>
+      <li><a href="/fi/guide">Asennusopas</a></li>
+      <li><a href="/fi/privacy">Tietosuoja</a></li>
+      <li><a href="https://ko-fi.com/diegobergonsi" rel="noopener noreferrer">Lahjoita</a></li>
+      <li><a href="mailto:contact@wakedeck.app">Yhteystiedot</a></li>
+    </ul>
+  </div>
+</footer>
+</body>
+</html>

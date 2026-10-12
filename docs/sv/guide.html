@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Installationsguiden | WakeDeck</title>
+<meta name="description" content="Aktivera Wake-on-LAN och fjärravstängning på din Linux-, Windows- eller Mac-dator så att WakeDeck kan väcka den från mobilen.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#161E56">
+<link rel="canonical" href="https://wakedeck.app/sv/guide">
+<link rel="alternate" hreflang="en" href="https://wakedeck.app/guide">
+<link rel="alternate" hreflang="pt-BR" href="https://wakedeck.app/pt-br/guide">
+<link rel="alternate" hreflang="pt-PT" href="https://wakedeck.app/pt-pt/guide">
+<link rel="alternate" hreflang="fr" href="https://wakedeck.app/fr/guide">
+<link rel="alternate" hreflang="de" href="https://wakedeck.app/de/guide">
+<link rel="alternate" hreflang="es" href="https://wakedeck.app/es/guide">
+<link rel="alternate" hreflang="zh-Hans" href="https://wakedeck.app/zh/guide">
+<link rel="alternate" hreflang="ja" href="https://wakedeck.app/ja/guide">
+<link rel="alternate" hreflang="it" href="https://wakedeck.app/it/guide">
+<link rel="alternate" hreflang="ru" href="https://wakedeck.app/ru/guide">
+<link rel="alternate" hreflang="ko" href="https://wakedeck.app/ko/guide">
+<link rel="alternate" hreflang="ar" href="https://wakedeck.app/ar/guide">
+<link rel="alternate" hreflang="tr" href="https://wakedeck.app/tr/guide">
+<link rel="alternate" hreflang="vi" href="https://wakedeck.app/vi/guide">
+<link rel="alternate" hreflang="id" href="https://wakedeck.app/id/guide">
+<link rel="alternate" hreflang="pl" href="https://wakedeck.app/pl/guide">
+<link rel="alternate" hreflang="sv" href="https://wakedeck.app/sv/guide">
+<link rel="alternate" hreflang="da" href="https://wakedeck.app/da/guide">
+<link rel="alternate" hreflang="nb" href="https://wakedeck.app/nb/guide">
+<link rel="alternate" hreflang="fi" href="https://wakedeck.app/fi/guide">
+<link rel="alternate" hreflang="x-default" href="https://wakedeck.app/guide">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Installationsguiden | WakeDeck">
+<meta property="og:description" content="Aktivera Wake-on-LAN och fjärravstängning på din Linux-, Windows- eller Mac-dator så att WakeDeck kan väcka den från mobilen.">
+<meta property="og:url" content="https://wakedeck.app/sv/guide">
+<meta property="og:image" content="https://wakedeck.app/assets/og.png">
+<link rel="stylesheet" href="/assets/site.css?v=90440331">
+</head>
+<body>
+<a class="skip" href="#main">Hoppa till innehåll</a>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="/sv/" aria-label="WakeDeck"><b>Wake</b><span>Deck</span></a>
+    <nav aria-label="Main">
+      <a class="btn donate nav-donate" href="https://ko-fi.com/diegobergonsi" rel="noopener noreferrer">Donera</a>
+      <a class="opt" href="/sv/#features">Funktioner</a>
+      <a class="opt" href="/sv/#how">Så fungerar det</a>
+      <a href="/sv/guide" aria-current="page">Installationsguiden</a>
+      <a href="/sv/privacy">Integritet</a>
+      <details class="lang">
+        <summary aria-label="Språk"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 4 5.6 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.6-4-9s1.4-6.4 4-9z"/></svg><span>Svenska</span></summary>
+        <ul>
+          <li><a href="/guide" lang="en" hreflang="en">English</a></li>
+          <li><a href="/pt-br/guide" lang="pt-BR" hreflang="pt-BR">Português (Brasil)</a></li>
+          <li><a href="/pt-pt/guide" lang="pt-PT" hreflang="pt-PT">Português (Portugal)</a></li>
+          <li><a href="/fr/guide" lang="fr" hreflang="fr">Français</a></li>
+          <li><a href="/de/guide" lang="de" hreflang="de">Deutsch</a></li>
+          <li><a href="/es/guide" lang="es" hreflang="es">Español</a></li>
+          <li><a href="/zh/guide" lang="zh-Hans" hreflang="zh-Hans">简体中文</a></li>
+          <li><a href="/ja/guide" lang="ja" hreflang="ja">日本語</a></li>
+          <li><a href="/it/guide" lang="it" hreflang="it">Italiano</a></li>
+          <li><a href="/ru/guide" lang="ru" hreflang="ru">Русский</a></li>
+          <li><a href="/ko/guide" lang="ko" hreflang="ko">한국어</a></li>
+          <li><a href="/ar/guide" lang="ar" hreflang="ar">العربية</a></li>
+          <li><a href="/tr/guide" lang="tr" hreflang="tr">Türkçe</a></li>
+          <li><a href="/vi/guide" lang="vi" hreflang="vi">Tiếng Việt</a></li>
+          <li><a href="/id/guide" lang="id" hreflang="id">Bahasa Indonesia</a></li>
+          <li><a href="/pl/guide" lang="pl" hreflang="pl">Polski</a></li>
+          <li><a href="/sv/guide" lang="sv" hreflang="sv" aria-current="true">Svenska</a></li>
+          <li><a href="/da/guide" lang="da" hreflang="da">Dansk</a></li>
+          <li><a href="/nb/guide" lang="nb" hreflang="nb">Norsk bokmål</a></li>
+          <li><a href="/fi/guide" lang="fi" hreflang="fi">Suomi</a></li>
+        </ul>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap page-title">
+    <h1>Installationsguiden</h1>
+    <p class="meta">Installationsguide för datorn. För att starta behövs inställningarna i avsnitt 1. Fjärravstängning via SSH (avsnitt 2) är valfritt.</p>
+  </div>
+
+  <div class="wrap prose">
+    <h2 id="wol">1. Wake-on-LAN (datorinställningar)</h2>
+    <p>Ett magiskt paket väcker en dator som är avstängd eller i viloläge, men bara om nätverkskortet fortfarande har ström och lyssnar. Använd nätverkskabel: Wi-Fi fungerar sällan för väckning.</p>
+    <h3 id="wol-linux">Linux</h3>
+    <p>Aktivera Wake on LAN i BIOS/UEFI (namnen varierar: Wake on LAN, Power On By PCI-E, Resume by PCI-E). Om det finns ett ErP-, EuP- eller djupviloläge-alternativ ska du stänga av det, eftersom det kapar strömmen till nätverkskortet.</p>
+    <p>Ta reda på nätverksgränssnittets namn (till exempel enp8s0):</p>
+    <pre><code>ip -br link</code></pre>
+    <p>Kontrollera Wake-on-inställningen. Den måste visa g:</p>
+    <pre><code>sudo ethtool &lt;iface&gt; | grep Wake-on</code></pre>
+    <p>Slå på den (återställs vid omstart):</p>
+    <pre><code>sudo ethtool -s &lt;iface&gt; wol g</code></pre>
+    <p>För att behålla den efter omstarter med NetworkManager (ersätt anslutningens namn, se nmcli connection show):</p>
+    <pre><code>sudo nmcli connection modify &quot;&lt;connection&gt;&quot; 802-3-ethernet.wake-on-lan magic</code></pre>
+    <h3 id="wol-windows">Windows</h3>
+    <p>Aktivera Wake on LAN i BIOS/UEFI (namnen varierar: Wake on LAN, Power On By PCI-E, Resume by PCI-E). Om det finns ett ErP-, EuP- eller djupviloläge-alternativ ska du stänga av det, eftersom det kapar strömmen till nätverkskortet.</p>
+    <p>Öppna Enhetshanteraren, dubbelklicka på nätverkskortet, fliken Energisparfunktioner: markera ”Tillåt att enheten väcker datorn” och ”Tillåt endast magiska paket att väcka datorn”.</p>
+    <p>I samma fönster, fliken Avancerat: ställ in ”Wake on Magic Packet” på Enabled (om den finns i listan).</p>
+    <p>Stäng av Snabbstart: Kontrollpanelen → Energialternativ → Välj funktion för strömbrytarna → Ändra inställningar som för närvarande inte är tillgängliga → avmarkera ”Aktivera snabbstart”. Med Snabbstart på ignorerar en avstängd dator ofta det magiska paketet.</p>
+    <h3 id="wol-macos">macOS</h3>
+    <p>Öppna Systeminställningar → Batteri (MacBook) eller Energi (stationär Mac) → Alternativ och slå på ”Väck för nätverksåtkomst”. Väckning fungerar bäst över Ethernet: på en MacBook använder du en USB-C- eller Thunderbolt-Ethernetadapter och låter den vara ansluten till ström. En Mac i vila på Wi-Fi ignorerar ofta det magiska paketet.</p>
+    <p>På Wi-Fi ska du också stänga av ”Privat Wi-Fi-adress” för ditt nätverk (Systeminställningar → Wi-Fi → Detaljer), annars får Mac-datorn en annan MAC-adress. I listan nedan är ”Ethernet Address” varje ports MAC-adress.</p>
+    <p>Lägg till enheten i WakeDeck med datorns MAC-adress. Du hittar den här:</p>
+    <p><strong>Linux</strong></p>
+    <pre><code>ip -br link</code></pre>
+    <p><strong>Windows</strong></p>
+    <pre><code>ipconfig /all</code></pre>
+    <p><strong>macOS</strong></p>
+    <pre><code>networksetup -listallhardwareports</code></pre>
+    <p>Broadcast-adress: nätverkets sista adress, till exempel 192.168.1.255 för 192.168.1.x (standardvärdet 255.255.255.255 fungerar också i samma nätverk). Port: 9.</p>
+
+    <h2 id="ssh">2. Fjärravstängning via SSH (valfritt)</h2>
+    <p class="note">Ersätt PASTE_KEY_LINE_FROM_APP med nyckelraden som visas på skärmen SSH-nyckel i WakeDeck.</p>
+    <p>Appen loggar in med sin egen nyckel, aldrig med lösenord. Datorn behöver en SSH-server, och appens publika nyckel måste läggas till på den. Kommandona nedan innehåller redan din nyckel.</p>
+    <h3 id="ssh-linux">Linux</h3>
+    <p>Installera och starta SSH-servern (exemplet gäller Debian/Ubuntu):</p>
+    <pre><code>sudo apt install openssh-server &amp;&amp; sudo systemctl enable --now ssh</code></pre>
+    <p>På Fedora, Arch eller SteamOS heter tjänsten i stället sshd:</p>
+    <pre><code>sudo systemctl enable --now sshd</code></pre>
+    <p>Lägg till appens nyckel för din användare. Raden begränsar nyckeln till avstängningskommandot:</p>
+    <pre><code>mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; echo &#x27;PASTE_KEY_LINE_FROM_APP&#x27; &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys</code></pre>
+    <p>Tillåt avstängning utan lösenord. Kör det här och lägg sedan till raden under (ersätt youruser och kontrollera sökvägen med: which shutdown):</p>
+    <pre><code>sudo visudo -f /etc/sudoers.d/wakedeck</code></pre>
+    <pre><code>youruser ALL=(ALL) NOPASSWD: /usr/bin/shutdown</code></pre>
+    <h3 id="ssh-windows">Windows</h3>
+    <p>Installera och starta OpenSSH Server i PowerShell som administratör:</p>
+    <pre><code>Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0; Start-Service sshd; Set-Service -Name sshd -StartupType Automatic</code></pre>
+    <p>Administratörskonto: lägg till nyckeln och lås filens behörigheter (annars ignorerar SSH filen):</p>
+    <pre><code>Add-Content -Force -Path &quot;$env:ProgramData\ssh\administrators_authorized_keys&quot; -Value &#x27;PASTE_KEY_LINE_FROM_APP&#x27;</code></pre>
+    <pre><code>icacls.exe &quot;$env:ProgramData\ssh\administrators_authorized_keys&quot; /inheritance:r /grant &quot;Administrators:F&quot; /grant &quot;SYSTEM:F&quot;</code></pre>
+    <p>För ett vanligt konto lägger du i stället nyckelraden i C:\Users\NAMN\.ssh\authorized_keys.</p>
+    <p>Om den ändå nekar: kontrollera att brandväggen tillåter TCP-port 22 (OpenSSH-funktionen lägger normalt till regeln) och att kontot inte är ett Microsoft Entra ID-konto, som inte kan använda nycklar.</p>
+    <h3 id="ssh-macos">macOS</h3>
+    <p>Slå på SSH-servern: Systeminställningar → Allmänt → Delning → Fjärrinloggning, och tillåt din användare.</p>
+    <p>Lägg till appens nyckel för din användare. Raden begränsar nyckeln till avstängningskommandot:</p>
+    <pre><code>mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; echo &#x27;PASTE_KEY_LINE_FROM_APP&#x27; &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys</code></pre>
+    <p>Tillåt avstängning utan lösenord. Kör det här och lägg sedan till raden under (ersätt youruser):</p>
+    <pre><code>sudo visudo -f /etc/sudoers.d/wakedeck</code></pre>
+    <pre><code>youruser ALL=(ALL) NOPASSWD: /sbin/shutdown</code></pre>
+    <p>På enhetens redigeringsskärm fyller du i värd (IP eller namn), SSH-användare (ditt kontonamn på datorn) och port (22). Tryck på Stäng av nu. Första gången ska du kontrollera att fingeravtrycket som visas stämmer med datorns och sedan trycka på Lita på. Datorns fingeravtryck:</p>
+    <p><strong>Linux</strong></p>
+    <pre><code>ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub</code></pre>
+    <p><strong>Windows</strong></p>
+    <pre><code>ssh-keygen -lf $env:ProgramData\ssh\ssh_host_ecdsa_key.pub</code></pre>
+    <p><strong>macOS</strong></p>
+    <pre><code>ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub</code></pre>
+    <p>”Datorn nekade SSH-nyckeln”: fel nyckel eller användarnamn. ”Det gick inte att ansluta”: datorn är avstängd, eller så är värd, port eller brandvägg fel. ”Datorn svarade med ett fel”: på Linux eller macOS är det oftast sudoers-regeln. ”Datorns SSH-nyckel har ändrats”: datorn har installerats om eller så har dess SSH-nycklar skapats på nytt; lita bara på den nya nyckeln om du väntade dig det.</p>
+
+    <h2 id="away">3. Borta hemifrån (VPN)</h2>
+    <p>Utanför ditt hemnätverk behöver du först en väg in, till exempel ett WireGuard- eller Tailscale-VPN. Ett magiskt paket är en broadcast, och många VPN vidarebefordrar inte broadcast. Ange nätverkets broadcast-adress (till exempel 192.168.1.255) i enheten. Fungerar väckning på distans ändå inte är den vanliga lösningen en liten enhet som alltid är på hemma och skickar paketet åt dig (en router med Wake-on-LAN eller en Raspberry Pi). Fjärravstängning via SSH fungerar över ett VPN så länge datorns adress går att nå.</p>
+    <p>Problem på distans: ”ingen nätverks- eller VPN-anslutning” betyder att telefonen saknar väg till adressen, så anslut VPN först. ”Broadcast-adressen hittades inte” betyder att namnet eller adressen i enheten inte går att slå upp. Ett VPN kan också ta emot paketet utan att någonsin leverera det: appen kan inte veta det, eftersom ett magiskt paket inte har något svar. Kontrollera att datorn startar och titta på dess status i listan.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>&copy; 2026 Diego Bergonsi</div>
+    <ul>
+      <li><a href="/sv/guide">Installationsguiden</a></li>
+      <li><a href="/sv/privacy">Integritet</a></li>
+      <li><a href="https://ko-fi.com/diegobergonsi" rel="noopener noreferrer">Donera</a></li>
+      <li><a href="mailto:contact@wakedeck.app">Kontakt</a></li>
+    </ul>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Руководстве по настройке | WakeDeck</title>
+<meta name="description" content="Включите Wake-on-LAN и удалённое выключение на компьютере с Linux, Windows или Mac, чтобы WakeDeck мог включать его с телефона.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#161E56">
+<link rel="canonical" href="https://wakedeck.app/ru/guide">
+<link rel="alternate" hreflang="en" href="https://wakedeck.app/guide">
+<link rel="alternate" hreflang="pt-BR" href="https://wakedeck.app/pt-br/guide">
+<link rel="alternate" hreflang="pt-PT" href="https://wakedeck.app/pt-pt/guide">
+<link rel="alternate" hreflang="fr" href="https://wakedeck.app/fr/guide">
+<link rel="alternate" hreflang="de" href="https://wakedeck.app/de/guide">
+<link rel="alternate" hreflang="es" href="https://wakedeck.app/es/guide">
+<link rel="alternate" hreflang="zh-Hans" href="https://wakedeck.app/zh/guide">
+<link rel="alternate" hreflang="ja" href="https://wakedeck.app/ja/guide">
+<link rel="alternate" hreflang="it" href="https://wakedeck.app/it/guide">
+<link rel="alternate" hreflang="ru" href="https://wakedeck.app/ru/guide">
+<link rel="alternate" hreflang="ko" href="https://wakedeck.app/ko/guide">
+<link rel="alternate" hreflang="ar" href="https://wakedeck.app/ar/guide">
+<link rel="alternate" hreflang="tr" href="https://wakedeck.app/tr/guide">
+<link rel="alternate" hreflang="vi" href="https://wakedeck.app/vi/guide">
+<link rel="alternate" hreflang="id" href="https://wakedeck.app/id/guide">
+<link rel="alternate" hreflang="pl" href="https://wakedeck.app/pl/guide">
+<link rel="alternate" hreflang="sv" href="https://wakedeck.app/sv/guide">
+<link rel="alternate" hreflang="da" href="https://wakedeck.app/da/guide">
+<link rel="alternate" hreflang="nb" href="https://wakedeck.app/nb/guide">
+<link rel="alternate" hreflang="fi" href="https://wakedeck.app/fi/guide">
+<link rel="alternate" hreflang="x-default" href="https://wakedeck.app/guide">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Руководстве по настройке | WakeDeck">
+<meta property="og:description" content="Включите Wake-on-LAN и удалённое выключение на компьютере с Linux, Windows или Mac, чтобы WakeDeck мог включать его с телефона.">
+<meta property="og:url" content="https://wakedeck.app/ru/guide">
+<meta property="og:image" content="https://wakedeck.app/assets/og.png">
+<link rel="stylesheet" href="/assets/site.css?v=90440331">
+</head>
+<body>
+<a class="skip" href="#main">Перейти к содержимому</a>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="/ru/" aria-label="WakeDeck"><b>Wake</b><span>Deck</span></a>
+    <nav aria-label="Main">
+      <a class="btn donate nav-donate" href="https://ko-fi.com/diegobergonsi" rel="noopener noreferrer">Сделать пожертвование</a>
+      <a class="opt" href="/ru/#features">Возможности</a>
+      <a class="opt" href="/ru/#how">Как это работает</a>
+      <a href="/ru/guide" aria-current="page">Руководстве по настройке</a>
+      <a href="/ru/privacy">Конфиденциальность</a>
+      <details class="lang">
+        <summary aria-label="Язык"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 4 5.6 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.6-4-9s1.4-6.4 4-9z"/></svg><span>Русский</span></summary>
+        <ul>
+          <li><a href="/guide" lang="en" hreflang="en">English</a></li>
+          <li><a href="/pt-br/guide" lang="pt-BR" hreflang="pt-BR">Português (Brasil)</a></li>
+          <li><a href="/pt-pt/guide" lang="pt-PT" hreflang="pt-PT">Português (Portugal)</a></li>
+          <li><a href="/fr/guide" lang="fr" hreflang="fr">Français</a></li>
+          <li><a href="/de/guide" lang="de" hreflang="de">Deutsch</a></li>
+          <li><a href="/es/guide" lang="es" hreflang="es">Español</a></li>
+          <li><a href="/zh/guide" lang="zh-Hans" hreflang="zh-Hans">简体中文</a></li>
+          <li><a href="/ja/guide" lang="ja" hreflang="ja">日本語</a></li>
+          <li><a href="/it/guide" lang="it" hreflang="it">Italiano</a></li>
+          <li><a href="/ru/guide" lang="ru" hreflang="ru" aria-current="true">Русский</a></li>
+          <li><a href="/ko/guide" lang="ko" hreflang="ko">한국어</a></li>
+          <li><a href="/ar/guide" lang="ar" hreflang="ar">العربية</a></li>
+          <li><a href="/tr/guide" lang="tr" hreflang="tr">Türkçe</a></li>
+          <li><a href="/vi/guide" lang="vi" hreflang="vi">Tiếng Việt</a></li>
+          <li><a href="/id/guide" lang="id" hreflang="id">Bahasa Indonesia</a></li>
+          <li><a href="/pl/guide" lang="pl" hreflang="pl">Polski</a></li>
+          <li><a href="/sv/guide" lang="sv" hreflang="sv">Svenska</a></li>
+          <li><a href="/da/guide" lang="da" hreflang="da">Dansk</a></li>
+          <li><a href="/nb/guide" lang="nb" hreflang="nb">Norsk bokmål</a></li>
+          <li><a href="/fi/guide" lang="fi" hreflang="fi">Suomi</a></li>
+        </ul>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap page-title">
+    <h1>Руководстве по настройке</h1>
+    <p class="meta">Руководство по настройке компьютера. Для включения нужны настройки из раздела 1. Удалённое выключение по SSH (раздел 2) необязательно.</p>
+  </div>
+
+  <div class="wrap prose">
+    <h2 id="wol">1. Wake-on-LAN (настройки компьютера)</h2>
+    <p>Волшебный пакет включает выключенный компьютер или компьютер в спящем режиме, но только если сетевая карта по-прежнему получает питание и «слушает» сеть. Используйте сетевой кабель: по Wi-Fi включение редко работает.</p>
+    <h3 id="wol-linux">Linux</h3>
+    <p>В BIOS/UEFI включите Wake on LAN (названия отличаются: Wake on LAN, Power On By PCI-E, Resume by PCI-E). Если есть параметр ErP, EuP или глубокого сна, отключите его, так как он отключает питание сетевой карты.</p>
+    <p>Узнайте имя сетевого интерфейса (например, enp8s0):</p>
+    <pre><code>ip -br link</code></pre>
+    <p>Проверьте параметр Wake-on. Он должен показывать g:</p>
+    <pre><code>sudo ethtool &lt;iface&gt; | grep Wake-on</code></pre>
+    <p>Включите его (сбрасывается при перезагрузке):</p>
+    <pre><code>sudo ethtool -s &lt;iface&gt; wol g</code></pre>
+    <p>Чтобы сохранить настройку после перезагрузок с помощью NetworkManager (замените имя подключения, см. nmcli connection show):</p>
+    <pre><code>sudo nmcli connection modify &quot;&lt;connection&gt;&quot; 802-3-ethernet.wake-on-lan magic</code></pre>
+    <h3 id="wol-windows">Windows</h3>
+    <p>В BIOS/UEFI включите Wake on LAN (названия отличаются: Wake on LAN, Power On By PCI-E, Resume by PCI-E). Если есть параметр ErP, EuP или глубокого сна, отключите его, так как он отключает питание сетевой карты.</p>
+    <p>Откройте «Диспетчер устройств», дважды щёлкните сетевой адаптер, вкладка «Управление электропитанием»: отметьте «Разрешить этому устройству выводить компьютер из ждущего режима» и «Разрешить вывод компьютера из ждущего режима только волшебным пакетом».</p>
+    <p>В том же окне, вкладка «Дополнительно»: установите «Wake on Magic Packet» в значение «Включено» (если параметр есть).</p>
+    <p>Отключите быстрый запуск: Панель управления → Электропитание → Действие кнопок питания → Изменение параметров, которые сейчас недоступны → снимите флажок «Включить быстрый запуск». При включённом быстром запуске выключенный компьютер часто игнорирует волшебный пакет.</p>
+    <h3 id="wol-macos">macOS</h3>
+    <p>Откройте «Системные настройки» → «Аккумулятор» (MacBook) или «Экономия энергии» (настольный Mac) → «Параметры» и включите «Пробуждать для доступа к сети». Включение лучше всего работает по Ethernet: на MacBook используйте адаптер Ethernet для USB-C или Thunderbolt и держите его подключённым к питанию. Mac в спящем режиме по Wi-Fi часто игнорирует волшебный пакет.</p>
+    <p>При подключении по Wi-Fi также отключите «Частный адрес Wi-Fi» для вашей сети (Системные настройки → Wi-Fi → Подробнее), иначе у Mac будет другой MAC-адрес. В списке ниже «Ethernet Address» — это MAC-адрес каждого порта.</p>
+    <p>В WakeDeck добавьте устройство с MAC-адресом компьютера. Найти его можно здесь:</p>
+    <p><strong>Linux</strong></p>
+    <pre><code>ip -br link</code></pre>
+    <p><strong>Windows</strong></p>
+    <pre><code>ipconfig /all</code></pre>
+    <p><strong>macOS</strong></p>
+    <pre><code>networksetup -listallhardwareports</code></pre>
+    <p>Широковещательный адрес: последний адрес вашей сети, например 192.168.1.255 для 192.168.1.x (значение по умолчанию 255.255.255.255 тоже работает в той же сети). Порт: 9.</p>
+
+    <h2 id="ssh">2. Удалённое выключение по SSH (необязательно)</h2>
+    <p class="note">Замените PASTE_KEY_LINE_FROM_APP строкой ключа с экрана «SSH-ключ» в WakeDeck.</p>
+    <p>Приложение входит со своим ключом, а не с паролем. На компьютере нужен SSH-сервер, и в него нужно добавить открытый ключ приложения. Команды ниже уже содержат ваш ключ.</p>
+    <h3 id="ssh-linux">Linux</h3>
+    <p>Установите и запустите SSH-сервер (пример для Debian/Ubuntu):</p>
+    <pre><code>sudo apt install openssh-server &amp;&amp; sudo systemctl enable --now ssh</code></pre>
+    <p>В Fedora, Arch и SteamOS служба называется sshd:</p>
+    <pre><code>sudo systemctl enable --now sshd</code></pre>
+    <p>Добавьте ключ приложения своему пользователю. Эта строка ограничивает ключ командой выключения:</p>
+    <pre><code>mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; echo &#x27;PASTE_KEY_LINE_FROM_APP&#x27; &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys</code></pre>
+    <p>Разрешите выключение без пароля. Выполните эту команду, затем добавьте строку под ней (замените youruser и проверьте путь командой: which shutdown):</p>
+    <pre><code>sudo visudo -f /etc/sudoers.d/wakedeck</code></pre>
+    <pre><code>youruser ALL=(ALL) NOPASSWD: /usr/bin/shutdown</code></pre>
+    <h3 id="ssh-windows">Windows</h3>
+    <p>В PowerShell от имени администратора установите и запустите OpenSSH Server:</p>
+    <pre><code>Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0; Start-Service sshd; Set-Service -Name sshd -StartupType Automatic</code></pre>
+    <p>Учётная запись администратора: добавьте ключ и ограничьте права на файл (иначе SSH его игнорирует):</p>
+    <pre><code>Add-Content -Force -Path &quot;$env:ProgramData\ssh\administrators_authorized_keys&quot; -Value &#x27;PASTE_KEY_LINE_FROM_APP&#x27;</code></pre>
+    <pre><code>icacls.exe &quot;$env:ProgramData\ssh\administrators_authorized_keys&quot; /inheritance:r /grant &quot;Administrators:F&quot; /grant &quot;SYSTEM:F&quot;</code></pre>
+    <p>Для обычной учётной записи поместите строку с ключом в C:\Users\ИМЯ\.ssh\authorized_keys.</p>
+    <p>Если всё равно отказывает: проверьте, что брандмауэр разрешает TCP-порт 22 (компонент OpenSSH обычно добавляет правило) и что учётная запись не Microsoft Entra ID, такие учётные записи не могут использовать ключи.</p>
+    <h3 id="ssh-macos">macOS</h3>
+    <p>Включите SSH-сервер: Системные настройки → Основные → Общий доступ → Удалённый вход, и разрешите доступ своему пользователю.</p>
+    <p>Добавьте ключ приложения своему пользователю. Эта строка ограничивает ключ командой выключения:</p>
+    <pre><code>mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; echo &#x27;PASTE_KEY_LINE_FROM_APP&#x27; &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys</code></pre>
+    <p>Разрешите выключение без пароля. Выполните эту команду, затем добавьте строку под ней (замените youruser):</p>
+    <pre><code>sudo visudo -f /etc/sudoers.d/wakedeck</code></pre>
+    <pre><code>youruser ALL=(ALL) NOPASSWD: /sbin/shutdown</code></pre>
+    <p>На экране изменения устройства укажите хост (IP или имя), пользователя SSH (имя вашей учётной записи на компьютере) и порт (22). Нажмите «Выключить сейчас». При первом подключении проверьте, что показанный отпечаток совпадает с отпечатком компьютера, затем нажмите «Доверять». Отпечаток компьютера:</p>
+    <p><strong>Linux</strong></p>
+    <pre><code>ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub</code></pre>
+    <p><strong>Windows</strong></p>
+    <pre><code>ssh-keygen -lf $env:ProgramData\ssh\ssh_host_ecdsa_key.pub</code></pre>
+    <p><strong>macOS</strong></p>
+    <pre><code>ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub</code></pre>
+    <p>«Компьютер отклонил SSH-ключ»: неверный ключ или имя пользователя. «Не удалось подключиться»: компьютер выключен либо неверны хост, порт или брандмауэр. «Компьютер ответил ошибкой»: в Linux или macOS обычно дело в правиле sudoers. «SSH-ключ компьютера изменился»: компьютер переустановили или его SSH-ключи создали заново; доверяйте новому ключу, только если ожидали этого.</p>
+
+    <h2 id="away">3. Вне дома (VPN)</h2>
+    <p>Вне домашней сети сначала нужен способ в неё попасть, например VPN WireGuard или Tailscale. Волшебный пакет — это широковещательная рассылка, а многие VPN не пересылают такие пакеты. Укажите в устройстве широковещательный адрес вашей сети (например, 192.168.1.255). Если включение на расстоянии всё равно не работает, обычное решение — небольшое всегда включённое устройство дома, которое отправит пакет за вас (роутер с Wake-on-LAN или Raspberry Pi). Удалённое выключение по SSH работает через VPN, пока адрес компьютера доступен.</p>
+    <p>Проблемы при удалённой работе: «нет подключения к сети или VPN» означает, что у телефона нет маршрута к этому адресу, поэтому сначала подключите VPN. «Широковещательный адрес не найден» означает, что имя или адрес в устройстве не удаётся разрешить. VPN также может принять пакет и не доставить его: приложение не может это определить, потому что у волшебного пакета нет ответа. Проверьте, включается ли компьютер, и посмотрите его статус в списке.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>&copy; 2026 Diego Bergonsi</div>
+    <ul>
+      <li><a href="/ru/guide">Руководстве по настройке</a></li>
+      <li><a href="/ru/privacy">Конфиденциальность</a></li>
+      <li><a href="https://ko-fi.com/diegobergonsi" rel="noopener noreferrer">Сделать пожертвование</a></li>
+      <li><a href="mailto:contact@wakedeck.app">Связаться</a></li>
+    </ul>
+  </div>
+</footer>
+</body>
+</html>

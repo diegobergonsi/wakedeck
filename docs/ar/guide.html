@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>دليل الإعداد | WakeDeck</title>
+<meta name="description" content="فعّل Wake-on-LAN وإيقاف التشغيل عن بُعد على جهاز الكمبيوتر الذي يعمل بنظام Linux أو Windows أو Mac ليتمكن WakeDeck من تشغيله من هاتفك.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#161E56">
+<link rel="canonical" href="https://wakedeck.app/ar/guide">
+<link rel="alternate" hreflang="en" href="https://wakedeck.app/guide">
+<link rel="alternate" hreflang="pt-BR" href="https://wakedeck.app/pt-br/guide">
+<link rel="alternate" hreflang="pt-PT" href="https://wakedeck.app/pt-pt/guide">
+<link rel="alternate" hreflang="fr" href="https://wakedeck.app/fr/guide">
+<link rel="alternate" hreflang="de" href="https://wakedeck.app/de/guide">
+<link rel="alternate" hreflang="es" href="https://wakedeck.app/es/guide">
+<link rel="alternate" hreflang="zh-Hans" href="https://wakedeck.app/zh/guide">
+<link rel="alternate" hreflang="ja" href="https://wakedeck.app/ja/guide">
+<link rel="alternate" hreflang="it" href="https://wakedeck.app/it/guide">
+<link rel="alternate" hreflang="ru" href="https://wakedeck.app/ru/guide">
+<link rel="alternate" hreflang="ko" href="https://wakedeck.app/ko/guide">
+<link rel="alternate" hreflang="ar" href="https://wakedeck.app/ar/guide">
+<link rel="alternate" hreflang="tr" href="https://wakedeck.app/tr/guide">
+<link rel="alternate" hreflang="vi" href="https://wakedeck.app/vi/guide">
+<link rel="alternate" hreflang="id" href="https://wakedeck.app/id/guide">
+<link rel="alternate" hreflang="pl" href="https://wakedeck.app/pl/guide">
+<link rel="alternate" hreflang="sv" href="https://wakedeck.app/sv/guide">
+<link rel="alternate" hreflang="da" href="https://wakedeck.app/da/guide">
+<link rel="alternate" hreflang="nb" href="https://wakedeck.app/nb/guide">
+<link rel="alternate" hreflang="fi" href="https://wakedeck.app/fi/guide">
+<link rel="alternate" hreflang="x-default" href="https://wakedeck.app/guide">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="دليل الإعداد | WakeDeck">
+<meta property="og:description" content="فعّل Wake-on-LAN وإيقاف التشغيل عن بُعد على جهاز الكمبيوتر الذي يعمل بنظام Linux أو Windows أو Mac ليتمكن WakeDeck من تشغيله من هاتفك.">
+<meta property="og:url" content="https://wakedeck.app/ar/guide">
+<meta property="og:image" content="https://wakedeck.app/assets/og.png">
+<link rel="stylesheet" href="/assets/site.css?v=90440331">
+</head>
+<body>
+<a class="skip" href="#main">انتقل إلى المحتوى</a>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="/ar/" aria-label="WakeDeck"><b>Wake</b><span>Deck</span></a>
+    <nav aria-label="Main">
+      <a class="btn donate nav-donate" href="https://ko-fi.com/diegobergonsi" rel="noopener noreferrer">تبرّع</a>
+      <a class="opt" href="/ar/#features">الميزات</a>
+      <a class="opt" href="/ar/#how">كيف يعمل</a>
+      <a href="/ar/guide" aria-current="page">دليل الإعداد</a>
+      <a href="/ar/privacy">الخصوصية</a>
+      <details class="lang">
+        <summary aria-label="اللغة"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 4 5.6 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.6-4-9s1.4-6.4 4-9z"/></svg><span>العربية</span></summary>
+        <ul>
+          <li><a href="/guide" lang="en" hreflang="en">English</a></li>
+          <li><a href="/pt-br/guide" lang="pt-BR" hreflang="pt-BR">Português (Brasil)</a></li>
+          <li><a href="/pt-pt/guide" lang="pt-PT" hreflang="pt-PT">Português (Portugal)</a></li>
+          <li><a href="/fr/guide" lang="fr" hreflang="fr">Français</a></li>
+          <li><a href="/de/guide" lang="de" hreflang="de">Deutsch</a></li>
+          <li><a href="/es/guide" lang="es" hreflang="es">Español</a></li>
+          <li><a href="/zh/guide" lang="zh-Hans" hreflang="zh-Hans">简体中文</a></li>
+          <li><a href="/ja/guide" lang="ja" hreflang="ja">日本語</a></li>
+          <li><a href="/it/guide" lang="it" hreflang="it">Italiano</a></li>
+          <li><a href="/ru/guide" lang="ru" hreflang="ru">Русский</a></li>
+          <li><a href="/ko/guide" lang="ko" hreflang="ko">한국어</a></li>
+          <li><a href="/ar/guide" lang="ar" hreflang="ar" aria-current="true">العربية</a></li>
+          <li><a href="/tr/guide" lang="tr" hreflang="tr">Türkçe</a></li>
+          <li><a href="/vi/guide" lang="vi" hreflang="vi">Tiếng Việt</a></li>
+          <li><a href="/id/guide" lang="id" hreflang="id">Bahasa Indonesia</a></li>
+          <li><a href="/pl/guide" lang="pl" hreflang="pl">Polski</a></li>
+          <li><a href="/sv/guide" lang="sv" hreflang="sv">Svenska</a></li>
+          <li><a href="/da/guide" lang="da" hreflang="da">Dansk</a></li>
+          <li><a href="/nb/guide" lang="nb" hreflang="nb">Norsk bokmål</a></li>
+          <li><a href="/fi/guide" lang="fi" hreflang="fi">Suomi</a></li>
+        </ul>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap page-title">
+    <h1>دليل الإعداد</h1>
+    <p class="meta">دليل إعداد الحاسوب. يتطلب التشغيل الإعدادات الواردة في القسم 1. الإيقاف عن بُعد عبر SSH (القسم 2) اختياري.</p>
+  </div>
+
+  <div class="wrap prose">
+    <h2 id="wol">1. Wake-on-LAN (إعدادات الحاسوب)</h2>
+    <p>تُشغّل الحزمة السحرية حاسوبًا مطفأً أو في وضع السكون، لكن فقط إذا كانت بطاقة الشبكة لا تزال تتلقى الطاقة وتنتظر الحزم. استخدم كابل شبكة: نادرًا ما يعمل التشغيل عبر Wi-Fi.</p>
+    <h3 id="wol-linux">Linux</h3>
+    <p>في BIOS/UEFI فعّل Wake on LAN (تختلف التسميات: Wake on LAN أو Power On By PCI-E أو Resume by PCI-E). إذا وُجد خيار ErP أو EuP أو السكون العميق فعطّله، لأنه يقطع الطاقة عن بطاقة الشبكة.</p>
+    <p>اعثر على اسم واجهة الشبكة (مثل enp8s0):</p>
+    <pre><code>ip -br link</code></pre>
+    <p>تحقق من إعداد Wake-on. يجب أن يظهر g:</p>
+    <pre><code>sudo ethtool &lt;iface&gt; | grep Wake-on</code></pre>
+    <p>فعّله (يُعاد ضبطه عند إعادة التشغيل):</p>
+    <pre><code>sudo ethtool -s &lt;iface&gt; wol g</code></pre>
+    <p>للإبقاء عليه بعد إعادة التشغيل باستخدام NetworkManager (استبدل اسم الاتصال، راجع nmcli connection show):</p>
+    <pre><code>sudo nmcli connection modify &quot;&lt;connection&gt;&quot; 802-3-ethernet.wake-on-lan magic</code></pre>
+    <h3 id="wol-windows">Windows</h3>
+    <p>في BIOS/UEFI فعّل Wake on LAN (تختلف التسميات: Wake on LAN أو Power On By PCI-E أو Resume by PCI-E). إذا وُجد خيار ErP أو EuP أو السكون العميق فعطّله، لأنه يقطع الطاقة عن بطاقة الشبكة.</p>
+    <p>افتح إدارة الأجهزة، وانقر نقرًا مزدوجًا على محوّل الشبكة، ثم علامة التبويب إدارة الطاقة: حدد “السماح لهذا الجهاز بإيقاظ الكمبيوتر” و“السماح فقط لحزمة سحرية بإيقاظ الكمبيوتر”.</p>
+    <p>في النافذة نفسها، علامة التبويب خيارات متقدمة: اضبط “Wake on Magic Packet” على Enabled (إن كان مدرجًا).</p>
+    <p>عطّل بدء التشغيل السريع: لوحة التحكم → خيارات الطاقة → اختيار وظائف أزرار الطاقة → تغيير الإعدادات غير المتوفرة حاليًا → ألغِ تحديد “تشغيل بدء التشغيل السريع”. عند تفعيل بدء التشغيل السريع، كثيرًا ما يتجاهل الحاسوب الذي أُطفئ الحزمة السحرية.</p>
+    <h3 id="wol-macos">macOS</h3>
+    <p>افتح إعدادات النظام → البطارية (MacBook) أو الطاقة (Mac المكتبي) → خيارات، وفعّل “الإيقاظ للوصول إلى الشبكة”. يعمل التشغيل بأفضل شكل عبر Ethernet: على MacBook استخدم محوّل Ethernet بمنفذ USB-C أو Thunderbolt وأبقه موصولًا بالطاقة. كثيرًا ما يتجاهل جهاز Mac النائم على Wi-Fi الحزمة السحرية.</p>
+    <p>على Wi-Fi، عطّل أيضًا “عنوان Wi-Fi الخاص” لشبكتك (إعدادات النظام → Wi-Fi → التفاصيل)، وإلا سيحصل Mac على عنوان MAC مختلف. في القائمة أدناه، “Ethernet Address” هو عنوان MAC لكل منفذ.</p>
+    <p>في WakeDeck أضف الجهاز بعنوان MAC الخاص بالحاسوب. تجده هنا:</p>
+    <p><strong>Linux</strong></p>
+    <pre><code>ip -br link</code></pre>
+    <p><strong>Windows</strong></p>
+    <pre><code>ipconfig /all</code></pre>
+    <p><strong>macOS</strong></p>
+    <pre><code>networksetup -listallhardwareports</code></pre>
+    <p>عنوان البث: آخر عنوان في شبكتك، مثل 192.168.1.255 للشبكة 192.168.1.x (القيمة الافتراضية 255.255.255.255 تعمل أيضًا على الشبكة نفسها). المنفذ: 9.</p>
+
+    <h2 id="ssh">2. الإيقاف عن بُعد عبر SSH (اختياري)</h2>
+    <p class="note">استبدل PASTE_KEY_LINE_FROM_APP بسطر المفتاح المعروض في شاشة مفتاح SSH في WakeDeck.</p>
+    <p>يسجّل التطبيق الدخول بمفتاحه الخاص، وليس بكلمة مرور. يحتاج الحاسوب إلى خادم SSH، ويجب إضافة المفتاح العام للتطبيق إليه. تحتوي الأوامر أدناه على مفتاحك بالفعل.</p>
+    <h3 id="ssh-linux">Linux</h3>
+    <p>ثبّت خادم SSH وشغّله (مثال لـ Debian/Ubuntu):</p>
+    <pre><code>sudo apt install openssh-server &amp;&amp; sudo systemctl enable --now ssh</code></pre>
+    <p>في Fedora وArch وSteamOS تُسمى الخدمة sshd بدلًا من ذلك:</p>
+    <pre><code>sudo systemctl enable --now sshd</code></pre>
+    <p>أضف مفتاح التطبيق إلى مستخدمك. يقصر هذا السطر المفتاح على أمر الإيقاف:</p>
+    <pre><code>mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; echo &#x27;PASTE_KEY_LINE_FROM_APP&#x27; &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys</code></pre>
+    <p>اسمح بإيقاف التشغيل دون كلمة مرور. شغّل هذا الأمر ثم أضف السطر الذي تحته (استبدل youruser وتحقق من المسار بالأمر: which shutdown):</p>
+    <pre><code>sudo visudo -f /etc/sudoers.d/wakedeck</code></pre>
+    <pre><code>youruser ALL=(ALL) NOPASSWD: /usr/bin/shutdown</code></pre>
+    <h3 id="ssh-windows">Windows</h3>
+    <p>في PowerShell بصلاحيات المسؤول، ثبّت OpenSSH Server وشغّله:</p>
+    <pre><code>Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0; Start-Service sshd; Set-Service -Name sshd -StartupType Automatic</code></pre>
+    <p>حساب المسؤول: أضف المفتاح وقيّد أذونات الملف (وإلا يتجاهل SSH الملف):</p>
+    <pre><code>Add-Content -Force -Path &quot;$env:ProgramData\ssh\administrators_authorized_keys&quot; -Value &#x27;PASTE_KEY_LINE_FROM_APP&#x27;</code></pre>
+    <pre><code>icacls.exe &quot;$env:ProgramData\ssh\administrators_authorized_keys&quot; /inheritance:r /grant &quot;Administrators:F&quot; /grant &quot;SYSTEM:F&quot;</code></pre>
+    <p>أما الحساب العادي فضع سطر المفتاح في C:\Users\NAME\.ssh\authorized_keys.</p>
+    <p>إذا استمر الرفض: تحقق من أن جدار الحماية يسمح بمنفذ TCP رقم 22 (تضيف ميزة OpenSSH القاعدة عادةً)، وأن الحساب ليس حساب Microsoft Entra ID الذي لا يمكنه استخدام المفاتيح.</p>
+    <h3 id="ssh-macos">macOS</h3>
+    <p>فعّل خادم SSH: إعدادات النظام → عام → المشاركة → تسجيل الدخول عن بُعد، واسمح لمستخدمك.</p>
+    <p>أضف مفتاح التطبيق إلى مستخدمك. يقصر هذا السطر المفتاح على أمر الإيقاف:</p>
+    <pre><code>mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; echo &#x27;PASTE_KEY_LINE_FROM_APP&#x27; &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys</code></pre>
+    <p>اسمح بإيقاف التشغيل دون كلمة مرور. شغّل هذا الأمر ثم أضف السطر الذي تحته (استبدل youruser):</p>
+    <pre><code>sudo visudo -f /etc/sudoers.d/wakedeck</code></pre>
+    <pre><code>youruser ALL=(ALL) NOPASSWD: /sbin/shutdown</code></pre>
+    <p>في شاشة تعديل الجهاز أدخل المضيف (IP أو الاسم) ومستخدم SSH (اسم حسابك على الحاسوب) والمنفذ (22). اضغط على إيقاف التشغيل الآن. في المرة الأولى تحقق من أن البصمة المعروضة تطابق بصمة الحاسوب، ثم اضغط على وثوق. بصمة الحاسوب:</p>
+    <p><strong>Linux</strong></p>
+    <pre><code>ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub</code></pre>
+    <p><strong>Windows</strong></p>
+    <pre><code>ssh-keygen -lf $env:ProgramData\ssh\ssh_host_ecdsa_key.pub</code></pre>
+    <p><strong>macOS</strong></p>
+    <pre><code>ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub</code></pre>
+    <p>“رفض الحاسوب مفتاح SSH”: المفتاح أو اسم المستخدم غير صحيح. “تعذّر الاتصال”: الحاسوب مطفأ، أو المضيف أو المنفذ أو جدار الحماية غير صحيح. “ردّ الحاسوب بخطأ”: في Linux أو macOS يكون السبب عادةً قاعدة sudoers. “تغيّر مفتاح SSH للحاسوب”: أُعيد تثبيت الحاسوب أو أُعيد إنشاء مفاتيح SSH الخاصة به؛ لا تثق بالمفتاح الجديد إلا إذا كنت تتوقع ذلك.</p>
+
+    <h2 id="away">3. خارج المنزل (VPN)</h2>
+    <p>من خارج شبكتك المنزلية تحتاج أولًا إلى طريقة للدخول إليها، مثل VPN من نوع WireGuard أو Tailscale. الحزمة السحرية بث عام، وكثير من شبكات VPN لا تمرّر البث. ضع عنوان البث لشبكتك (مثل 192.168.1.255) في الجهاز. إذا ظل التشغيل عن بُعد لا يعمل، فالحل المعتاد هو جهاز صغير يعمل دائمًا في المنزل يرسل الحزمة نيابةً عنك (راوتر يدعم Wake-on-LAN أو Raspberry Pi). يعمل الإيقاف عن بُعد عبر SSH من خلال VPN ما دام عنوان الحاسوب قابلًا للوصول.</p>
+    <p>مشكلات التشغيل عن بُعد: “لا يوجد اتصال بالشبكة أو VPN” تعني أن الهاتف لا يملك مسارًا إلى ذلك العنوان، فاتصل بـ VPN أولًا. “لم يُعثر على عنوان البث” تعني أنه تعذّر تحليل الاسم أو العنوان المدخل في الجهاز. وقد تقبل VPN الحزمة دون أن تسلّمها: لا يستطيع التطبيق معرفة ذلك لأن الحزمة السحرية لا يأتي لها ردّ. تحقق من أن الحاسوب يعمل، وانظر إلى حالته في القائمة.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>&copy; 2026 Diego Bergonsi</div>
+    <ul>
+      <li><a href="/ar/guide">دليل الإعداد</a></li>
+      <li><a href="/ar/privacy">الخصوصية</a></li>
+      <li><a href="https://ko-fi.com/diegobergonsi" rel="noopener noreferrer">تبرّع</a></li>
+      <li><a href="mailto:contact@wakedeck.app">اتصل بنا</a></li>
+    </ul>
+  </div>
+</footer>
+</body>
+</html>
