@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>セットアップガイド | WakeDeck</title>
+<meta name="description" content="Linux、Windows、Mac の PC で Wake-on-LAN とリモートシャットダウンを有効にして、WakeDeck からスマートフォンで起動できるようにします。">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#161E56">
+<link rel="canonical" href="https://wakedeck.app/ja/guide">
+<link rel="alternate" hreflang="en" href="https://wakedeck.app/guide">
+<link rel="alternate" hreflang="pt-BR" href="https://wakedeck.app/pt-br/guide">
+<link rel="alternate" hreflang="pt-PT" href="https://wakedeck.app/pt-pt/guide">
+<link rel="alternate" hreflang="fr" href="https://wakedeck.app/fr/guide">
+<link rel="alternate" hreflang="de" href="https://wakedeck.app/de/guide">
+<link rel="alternate" hreflang="es" href="https://wakedeck.app/es/guide">
+<link rel="alternate" hreflang="zh-Hans" href="https://wakedeck.app/zh/guide">
+<link rel="alternate" hreflang="ja" href="https://wakedeck.app/ja/guide">
+<link rel="alternate" hreflang="x-default" href="https://wakedeck.app/guide">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="セットアップガイド | WakeDeck">
+<meta property="og:description" content="Linux、Windows、Mac の PC で Wake-on-LAN とリモートシャットダウンを有効にして、WakeDeck からスマートフォンで起動できるようにします。">
+<meta property="og:url" content="https://wakedeck.app/ja/guide">
+<meta property="og:image" content="https://wakedeck.app/assets/og.png">
+<link rel="stylesheet" href="/assets/site.css?v=fdd05b2c">
+</head>
+<body>
+<a class="skip" href="#main">本文へ移動</a>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="/ja/" aria-label="WakeDeck"><b>Wake</b><span>Deck</span></a>
+    <nav aria-label="Main">
+      <a class="btn donate nav-donate" href="https://ko-fi.com/diegobergonsi" rel="noopener noreferrer">寄付する</a>
+      <a class="opt" href="/ja/#features">機能</a>
+      <a class="opt" href="/ja/#how">使い方</a>
+      <a href="/ja/guide" aria-current="page">セットアップガイド</a>
+      <a href="/ja/privacy">プライバシー</a>
+      <details class="lang">
+        <summary aria-label="言語"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 4 5.6 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.6-4-9s1.4-6.4 4-9z"/></svg><span>日本語</span></summary>
+        <ul>
+          <li><a href="/guide" lang="en" hreflang="en">English</a></li>
+          <li><a href="/pt-br/guide" lang="pt-BR" hreflang="pt-BR">Português (Brasil)</a></li>
+          <li><a href="/pt-pt/guide" lang="pt-PT" hreflang="pt-PT">Português (Portugal)</a></li>
+          <li><a href="/fr/guide" lang="fr" hreflang="fr">Français</a></li>
+          <li><a href="/de/guide" lang="de" hreflang="de">Deutsch</a></li>
+          <li><a href="/es/guide" lang="es" hreflang="es">Español</a></li>
+          <li><a href="/zh/guide" lang="zh-Hans" hreflang="zh-Hans">简体中文</a></li>
+          <li><a href="/ja/guide" lang="ja" hreflang="ja" aria-current="true">日本語</a></li>
+        </ul>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap page-title">
+    <h1>セットアップガイド</h1>
+    <p class="meta">PC のセットアップガイドです。起動にはセクション 1 の設定が必要です。SSH によるリモートシャットダウン（セクション 2）は任意です。</p>
+  </div>
+
+  <div class="wrap prose">
+    <h2 id="wol">1. Wake-on-LAN（PC の設定）</h2>
+    <p>マジックパケットは、電源が切れている、またはスリープ中の PC を起動できます。ただし、ネットワークカードに電力が供給され、待ち受けている場合に限ります。LAN ケーブルを使用してください。Wi-Fi では起動できないことがほとんどです。</p>
+    <h3 id="wol-linux">Linux</h3>
+    <p>BIOS/UEFI で Wake on LAN を有効にします（名称は機種により異なります：Wake on LAN、Power On By PCI-E、Resume by PCI-E）。ErP、EuP、ディープスリープのオプションがある場合は、ネットワークカードへの電力が遮断されるため無効にしてください。</p>
+    <p>ネットワークインターフェース名を調べます（例：enp8s0）：</p>
+    <pre><code>ip -br link</code></pre>
+    <p>Wake-on の設定を確認します。g と表示される必要があります：</p>
+    <pre><code>sudo ethtool &lt;iface&gt; | grep Wake-on</code></pre>
+    <p>有効にします（再起動するとリセットされます）：</p>
+    <pre><code>sudo ethtool -s &lt;iface&gt; wol g</code></pre>
+    <p>NetworkManager で再起動後も維持するには（接続名を置き換えてください。nmcli connection show を参照）：</p>
+    <pre><code>sudo nmcli connection modify &quot;&lt;connection&gt;&quot; 802-3-ethernet.wake-on-lan magic</code></pre>
+    <h3 id="wol-windows">Windows</h3>
+    <p>BIOS/UEFI で Wake on LAN を有効にします（名称は機種により異なります：Wake on LAN、Power On By PCI-E、Resume by PCI-E）。ErP、EuP、ディープスリープのオプションがある場合は、ネットワークカードへの電力が遮断されるため無効にしてください。</p>
+    <p>デバイス マネージャーを開き、ネットワーク アダプターをダブルクリックして、[電源の管理] タブで「このデバイスで、コンピューターのスタンバイ状態を解除できるようにする」と「マジック パケットでのみ、コンピューターのスタンバイ状態を解除できるようにする」にチェックを入れます。</p>
+    <p>同じウィンドウの [詳細設定] タブで、「Wake on Magic Packet」を有効にします（一覧にある場合）。</p>
+    <p>高速スタートアップを無効にします：コントロール パネル → 電源オプション → 電源ボタンの動作を選択する → 現在利用可能ではない設定を変更します →「高速スタートアップを有効にする」のチェックを外します。高速スタートアップが有効だと、シャットダウンした PC がマジックパケットを無視することがよくあります。</p>
+    <h3 id="wol-macos">macOS</h3>
+    <p>システム設定 → バッテリー（MacBook）またはエネルギー（デスクトップ Mac）→ オプションで、「ネットワークアクセスによるスリープ解除」をオンにします。起動はイーサネット接続が最適です。MacBook では USB-C または Thunderbolt のイーサネットアダプタを使い、電源につないでおいてください。Wi-Fi 接続でスリープ中の Mac は、マジックパケットを無視することがよくあります。</p>
+    <p>Wi-Fi を使う場合は、お使いのネットワークの「プライベート Wi-Fi アドレス」もオフにしてください（システム設定 → Wi-Fi → 詳細）。オフにしないと Mac の MAC アドレスが変わります。下の一覧の「Ethernet Address」が各ポートの MAC アドレスです。</p>
+    <p>WakeDeck で、PC の MAC アドレスを使ってデバイスを追加します。確認方法：</p>
+    <p><strong>Linux</strong></p>
+    <pre><code>ip -br link</code></pre>
+    <p><strong>Windows</strong></p>
+    <pre><code>ipconfig /all</code></pre>
+    <p><strong>macOS</strong></p>
+    <pre><code>networksetup -listallhardwareports</code></pre>
+    <p>ブロードキャストアドレス：ネットワークの最後のアドレスです。たとえば 192.168.1.x のネットワークなら 192.168.1.255 です（同じネットワーク内では既定値の 255.255.255.255 も使えます）。ポート：9。</p>
+
+    <h2 id="ssh">2. SSH によるリモートシャットダウン（任意）</h2>
+    <p class="note">PASTE_KEY_LINE_FROM_APP は、WakeDeck の SSH 鍵画面に表示される鍵の行に置き換えてください。</p>
+    <p>アプリは専用の鍵でログインし、パスワードは使いません。PC には SSH サーバーが必要で、アプリの公開鍵を追加しておく必要があります。以下のコマンドには、すでにあなたの鍵が含まれています。</p>
+    <h3 id="ssh-linux">Linux</h3>
+    <p>SSH サーバーをインストールして起動します（Debian/Ubuntu の例）：</p>
+    <pre><code>sudo apt install openssh-server &amp;&amp; sudo systemctl enable --now ssh</code></pre>
+    <p>Fedora、Arch、SteamOS ではサービス名が sshd です：</p>
+    <pre><code>sudo systemctl enable --now sshd</code></pre>
+    <p>アプリの鍵をユーザーに追加します。この行により、鍵はシャットダウンコマンドだけに制限されます：</p>
+    <pre><code>mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; echo &#x27;PASTE_KEY_LINE_FROM_APP&#x27; &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys</code></pre>
+    <p>パスワードなしでシャットダウンできるようにします。次を実行し、その下の行を追加してください（youruser を置き換え、which shutdown でパスを確認してください）：</p>
+    <pre><code>sudo visudo -f /etc/sudoers.d/wakedeck</code></pre>
+    <pre><code>youruser ALL=(ALL) NOPASSWD: /usr/bin/shutdown</code></pre>
+    <h3 id="ssh-windows">Windows</h3>
+    <p>管理者として PowerShell を開き、OpenSSH サーバーをインストールして起動します：</p>
+    <pre><code>Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0; Start-Service sshd; Set-Service -Name sshd -StartupType Automatic</code></pre>
+    <p>管理者アカウント：鍵を追加し、ファイルのアクセス許可を制限します（そうしないと SSH はファイルを無視します）：</p>
+    <pre><code>Add-Content -Force -Path &quot;$env:ProgramData\ssh\administrators_authorized_keys&quot; -Value &#x27;PASTE_KEY_LINE_FROM_APP&#x27;</code></pre>
+    <pre><code>icacls.exe &quot;$env:ProgramData\ssh\administrators_authorized_keys&quot; /inheritance:r /grant &quot;Administrators:F&quot; /grant &quot;SYSTEM:F&quot;</code></pre>
+    <p>通常のアカウントの場合：鍵の行を C:\Users\NAME\.ssh\authorized_keys に置きます。</p>
+    <p>それでも拒否される場合：ファイアウォールが TCP ポート 22 を許可していること（OpenSSH 機能は通常ルールを自動で追加します）と、アカウントが鍵を使えない Microsoft Entra ID アカウントではないことを確認してください。</p>
+    <h3 id="ssh-macos">macOS</h3>
+    <p>SSH サーバーをオンにします：システム設定 → 一般 → 共有 → リモートログイン。そしてお使いのユーザーを許可します。</p>
+    <p>アプリの鍵をユーザーに追加します。この行により、鍵はシャットダウンコマンドだけに制限されます：</p>
+    <pre><code>mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; echo &#x27;PASTE_KEY_LINE_FROM_APP&#x27; &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys</code></pre>
+    <p>パスワードなしでシャットダウンできるようにします。次を実行し、その下の行を追加してください（youruser を置き換えます）：</p>
+    <pre><code>sudo visudo -f /etc/sudoers.d/wakedeck</code></pre>
+    <pre><code>youruser ALL=(ALL) NOPASSWD: /sbin/shutdown</code></pre>
+    <p>デバイスの編集画面で、ホスト（IP または名前）、SSH ユーザー（PC のアカウント名）、ポート（22）を入力します。「今すぐシャットダウン」をタップします。初回は、表示されたフィンガープリントが PC のものと一致することを確認してから「信頼する」をタップしてください。PC のフィンガープリント：</p>
+    <p><strong>Linux</strong></p>
+    <pre><code>ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub</code></pre>
+    <p><strong>Windows</strong></p>
+    <pre><code>ssh-keygen -lf $env:ProgramData\ssh\ssh_host_ecdsa_key.pub</code></pre>
+    <p><strong>macOS</strong></p>
+    <pre><code>ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub</code></pre>
+    <p>「PC が SSH 鍵を拒否しました」：鍵またはユーザー名が違います。「接続できませんでした」：PC の電源が切れているか、ホスト、ポート、ファイアウォールが正しくありません。「PC がエラーを返しました」：Linux や macOS では通常 sudoers のルールが原因です。「PC の SSH 鍵が変更されました」：PC が再インストールされたか、SSH 鍵が再生成されました。想定どおりの場合にのみ新しい鍵を信頼してください。</p>
+
+    <h2 id="away">3. 外出先から（VPN）</h2>
+    <p>自宅ネットワークの外からは、まずネットワークに入る手段が必要です（例：WireGuard や Tailscale の VPN）。マジックパケットはブロードキャストであり、多くの VPN はブロードキャストを転送しません。デバイスには、ネットワークのブロードキャストアドレス（例：192.168.1.255）を設定してください。それでも遠隔で起動できない場合は、代わりにパケットを送ってくれる常時稼働の小さな機器を自宅に置くのが一般的な解決策です（Wake-on-LAN 対応のルーターや Raspberry Pi など）。SSH によるリモートシャットダウンは、PC のアドレスに到達できれば VPN 経由でも動作します。</p>
+    <p>遠隔でのトラブル：「ネットワークまたは VPN に接続されていません」は、スマートフォンにそのアドレスへの経路がないという意味です。先に VPN に接続してください。「ブロードキャストアドレスが見つかりません」は、デバイスの名前またはアドレスを解決できないという意味です。VPN がパケットを受け取っても届けない場合もあります。マジックパケットには応答がないため、アプリには判断できません。PC が起動するかを確認し、一覧で状態を見てください。</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>&copy; 2026 Diego Bergonsi</div>
+    <ul>
+      <li><a href="/ja/guide">セットアップガイド</a></li>
+      <li><a href="/ja/privacy">プライバシー</a></li>
+      <li><a href="https://ko-fi.com/diegobergonsi" rel="noopener noreferrer">寄付する</a></li>
+      <li><a href="mailto:contact@wakedeck.app">お問い合わせ</a></li>
+    </ul>
+  </div>
+</footer>
+</body>
+</html>

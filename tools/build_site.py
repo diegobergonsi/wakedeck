@@ -7,6 +7,8 @@ Languages: the folder name (empty for English) maps to the html lang code and th
 import hashlib
 import html
 import pathlib
+import re
+import xml.etree.ElementTree as ET
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent / "docs"
 SITE = "https://wakedeck.app"
@@ -643,13 +645,63 @@ def base(folder):
     return f"/{folder}/" if folder else "/"
 
 
+# ---------------------------------------------------------------- guide page (text comes from the app's Help screen)
+RES = pathlib.Path(__file__).resolve().parent.parent / "app" / "src" / "main" / "res"
+RES_DIR = {"": "values", "pt-br": "values-pt-rBR", "pt-pt": "values-pt-rPT"}
+PAGE_SUFFIX = {"index": "", "privacy": "privacy", "guide": "guide"}
+
+GUIDE_META = {
+    "en": ("Turn on Wake-on-LAN and remote shutdown on your Linux, Windows or Mac PC so WakeDeck can wake it from your phone.",
+           "Replace PASTE_KEY_LINE_FROM_APP with the key line shown in WakeDeck\u2019s SSH key screen."),
+    "pt-br": ("Ative o Wake-on-LAN e o desligamento remoto no seu PC com Linux, Windows ou Mac para o WakeDeck ligá-lo pelo celular.",
+              "Troque PASTE_KEY_LINE_FROM_APP pela linha da chave mostrada na tela Chave SSH do WakeDeck."),
+    "pt-pt": ("Ative o Wake-on-LAN e o encerramento remoto no seu PC com Linux, Windows ou Mac para o WakeDeck o ligar a partir do telemóvel.",
+              "Troque PASTE_KEY_LINE_FROM_APP pela linha da chave mostrada no ecrã Chave SSH do WakeDeck."),
+    "fr": ("Activez Wake-on-LAN et l’extinction à distance sur votre PC Linux, Windows ou Mac pour que WakeDeck puisse l’allumer depuis votre téléphone.",
+           "Remplacez PASTE_KEY_LINE_FROM_APP par la ligne de clé affichée dans l’écran Clé SSH de WakeDeck."),
+    "de": ("Aktiviere Wake-on-LAN und das Herunterfahren aus der Ferne auf deinem Linux-, Windows- oder Mac-PC, damit WakeDeck ihn von deinem Telefon aus aufwecken kann.",
+           "Ersetze PASTE_KEY_LINE_FROM_APP durch die Schlüsselzeile aus dem Bildschirm SSH-Schlüssel in WakeDeck."),
+    "es": ("Activa Wake-on-LAN y el apagado remoto en tu PC con Linux, Windows o Mac para que WakeDeck pueda encenderlo desde tu teléfono.",
+           "Sustituye PASTE_KEY_LINE_FROM_APP por la línea de clave que muestra la pantalla Clave SSH de WakeDeck."),
+    "zh": ("在你的 Linux、Windows 或 Mac 电脑上开启 Wake-on-LAN 和远程关机，让 WakeDeck 可以从手机唤醒它。",
+           "请把 PASTE_KEY_LINE_FROM_APP 替换为 WakeDeck 的 SSH 密钥界面中显示的密钥行。"),
+    "ja": ("Linux、Windows、Mac の PC で Wake-on-LAN とリモートシャットダウンを有効にして、WakeDeck からスマートフォンで起動できるようにします。",
+           "PASTE_KEY_LINE_FROM_APP は、WakeDeck の SSH 鍵画面に表示される鍵の行に置き換えてください。"),
+}
+KEY_PLACEHOLDER = "PASTE_KEY_LINE_FROM_APP"
+
+
+def _unescape(v):
+    v = re.sub(r"\\u([0-9a-fA-F]{4})", lambda m: chr(int(m.group(1), 16)), v)
+    return re.sub(r"\\(.)", lambda m: "\n" if m.group(1) == "n" else m.group(1), v)
+
+
+def load_strings(folder):
+    """Android string resources for a language, falling back to the default file."""
+    out = {}
+    names = ["values/strings.xml", "values/commands.xml"]
+    if folder:
+        names.append(RES_DIR.get(folder, f"values-{folder}") + "/strings.xml")
+    for n in names:
+        for el in ET.parse(RES / n).getroot().iter("string"):
+            assert len(el) == 0, el.get("name")
+            out[el.get("name")] = _unescape(el.text or "")
+    return out
+
+
+def guide_label(folder):
+    g = load_strings(folder)["empty_devices_help"]
+    return g[:1].upper() + g[1:]
+
+
 def head(lang_code, folder, page, title, desc, ogdesc):
-    path = base(folder) + ("privacy" if page == "privacy" else "")
+    suffix = PAGE_SUFFIX[page]
+    path = base(folder) + suffix
     alternates = "\n".join(
-        f'<link rel="alternate" hreflang="{code}" href="{SITE}{base(f)}{"privacy" if page == "privacy" else ""}">'
+        f'<link rel="alternate" hreflang="{code}" href="{SITE}{base(f)}{suffix}">'
         for f, code, _ in LANGS
     )
-    alternates += f'\n<link rel="alternate" hreflang="x-default" href="{SITE}{"/privacy" if page == "privacy" else "/"}">'
+    alternates += f'\n<link rel="alternate" hreflang="x-default" href="{SITE}/{suffix}">'
     return f"""<!doctype html>
 <html lang="{lang_code}">
 <head>
@@ -676,11 +728,12 @@ def header(t, folder, page):
     b = base(folder)
     items = []
     for f, code, name in LANGS:
-        href = base(f) + ("privacy" if page == "privacy" else "")
+        href = base(f) + PAGE_SUFFIX[page]
         cur = ' aria-current="true"' if f == folder else ""
         items.append(f'<li><a href="{href}" lang="{code}" hreflang="{code}"{cur}>{name}</a></li>')
     current = next(n for f, c, n in LANGS if f == folder)
     cur_priv = ' aria-current="page"' if page == "privacy" else ""
+    cur_guide = ' aria-current="page"' if page == "guide" else ""
     return f"""<body>
 <a class="skip" href="#main">{t["skip"]}</a>
 
@@ -691,6 +744,7 @@ def header(t, folder, page):
       <a class="btn donate nav-donate" href="{KOFI}" rel="noopener noreferrer">{SUPPORT[folder or "en"][2]}</a>
       <a class="opt" href="{b}#features">{t["features"]}</a>
       <a class="opt" href="{b}#how">{t["how"]}</a>
+      <a href="{b}guide"{cur_guide}>{t["guide"]}</a>
       <a href="{b}privacy"{cur_priv}>{t["privacy"]}</a>
       <details class="lang">
         <summary aria-label="{t["language"]}"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 4 5.6 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.6-4-9s1.4-6.4 4-9z"/></svg><span>{current}</span></summary>
@@ -711,6 +765,7 @@ def footer(t, folder):
   <div class="wrap">
     <div>&copy; 2026 Diego Bergonsi</div>
     <ul>
+      <li><a href="{b}guide">{t["guide"]}</a></li>
       <li><a href="{b}privacy">{t["privacy"]}</a></li>
       <li><a href="{KOFI}" rel="noopener noreferrer">{SUPPORT[folder or "en"][2]}</a></li>
       <li><a href="mailto:contact@wakedeck.app">{t["contact"]}</a></li>
@@ -820,12 +875,87 @@ def build_privacy(folder, code):
 """ + footer(t, folder)
 
 
+def build_guide(folder, code):
+    t = INDEX[folder or "en"]
+    g = load_strings(folder)
+    desc, key_note = GUIDE_META[folder or "en"]
+    e = html.escape
+
+    def body(name):
+        return f"    <p>{e(g[name])}</p>"
+
+    def cmd(name):
+        text = g[name].replace("%1$s", KEY_PLACEHOLDER)
+        return f"    <pre><code>{e(text)}</code></pre>"
+
+    def os_h3(slug, name):
+        return f'    <h3 id="{slug}">{e(g[name])}</h3>'
+
+    def label(name):
+        return f"    <p><strong>{e(g[name])}</strong></p>"
+
+    wol = [body("help_wol_intro")]
+    wol += [os_h3("wol-linux", "help_os_linux"), body("help_wol_bios"),
+            body("help_wol_l1"), cmd("cmd_linux_list_ifaces"), body("help_wol_l2"), cmd("cmd_linux_check_wol"),
+            body("help_wol_l3"), cmd("cmd_linux_set_wol"), body("help_wol_l4"), cmd("cmd_linux_persist_wol")]
+    wol += [os_h3("wol-windows", "help_os_windows"), body("help_wol_bios"),
+            body("help_wol_w1"), body("help_wol_w2"), body("help_wol_w3")]
+    wol += [os_h3("wol-macos", "help_os_macos"), body("help_wol_m1"), body("help_wol_m2")]
+    wol += [body("help_wol_app"),
+            label("help_os_linux"), cmd("cmd_linux_list_ifaces"),
+            label("help_os_windows"), cmd("cmd_win_ipconfig"),
+            label("help_os_macos"), cmd("cmd_mac_networksetup"),
+            body("help_wol_app2")]
+
+    ssh = [body("help_ssh_intro")]
+    ssh += [os_h3("ssh-linux", "help_os_linux"),
+            body("help_ssh_l1"), cmd("cmd_linux_install_ssh"), body("help_ssh_l1b"), cmd("cmd_linux_enable_sshd"),
+            body("help_ssh_l2"), cmd("cmd_linux_add_key"),
+            body("help_ssh_l3"), cmd("cmd_linux_sudoers"), cmd("cmd_linux_sudoers_line")]
+    ssh += [os_h3("ssh-windows", "help_os_windows"),
+            body("help_ssh_w1"), cmd("cmd_win_install_ssh"), body("help_ssh_w2"),
+            cmd("cmd_win_add_admin_key"), cmd("cmd_win_lock_admin_keys"), body("help_ssh_w3"), body("help_ssh_w4")]
+    ssh += [os_h3("ssh-macos", "help_os_macos"),
+            body("help_ssh_m1"), body("help_ssh_l2"), cmd("cmd_linux_add_key"),
+            body("help_ssh_m3"), cmd("cmd_linux_sudoers"), cmd("cmd_mac_sudoers_line")]
+    ssh += [body("help_ssh_app"),
+            label("help_os_linux"), cmd("cmd_linux_hostkey"),
+            label("help_os_windows"), cmd("cmd_win_hostkey"),
+            label("help_os_macos"), cmd("cmd_linux_hostkey"),
+            body("help_ssh_trouble")]
+
+    title = guide_label(folder)
+    return head(code, folder, "guide", f"{title} | WakeDeck", desc, desc) + "\n" + header(t, folder, "guide") + f"""
+<main id="main">
+  <div class="wrap page-title">
+    <h1>{e(title)}</h1>
+    <p class="meta">{e(g["help_intro"])}</p>
+  </div>
+
+  <div class="wrap prose">
+    <h2 id="wol">{e(g["help_s1"])}</h2>
+{chr(10).join(wol)}
+
+    <h2 id="ssh">{e(g["help_s2"])}</h2>
+    <p class="note">{e(key_note)}</p>
+{chr(10).join(ssh)}
+
+    <h2 id="away">{e(g["help_s3"])}</h2>
+{body("help_remote")}
+{body("help_remote_errors")}
+  </div>
+</main>
+""" + footer(t, folder)
+
+
 def main():
     for folder, code, _ in LANGS:
+        INDEX[folder or "en"]["guide"] = guide_label(folder)
         target = ROOT / folder if folder else ROOT
         target.mkdir(exist_ok=True)
         (target / "index.html").write_text(build_index(folder, code), encoding="utf-8")
         (target / "privacy.html").write_text(build_privacy(folder, code), encoding="utf-8")
+        (target / "guide.html").write_text(build_guide(folder, code), encoding="utf-8")
         print("built", folder or "en")
 
 

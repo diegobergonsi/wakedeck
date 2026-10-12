@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guía de configuración | WakeDeck</title>
+<meta name="description" content="Activa Wake-on-LAN y el apagado remoto en tu PC con Linux, Windows o Mac para que WakeDeck pueda encenderlo desde tu teléfono.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#161E56">
+<link rel="canonical" href="https://wakedeck.app/es/guide">
+<link rel="alternate" hreflang="en" href="https://wakedeck.app/guide">
+<link rel="alternate" hreflang="pt-BR" href="https://wakedeck.app/pt-br/guide">
+<link rel="alternate" hreflang="pt-PT" href="https://wakedeck.app/pt-pt/guide">
+<link rel="alternate" hreflang="fr" href="https://wakedeck.app/fr/guide">
+<link rel="alternate" hreflang="de" href="https://wakedeck.app/de/guide">
+<link rel="alternate" hreflang="es" href="https://wakedeck.app/es/guide">
+<link rel="alternate" hreflang="zh-Hans" href="https://wakedeck.app/zh/guide">
+<link rel="alternate" hreflang="ja" href="https://wakedeck.app/ja/guide">
+<link rel="alternate" hreflang="x-default" href="https://wakedeck.app/guide">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Guía de configuración | WakeDeck">
+<meta property="og:description" content="Activa Wake-on-LAN y el apagado remoto en tu PC con Linux, Windows o Mac para que WakeDeck pueda encenderlo desde tu teléfono.">
+<meta property="og:url" content="https://wakedeck.app/es/guide">
+<meta property="og:image" content="https://wakedeck.app/assets/og.png">
+<link rel="stylesheet" href="/assets/site.css?v=fdd05b2c">
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="/es/" aria-label="WakeDeck"><b>Wake</b><span>Deck</span></a>
+    <nav aria-label="Main">
+      <a class="btn donate nav-donate" href="https://ko-fi.com/diegobergonsi" rel="noopener noreferrer">Hacer una donación</a>
+      <a class="opt" href="/es/#features">Funciones</a>
+      <a class="opt" href="/es/#how">Cómo funciona</a>
+      <a href="/es/guide" aria-current="page">Guía de configuración</a>
+      <a href="/es/privacy">Privacidad</a>
+      <details class="lang">
+        <summary aria-label="Idioma"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 4 5.6 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.6-4-9s1.4-6.4 4-9z"/></svg><span>Español</span></summary>
+        <ul>
+          <li><a href="/guide" lang="en" hreflang="en">English</a></li>
+          <li><a href="/pt-br/guide" lang="pt-BR" hreflang="pt-BR">Português (Brasil)</a></li>
+          <li><a href="/pt-pt/guide" lang="pt-PT" hreflang="pt-PT">Português (Portugal)</a></li>
+          <li><a href="/fr/guide" lang="fr" hreflang="fr">Français</a></li>
+          <li><a href="/de/guide" lang="de" hreflang="de">Deutsch</a></li>
+          <li><a href="/es/guide" lang="es" hreflang="es" aria-current="true">Español</a></li>
+          <li><a href="/zh/guide" lang="zh-Hans" hreflang="zh-Hans">简体中文</a></li>
+          <li><a href="/ja/guide" lang="ja" hreflang="ja">日本語</a></li>
+        </ul>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap page-title">
+    <h1>Guía de configuración</h1>
+    <p class="meta">Guía de configuración del PC. Para encender hacen falta los ajustes de la sección 1. El apagado remoto por SSH (sección 2) es opcional.</p>
+  </div>
+
+  <div class="wrap prose">
+    <h2 id="wol">1. Wake-on-LAN (ajustes del PC)</h2>
+    <p>Un paquete mágico enciende un PC apagado o suspendido, pero solo si su tarjeta de red sigue recibiendo energía y escuchando. Usa un cable de red: por Wi-Fi rara vez funciona el encendido.</p>
+    <h3 id="wol-linux">Linux</h3>
+    <p>En la BIOS/UEFI, activa Wake on LAN (los nombres varían: Wake on LAN, Power On By PCI-E, Resume by PCI-E). Si hay una opción ErP, EuP o deep sleep, desactívala, porque corta la energía a la tarjeta de red.</p>
+    <p>Busca el nombre de la interfaz de red (por ejemplo enp8s0):</p>
+    <pre><code>ip -br link</code></pre>
+    <p>Comprueba el ajuste Wake-on. Debe mostrar g:</p>
+    <pre><code>sudo ethtool &lt;iface&gt; | grep Wake-on</code></pre>
+    <p>Actívalo (se restablece al reiniciar):</p>
+    <pre><code>sudo ethtool -s &lt;iface&gt; wol g</code></pre>
+    <p>Para conservarlo tras los reinicios con NetworkManager (sustituye el nombre de la conexión, consulta nmcli connection show):</p>
+    <pre><code>sudo nmcli connection modify &quot;&lt;connection&gt;&quot; 802-3-ethernet.wake-on-lan magic</code></pre>
+    <h3 id="wol-windows">Windows</h3>
+    <p>En la BIOS/UEFI, activa Wake on LAN (los nombres varían: Wake on LAN, Power On By PCI-E, Resume by PCI-E). Si hay una opción ErP, EuP o deep sleep, desactívala, porque corta la energía a la tarjeta de red.</p>
+    <p>Abre el Administrador de dispositivos, haz doble clic en tu adaptador de red y ve a la pestaña Administración de energía: marca «Permitir que este dispositivo reactive el equipo» y «Permitir solo que un paquete mágico reactive el equipo».</p>
+    <p>En la misma ventana, pestaña Opciones avanzadas: pon «Wake on Magic Packet» en Habilitado (si aparece).</p>
+    <p>Desactiva el inicio rápido: Panel de control → Opciones de energía → Elegir el comportamiento de los botones de inicio/apagado → Cambiar la configuración actualmente no disponible → desmarca «Activar inicio rápido». Con el inicio rápido activado, un PC apagado suele ignorar el paquete mágico.</p>
+    <h3 id="wol-macos">macOS</h3>
+    <p>Abre Ajustes del Sistema → Batería (MacBook) o Energía (Mac de sobremesa) → Opciones y activa “Activar para acceso a la red”. El encendido funciona mejor por cable: en un MacBook usa un adaptador Ethernet USB-C o Thunderbolt y déjalo enchufado a la corriente. Un Mac suspendido por Wi-Fi suele ignorar el paquete mágico.</p>
+    <p>Si usas Wi-Fi, desactiva también “Dirección Wi-Fi privada” para tu red (Ajustes del Sistema → Wi-Fi → Detalles), o el Mac tendrá otra dirección MAC. En la lista de abajo, “Ethernet Address” es la dirección MAC de cada puerto.</p>
+    <p>En WakeDeck, añade el dispositivo con la dirección MAC del PC. Dónde encontrarla:</p>
+    <p><strong>Linux</strong></p>
+    <pre><code>ip -br link</code></pre>
+    <p><strong>Windows</strong></p>
+    <pre><code>ipconfig /all</code></pre>
+    <p><strong>macOS</strong></p>
+    <pre><code>networksetup -listallhardwareports</code></pre>
+    <p>Dirección de difusión: la última dirección de tu red, por ejemplo 192.168.1.255 para 192.168.1.x (el valor predeterminado 255.255.255.255 también funciona en la misma red). Puerto: 9.</p>
+
+    <h2 id="ssh">2. Apagado remoto por SSH (opcional)</h2>
+    <p class="note">Sustituye PASTE_KEY_LINE_FROM_APP por la línea de clave que muestra la pantalla Clave SSH de WakeDeck.</p>
+    <p>La app inicia sesión con su propia clave, nunca con una contraseña. El PC necesita un servidor SSH y hay que añadirle la clave pública de la app. Los comandos de abajo ya incluyen tu clave.</p>
+    <h3 id="ssh-linux">Linux</h3>
+    <p>Instala e inicia el servidor SSH (ejemplo para Debian/Ubuntu):</p>
+    <pre><code>sudo apt install openssh-server &amp;&amp; sudo systemctl enable --now ssh</code></pre>
+    <p>En Fedora, Arch o SteamOS el servicio se llama sshd:</p>
+    <pre><code>sudo systemctl enable --now sshd</code></pre>
+    <p>Añade la clave de la app a tu usuario. La línea limita la clave al comando de apagado:</p>
+    <pre><code>mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; echo &#x27;PASTE_KEY_LINE_FROM_APP&#x27; &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys</code></pre>
+    <p>Permite apagar sin contraseña. Ejecuta esto y después añade la línea de debajo (sustituye youruser y comprueba la ruta con: which shutdown):</p>
+    <pre><code>sudo visudo -f /etc/sudoers.d/wakedeck</code></pre>
+    <pre><code>youruser ALL=(ALL) NOPASSWD: /usr/bin/shutdown</code></pre>
+    <h3 id="ssh-windows">Windows</h3>
+    <p>En PowerShell como administrador, instala e inicia el servidor OpenSSH:</p>
+    <pre><code>Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0; Start-Service sshd; Set-Service -Name sshd -StartupType Automatic</code></pre>
+    <p>Cuenta de administrador: añade la clave y restringe los permisos del archivo (si no, SSH lo ignora):</p>
+    <pre><code>Add-Content -Force -Path &quot;$env:ProgramData\ssh\administrators_authorized_keys&quot; -Value &#x27;PASTE_KEY_LINE_FROM_APP&#x27;</code></pre>
+    <pre><code>icacls.exe &quot;$env:ProgramData\ssh\administrators_authorized_keys&quot; /inheritance:r /grant &quot;Administrators:F&quot; /grant &quot;SYSTEM:F&quot;</code></pre>
+    <p>Para una cuenta normal: pon la línea de la clave en C:\Users\NAME\.ssh\authorized_keys.</p>
+    <p>Si sigue rechazando la conexión: comprueba que el cortafuegos permite el puerto TCP 22 (la característica OpenSSH normalmente añade la regla) y que la cuenta no es una cuenta de Microsoft Entra ID, que no puede usar claves.</p>
+    <h3 id="ssh-macos">macOS</h3>
+    <p>Activa el servidor SSH: Ajustes del Sistema → General → Compartir → Sesión remota, y permite a tu usuario.</p>
+    <p>Añade la clave de la app a tu usuario. La línea limita la clave al comando de apagado:</p>
+    <pre><code>mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; echo &#x27;PASTE_KEY_LINE_FROM_APP&#x27; &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys</code></pre>
+    <p>Permite apagar sin contraseña. Ejecuta esto y después añade la línea de debajo (sustituye youruser):</p>
+    <pre><code>sudo visudo -f /etc/sudoers.d/wakedeck</code></pre>
+    <pre><code>youruser ALL=(ALL) NOPASSWD: /sbin/shutdown</code></pre>
+    <p>En la pantalla de edición del dispositivo, rellena el host (IP o nombre), el usuario SSH (el nombre de tu cuenta en el PC) y el puerto (22). Toca Apagar ahora. La primera vez, comprueba que la huella mostrada coincide con la del PC y toca Confiar. La huella del PC:</p>
+    <p><strong>Linux</strong></p>
+    <pre><code>ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub</code></pre>
+    <p><strong>Windows</strong></p>
+    <pre><code>ssh-keygen -lf $env:ProgramData\ssh\ssh_host_ecdsa_key.pub</code></pre>
+    <p><strong>macOS</strong></p>
+    <pre><code>ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub</code></pre>
+    <p>«El PC rechazó la clave SSH»: clave o nombre de usuario incorrectos. «No se pudo conectar»: el PC está apagado, o el host, el puerto o el cortafuegos son incorrectos. «El PC respondió con un error»: en Linux o macOS suele ser la regla de sudoers. «Ha cambiado la clave SSH del PC»: el PC se reinstaló o se regeneraron sus claves SSH; confía en la nueva clave solo si lo esperabas.</p>
+
+    <h2 id="away">3. Fuera de casa (VPN)</h2>
+    <p>Desde fuera de tu red doméstica primero necesitas una forma de entrar en ella, por ejemplo una VPN WireGuard o Tailscale. Un paquete mágico es una difusión, y muchas VPN no reenvían difusiones. Pon la dirección de difusión de tu red (por ejemplo 192.168.1.255) en el dispositivo. Si aun así el encendido remoto no funciona, la solución habitual es un pequeño dispositivo siempre encendido en casa que envíe el paquete por ti (un router con Wake-on-LAN o una Raspberry Pi). El apagado remoto por SSH funciona a través de una VPN mientras se pueda llegar a la dirección del PC.</p>
+    <p>Problemas en remoto: «sin conexión de red ni VPN» significa que el teléfono no tiene ruta hacia esa dirección, así que conecta primero la VPN. «No se encontró la dirección de difusión» significa que el nombre o la dirección del dispositivo no se puede resolver. Una VPN también puede aceptar el paquete sin entregarlo nunca: la app no puede saberlo, porque un paquete mágico no tiene respuesta. Comprueba que el PC se enciende y mira su estado en la lista.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>&copy; 2026 Diego Bergonsi</div>
+    <ul>
+      <li><a href="/es/guide">Guía de configuración</a></li>
+      <li><a href="/es/privacy">Privacidad</a></li>
+      <li><a href="https://ko-fi.com/diegobergonsi" rel="noopener noreferrer">Hacer una donación</a></li>
+      <li><a href="mailto:contact@wakedeck.app">Contacto</a></li>
+    </ul>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Einrichtungsanleitung | WakeDeck</title>
+<meta name="description" content="Aktiviere Wake-on-LAN und das Herunterfahren aus der Ferne auf deinem Linux-, Windows- oder Mac-PC, damit WakeDeck ihn von deinem Telefon aus aufwecken kann.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#161E56">
+<link rel="canonical" href="https://wakedeck.app/de/guide">
+<link rel="alternate" hreflang="en" href="https://wakedeck.app/guide">
+<link rel="alternate" hreflang="pt-BR" href="https://wakedeck.app/pt-br/guide">
+<link rel="alternate" hreflang="pt-PT" href="https://wakedeck.app/pt-pt/guide">
+<link rel="alternate" hreflang="fr" href="https://wakedeck.app/fr/guide">
+<link rel="alternate" hreflang="de" href="https://wakedeck.app/de/guide">
+<link rel="alternate" hreflang="es" href="https://wakedeck.app/es/guide">
+<link rel="alternate" hreflang="zh-Hans" href="https://wakedeck.app/zh/guide">
+<link rel="alternate" hreflang="ja" href="https://wakedeck.app/ja/guide">
+<link rel="alternate" hreflang="x-default" href="https://wakedeck.app/guide">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Einrichtungsanleitung | WakeDeck">
+<meta property="og:description" content="Aktiviere Wake-on-LAN und das Herunterfahren aus der Ferne auf deinem Linux-, Windows- oder Mac-PC, damit WakeDeck ihn von deinem Telefon aus aufwecken kann.">
+<meta property="og:url" content="https://wakedeck.app/de/guide">
+<meta property="og:image" content="https://wakedeck.app/assets/og.png">
+<link rel="stylesheet" href="/assets/site.css?v=fdd05b2c">
+</head>
+<body>
+<a class="skip" href="#main">Zum Inhalt springen</a>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="/de/" aria-label="WakeDeck"><b>Wake</b><span>Deck</span></a>
+    <nav aria-label="Main">
+      <a class="btn donate nav-donate" href="https://ko-fi.com/diegobergonsi" rel="noopener noreferrer">Spenden</a>
+      <a class="opt" href="/de/#features">Funktionen</a>
+      <a class="opt" href="/de/#how">So funktioniert’s</a>
+      <a href="/de/guide" aria-current="page">Einrichtungsanleitung</a>
+      <a href="/de/privacy">Datenschutz</a>
+      <details class="lang">
+        <summary aria-label="Sprache"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 4 5.6 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.6-4-9s1.4-6.4 4-9z"/></svg><span>Deutsch</span></summary>
+        <ul>
+          <li><a href="/guide" lang="en" hreflang="en">English</a></li>
+          <li><a href="/pt-br/guide" lang="pt-BR" hreflang="pt-BR">Português (Brasil)</a></li>
+          <li><a href="/pt-pt/guide" lang="pt-PT" hreflang="pt-PT">Português (Portugal)</a></li>
+          <li><a href="/fr/guide" lang="fr" hreflang="fr">Français</a></li>
+          <li><a href="/de/guide" lang="de" hreflang="de" aria-current="true">Deutsch</a></li>
+          <li><a href="/es/guide" lang="es" hreflang="es">Español</a></li>
+          <li><a href="/zh/guide" lang="zh-Hans" hreflang="zh-Hans">简体中文</a></li>
+          <li><a href="/ja/guide" lang="ja" hreflang="ja">日本語</a></li>
+        </ul>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap page-title">
+    <h1>Einrichtungsanleitung</h1>
+    <p class="meta">Einrichtungsanleitung für den PC. Zum Aufwecken sind die Einstellungen aus Abschnitt 1 nötig. Das Herunterfahren per SSH (Abschnitt 2) ist optional.</p>
+  </div>
+
+  <div class="wrap prose">
+    <h2 id="wol">1. Wake-on-LAN (PC-Einstellungen)</h2>
+    <p>Ein Magic Packet weckt einen ausgeschalteten oder schlafenden PC auf, aber nur, wenn seine Netzwerkkarte noch mit Strom versorgt wird und lauscht. Verwende ein Netzwerkkabel: Über WLAN klappt das Aufwecken selten.</p>
+    <h3 id="wol-linux">Linux</h3>
+    <p>Aktiviere im BIOS/UEFI Wake on LAN (die Namen variieren: Wake on LAN, Power On By PCI-E, Resume by PCI-E). Gibt es eine Option ErP, EuP oder Deep Sleep, schalte sie aus, denn sie trennt die Netzwerkkarte vom Strom.</p>
+    <p>Finde den Namen der Netzwerkschnittstelle heraus (zum Beispiel enp8s0):</p>
+    <pre><code>ip -br link</code></pre>
+    <p>Prüfe die Einstellung Wake-on. Sie muss g anzeigen:</p>
+    <pre><code>sudo ethtool &lt;iface&gt; | grep Wake-on</code></pre>
+    <p>Aktiviere sie (wird beim Neustart zurückgesetzt):</p>
+    <pre><code>sudo ethtool -s &lt;iface&gt; wol g</code></pre>
+    <p>So bleibt sie mit NetworkManager nach Neustarts erhalten (ersetze den Verbindungsnamen, siehe nmcli connection show):</p>
+    <pre><code>sudo nmcli connection modify &quot;&lt;connection&gt;&quot; 802-3-ethernet.wake-on-lan magic</code></pre>
+    <h3 id="wol-windows">Windows</h3>
+    <p>Aktiviere im BIOS/UEFI Wake on LAN (die Namen variieren: Wake on LAN, Power On By PCI-E, Resume by PCI-E). Gibt es eine Option ErP, EuP oder Deep Sleep, schalte sie aus, denn sie trennt die Netzwerkkarte vom Strom.</p>
+    <p>Öffne den Geräte-Manager, doppelklicke auf deinen Netzwerkadapter und wähle die Registerkarte Energieverwaltung: Aktiviere „Gerät kann den Computer aus dem Ruhezustand aktivieren“ und „Nur Magic Packet kann den Computer aus dem Ruhezustand aktivieren“.</p>
+    <p>Im selben Fenster, Registerkarte Erweitert: Setze „Wake on Magic Packet“ auf Aktiviert (falls aufgeführt).</p>
+    <p>Deaktiviere den Schnellstart: Systemsteuerung → Energieoptionen → Auswählen, was beim Drücken von Netzschaltern geschehen soll → Einige Einstellungen sind momentan nicht verfügbar → Haken bei „Schnellstart aktivieren“ entfernen. Bei aktivem Schnellstart ignoriert ein heruntergefahrener PC das Magic Packet oft.</p>
+    <h3 id="wol-macos">macOS</h3>
+    <p>Öffne Systemeinstellungen → Batterie (MacBook) oder Energie (Desktop-Mac) → Optionen und aktiviere “Aufwecken für Netzwerkzugriff”. Das Aufwecken klappt am besten per Ethernet: Nutze am MacBook einen USB-C- oder Thunderbolt-Ethernet-Adapter und lass ihn am Strom. Ein schlafender Mac im WLAN ignoriert das Magic Packet oft.</p>
+    <p>Schalte im WLAN auch “Private WLAN-Adresse” für dein Netzwerk aus (Systemeinstellungen → WLAN → Details), sonst bekommt der Mac eine andere MAC-Adresse. In der Liste unten ist “Ethernet Address” die MAC-Adresse des jeweiligen Anschlusses.</p>
+    <p>Füge in WakeDeck das Gerät mit der MAC-Adresse des PCs hinzu. So findest du sie:</p>
+    <p><strong>Linux</strong></p>
+    <pre><code>ip -br link</code></pre>
+    <p><strong>Windows</strong></p>
+    <pre><code>ipconfig /all</code></pre>
+    <p><strong>macOS</strong></p>
+    <pre><code>networksetup -listallhardwareports</code></pre>
+    <p>Broadcast-Adresse: die letzte Adresse deines Netzwerks, zum Beispiel 192.168.1.255 für 192.168.1.x (der Standard 255.255.255.255 funktioniert im selben Netzwerk ebenfalls). Port: 9.</p>
+
+    <h2 id="ssh">2. Herunterfahren per SSH (optional)</h2>
+    <p class="note">Ersetze PASTE_KEY_LINE_FROM_APP durch die Schlüsselzeile aus dem Bildschirm SSH-Schlüssel in WakeDeck.</p>
+    <p>Die App meldet sich mit ihrem eigenen Schlüssel an, nie mit einem Passwort. Der PC braucht einen SSH-Server, und der öffentliche Schlüssel der App muss dort hinzugefügt werden. Die Befehle unten enthalten bereits deinen Schlüssel.</p>
+    <h3 id="ssh-linux">Linux</h3>
+    <p>SSH-Server installieren und starten (Beispiel für Debian/Ubuntu):</p>
+    <pre><code>sudo apt install openssh-server &amp;&amp; sudo systemctl enable --now ssh</code></pre>
+    <p>Unter Fedora, Arch oder SteamOS heißt der Dienst stattdessen sshd:</p>
+    <pre><code>sudo systemctl enable --now sshd</code></pre>
+    <p>Füge den Schlüssel der App zu deinem Benutzer hinzu. Die Zeile beschränkt den Schlüssel auf den Herunterfahren-Befehl:</p>
+    <pre><code>mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; echo &#x27;PASTE_KEY_LINE_FROM_APP&#x27; &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys</code></pre>
+    <p>Erlaube das Herunterfahren ohne Passwort. Führe dies aus und füge dann die Zeile darunter hinzu (ersetze youruser und prüfe den Pfad mit: which shutdown):</p>
+    <pre><code>sudo visudo -f /etc/sudoers.d/wakedeck</code></pre>
+    <pre><code>youruser ALL=(ALL) NOPASSWD: /usr/bin/shutdown</code></pre>
+    <h3 id="ssh-windows">Windows</h3>
+    <p>Installiere und starte den OpenSSH-Server in PowerShell als Administrator:</p>
+    <pre><code>Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0; Start-Service sshd; Set-Service -Name sshd -StartupType Automatic</code></pre>
+    <p>Administratorkonto: Füge den Schlüssel hinzu und schränke die Dateiberechtigungen ein (sonst ignoriert SSH die Datei):</p>
+    <pre><code>Add-Content -Force -Path &quot;$env:ProgramData\ssh\administrators_authorized_keys&quot; -Value &#x27;PASTE_KEY_LINE_FROM_APP&#x27;</code></pre>
+    <pre><code>icacls.exe &quot;$env:ProgramData\ssh\administrators_authorized_keys&quot; /inheritance:r /grant &quot;Administrators:F&quot; /grant &quot;SYSTEM:F&quot;</code></pre>
+    <p>Bei einem normalen Konto: Lege die Schlüsselzeile in C:\Users\NAME\.ssh\authorized_keys ab.</p>
+    <p>Wird der Zugriff weiterhin abgelehnt: Prüfe, ob die Firewall den TCP-Port 22 erlaubt (das OpenSSH-Feature legt die Regel normalerweise an) und ob das Konto kein Microsoft-Entra-ID-Konto ist, denn diese können keine Schlüssel verwenden.</p>
+    <h3 id="ssh-macos">macOS</h3>
+    <p>Schalte den SSH-Server ein: Systemeinstellungen → Allgemein → Teilen → Entfernte Anmeldung, und erlaube deinen Benutzer.</p>
+    <p>Füge den Schlüssel der App zu deinem Benutzer hinzu. Die Zeile beschränkt den Schlüssel auf den Herunterfahren-Befehl:</p>
+    <pre><code>mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; echo &#x27;PASTE_KEY_LINE_FROM_APP&#x27; &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys</code></pre>
+    <p>Erlaube das Herunterfahren ohne Passwort. Führe dies aus und füge dann die Zeile darunter hinzu (ersetze youruser):</p>
+    <pre><code>sudo visudo -f /etc/sudoers.d/wakedeck</code></pre>
+    <pre><code>youruser ALL=(ALL) NOPASSWD: /sbin/shutdown</code></pre>
+    <p>Trage im Bearbeitungsbildschirm des Geräts den Host (IP oder Name), den SSH-Benutzer (dein Kontoname auf dem PC) und den Port (22) ein. Tippe auf Jetzt herunterfahren. Prüfe beim ersten Mal, ob der angezeigte Fingerabdruck mit dem des PCs übereinstimmt, und tippe dann auf Vertrauen. Der Fingerabdruck des PCs:</p>
+    <p><strong>Linux</strong></p>
+    <pre><code>ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub</code></pre>
+    <p><strong>Windows</strong></p>
+    <pre><code>ssh-keygen -lf $env:ProgramData\ssh\ssh_host_ecdsa_key.pub</code></pre>
+    <p><strong>macOS</strong></p>
+    <pre><code>ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub</code></pre>
+    <p>„Der PC hat den SSH-Schlüssel abgelehnt“: falscher Schlüssel oder Benutzername. „Verbindung nicht möglich“: Der PC ist aus, oder Host, Port oder Firewall stimmen nicht. „Der PC hat mit einem Fehler geantwortet“: Unter Linux oder macOS ist meist die sudoers-Regel schuld. „Der SSH-Schlüssel des PCs hat sich geändert“: Der PC wurde neu installiert oder seine SSH-Schlüssel wurden neu erzeugt; vertraue dem neuen Schlüssel nur, wenn du damit rechnest.</p>
+
+    <h2 id="away">3. Unterwegs (VPN)</h2>
+    <p>Von außerhalb deines Heimnetzes brauchst du zuerst einen Weg hinein, zum Beispiel ein WireGuard- oder Tailscale-VPN. Ein Magic Packet ist ein Broadcast, und viele VPNs leiten keine Broadcasts weiter. Trage die Broadcast-Adresse deines Netzwerks (zum Beispiel 192.168.1.255) im Gerät ein. Klappt das Aufwecken aus der Ferne trotzdem nicht, ist die übliche Lösung ein kleines, immer eingeschaltetes Gerät zu Hause, das das Paket für dich sendet (ein Router mit Wake-on-LAN oder ein Raspberry Pi). Das Herunterfahren per SSH funktioniert über ein VPN, solange die Adresse des PCs erreichbar ist.</p>
+    <p>Probleme aus der Ferne: „keine Netzwerk- oder VPN-Verbindung“ bedeutet, dass das Telefon keine Route zu dieser Adresse hat; verbinde zuerst das VPN. „Broadcast-Adresse nicht gefunden“ bedeutet, dass der Name oder die Adresse im Gerät nicht aufgelöst werden kann. Ein VPN kann das Paket auch annehmen und nie zustellen: Die App kann das nicht erkennen, weil ein Magic Packet keine Antwort hat. Prüfe, ob der PC angeht, und sieh dir seinen Status in der Liste an.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>&copy; 2026 Diego Bergonsi</div>
+    <ul>
+      <li><a href="/de/guide">Einrichtungsanleitung</a></li>
+      <li><a href="/de/privacy">Datenschutz</a></li>
+      <li><a href="https://ko-fi.com/diegobergonsi" rel="noopener noreferrer">Spenden</a></li>
+      <li><a href="mailto:contact@wakedeck.app">Kontakt</a></li>
+    </ul>
+  </div>
+</footer>
+</body>
+</html>

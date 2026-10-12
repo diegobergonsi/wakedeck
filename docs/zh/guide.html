@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>设置指南 | WakeDeck</title>
+<meta name="description" content="在你的 Linux、Windows 或 Mac 电脑上开启 Wake-on-LAN 和远程关机，让 WakeDeck 可以从手机唤醒它。">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#161E56">
+<link rel="canonical" href="https://wakedeck.app/zh/guide">
+<link rel="alternate" hreflang="en" href="https://wakedeck.app/guide">
+<link rel="alternate" hreflang="pt-BR" href="https://wakedeck.app/pt-br/guide">
+<link rel="alternate" hreflang="pt-PT" href="https://wakedeck.app/pt-pt/guide">
+<link rel="alternate" hreflang="fr" href="https://wakedeck.app/fr/guide">
+<link rel="alternate" hreflang="de" href="https://wakedeck.app/de/guide">
+<link rel="alternate" hreflang="es" href="https://wakedeck.app/es/guide">
+<link rel="alternate" hreflang="zh-Hans" href="https://wakedeck.app/zh/guide">
+<link rel="alternate" hreflang="ja" href="https://wakedeck.app/ja/guide">
+<link rel="alternate" hreflang="x-default" href="https://wakedeck.app/guide">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="设置指南 | WakeDeck">
+<meta property="og:description" content="在你的 Linux、Windows 或 Mac 电脑上开启 Wake-on-LAN 和远程关机，让 WakeDeck 可以从手机唤醒它。">
+<meta property="og:url" content="https://wakedeck.app/zh/guide">
+<meta property="og:image" content="https://wakedeck.app/assets/og.png">
+<link rel="stylesheet" href="/assets/site.css?v=fdd05b2c">
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="/zh/" aria-label="WakeDeck"><b>Wake</b><span>Deck</span></a>
+    <nav aria-label="Main">
+      <a class="btn donate nav-donate" href="https://ko-fi.com/diegobergonsi" rel="noopener noreferrer">捐赠</a>
+      <a class="opt" href="/zh/#features">功能</a>
+      <a class="opt" href="/zh/#how">使用方法</a>
+      <a href="/zh/guide" aria-current="page">设置指南</a>
+      <a href="/zh/privacy">隐私</a>
+      <details class="lang">
+        <summary aria-label="语言"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 4 5.6 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.6-4-9s1.4-6.4 4-9z"/></svg><span>简体中文</span></summary>
+        <ul>
+          <li><a href="/guide" lang="en" hreflang="en">English</a></li>
+          <li><a href="/pt-br/guide" lang="pt-BR" hreflang="pt-BR">Português (Brasil)</a></li>
+          <li><a href="/pt-pt/guide" lang="pt-PT" hreflang="pt-PT">Português (Portugal)</a></li>
+          <li><a href="/fr/guide" lang="fr" hreflang="fr">Français</a></li>
+          <li><a href="/de/guide" lang="de" hreflang="de">Deutsch</a></li>
+          <li><a href="/es/guide" lang="es" hreflang="es">Español</a></li>
+          <li><a href="/zh/guide" lang="zh-Hans" hreflang="zh-Hans" aria-current="true">简体中文</a></li>
+          <li><a href="/ja/guide" lang="ja" hreflang="ja">日本語</a></li>
+        </ul>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap page-title">
+    <h1>设置指南</h1>
+    <p class="meta">电脑设置指南。唤醒需要完成第 1 节中的设置。通过 SSH 远程关机（第 2 节）为可选功能。</p>
+  </div>
+
+  <div class="wrap prose">
+    <h2 id="wol">1. Wake-on-LAN（电脑设置）</h2>
+    <p>魔术包可以唤醒已关机或睡眠的电脑，但前提是它的网卡仍然有电并在监听。请使用网线：Wi-Fi 很少能用于唤醒。</p>
+    <h3 id="wol-linux">Linux</h3>
+    <p>在 BIOS/UEFI 中开启 Wake on LAN（名称各不相同：Wake on LAN、Power On By PCI-E、Resume by PCI-E）。如果有 ErP、EuP 或深度睡眠选项，请将其关闭，因为它会切断网卡的供电。</p>
+    <p>找到网络接口的名称（例如 enp8s0）：</p>
+    <pre><code>ip -br link</code></pre>
+    <p>检查 Wake-on 设置，应显示 g：</p>
+    <pre><code>sudo ethtool &lt;iface&gt; | grep Wake-on</code></pre>
+    <p>将其开启（重启后会重置）：</p>
+    <pre><code>sudo ethtool -s &lt;iface&gt; wol g</code></pre>
+    <p>若要在 NetworkManager 下重启后仍保持有效（请替换连接名称，参见 nmcli connection show）：</p>
+    <pre><code>sudo nmcli connection modify &quot;&lt;connection&gt;&quot; 802-3-ethernet.wake-on-lan magic</code></pre>
+    <h3 id="wol-windows">Windows</h3>
+    <p>在 BIOS/UEFI 中开启 Wake on LAN（名称各不相同：Wake on LAN、Power On By PCI-E、Resume by PCI-E）。如果有 ErP、EuP 或深度睡眠选项，请将其关闭，因为它会切断网卡的供电。</p>
+    <p>打开设备管理器，双击你的网络适配器，进入“电源管理”选项卡：勾选“允许此设备唤醒计算机”和“只允许幻数据包唤醒计算机”。</p>
+    <p>在同一窗口的“高级”选项卡中：将“Wake on Magic Packet”设为“已启用”（如果列出了该项）。</p>
+    <p>关闭快速启动：控制面板 → 电源选项 → 选择电源按钮的功能 → 更改当前不可用的设置 → 取消勾选“启用快速启动”。开启快速启动时，已关机的电脑常常会忽略魔术包。</p>
+    <h3 id="wol-macos">macOS</h3>
+    <p>打开“系统设置” → “电池”（MacBook）或“节能”（台式 Mac）→ “选项”，开启“网络唤醒”。使用有线网络唤醒效果最好：MacBook 请用 USB-C 或雷雳以太网适配器，并保持接通电源。通过 Wi-Fi 睡眠的 Mac 常常会忽略魔术包。</p>
+    <p>使用 Wi-Fi 时，还要为你的网络关闭“私有 Wi-Fi 地址”（系统设置 → Wi-Fi → 详细信息），否则 Mac 会使用另一个 MAC 地址。下面列表中的“Ethernet Address”就是各端口的 MAC 地址。</p>
+    <p>在 WakeDeck 中，用电脑的 MAC 地址添加设备。查找方法：</p>
+    <p><strong>Linux</strong></p>
+    <pre><code>ip -br link</code></pre>
+    <p><strong>Windows</strong></p>
+    <pre><code>ipconfig /all</code></pre>
+    <p><strong>macOS</strong></p>
+    <pre><code>networksetup -listallhardwareports</code></pre>
+    <p>广播地址：你所在网络的最后一个地址，例如 192.168.1.x 网络对应 192.168.1.255（默认的 255.255.255.255 在同一网络中也可用）。端口：9。</p>
+
+    <h2 id="ssh">2. 通过 SSH 远程关机（可选）</h2>
+    <p class="note">请把 PASTE_KEY_LINE_FROM_APP 替换为 WakeDeck 的 SSH 密钥界面中显示的密钥行。</p>
+    <p>应用使用自己的密钥登录，绝不使用密码。电脑需要运行 SSH 服务器，并且必须添加应用的公钥。下面的命令已经包含了你的密钥。</p>
+    <h3 id="ssh-linux">Linux</h3>
+    <p>安装并启动 SSH 服务器（以 Debian/Ubuntu 为例）：</p>
+    <pre><code>sudo apt install openssh-server &amp;&amp; sudo systemctl enable --now ssh</code></pre>
+    <p>在 Fedora、Arch 或 SteamOS 上，服务名称是 sshd：</p>
+    <pre><code>sudo systemctl enable --now sshd</code></pre>
+    <p>把应用的密钥添加到你的用户。这一行会把密钥限制为只能执行关机命令：</p>
+    <pre><code>mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; echo &#x27;PASTE_KEY_LINE_FROM_APP&#x27; &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys</code></pre>
+    <p>允许无需密码关机。运行下面的命令，然后添加其下方的那一行（替换 youruser，并用 which shutdown 确认路径）：</p>
+    <pre><code>sudo visudo -f /etc/sudoers.d/wakedeck</code></pre>
+    <pre><code>youruser ALL=(ALL) NOPASSWD: /usr/bin/shutdown</code></pre>
+    <h3 id="ssh-windows">Windows</h3>
+    <p>以管理员身份打开 PowerShell，安装并启动 OpenSSH 服务器：</p>
+    <pre><code>Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0; Start-Service sshd; Set-Service -Name sshd -StartupType Automatic</code></pre>
+    <p>管理员账户：添加密钥并收紧文件权限（否则 SSH 会忽略该文件）：</p>
+    <pre><code>Add-Content -Force -Path &quot;$env:ProgramData\ssh\administrators_authorized_keys&quot; -Value &#x27;PASTE_KEY_LINE_FROM_APP&#x27;</code></pre>
+    <pre><code>icacls.exe &quot;$env:ProgramData\ssh\administrators_authorized_keys&quot; /inheritance:r /grant &quot;Administrators:F&quot; /grant &quot;SYSTEM:F&quot;</code></pre>
+    <p>普通账户则：把密钥行放到 C:\Users\NAME\.ssh\authorized_keys。</p>
+    <p>如果仍被拒绝：请检查防火墙是否允许 TCP 端口 22（OpenSSH 功能通常会自动添加规则），以及该账户不是 Microsoft Entra ID 账户，此类账户无法使用密钥。</p>
+    <h3 id="ssh-macos">macOS</h3>
+    <p>开启 SSH 服务器：系统设置 → 通用 → 共享 → 远程登录，并允许你的用户。</p>
+    <p>把应用的密钥添加到你的用户。这一行会把密钥限制为只能执行关机命令：</p>
+    <pre><code>mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; echo &#x27;PASTE_KEY_LINE_FROM_APP&#x27; &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys</code></pre>
+    <p>允许无需密码关机。运行下面的命令，然后添加其下方的那一行（替换 youruser）：</p>
+    <pre><code>sudo visudo -f /etc/sudoers.d/wakedeck</code></pre>
+    <pre><code>youruser ALL=(ALL) NOPASSWD: /sbin/shutdown</code></pre>
+    <p>在设备的编辑界面中填写主机（IP 或名称）、SSH 用户（你在电脑上的账户名）和端口（22）。点按“立即关机”。第一次连接时，请确认显示的指纹与电脑的一致，然后点按“信任”。电脑的指纹：</p>
+    <p><strong>Linux</strong></p>
+    <pre><code>ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub</code></pre>
+    <p><strong>Windows</strong></p>
+    <pre><code>ssh-keygen -lf $env:ProgramData\ssh\ssh_host_ecdsa_key.pub</code></pre>
+    <p><strong>macOS</strong></p>
+    <pre><code>ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub</code></pre>
+    <p>“电脑拒绝了该 SSH 密钥”：密钥或用户名有误。“无法连接”：电脑已关机，或主机、端口、防火墙有误。“电脑返回了错误”：在 Linux 或 macOS 上通常是 sudoers 规则的问题。“电脑的 SSH 密钥已更改”：电脑被重新安装，或其 SSH 密钥被重新生成；只有在你预料到这一点时才信任新密钥。</p>
+
+    <h2 id="away">3. 离家在外（VPN）</h2>
+    <p>在家庭网络之外，你首先需要一种进入家庭网络的方式，例如 WireGuard 或 Tailscale VPN。魔术包是广播，而许多 VPN 不会转发广播。请在设备中填写你网络的广播地址（例如 192.168.1.255）。如果远程唤醒仍然不起作用，通常的解决办法是在家里放一台常开的小设备，由它代你发送数据包（支持 Wake-on-LAN 的路由器，或树莓派）。只要电脑的地址可以访问，通过 SSH 远程关机就可以在 VPN 下使用。</p>
+    <p>远程问题：“没有网络或 VPN 连接”表示手机没有通往该地址的路由，请先连接 VPN。“找不到广播地址”表示设备中的名称或地址无法解析。VPN 也可能接收了数据包却从未送达：应用无法得知，因为魔术包没有回复。请确认电脑是否开机，并查看它在列表中的状态。</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>&copy; 2026 Diego Bergonsi</div>
+    <ul>
+      <li><a href="/zh/guide">设置指南</a></li>
+      <li><a href="/zh/privacy">隐私</a></li>
+      <li><a href="https://ko-fi.com/diegobergonsi" rel="noopener noreferrer">捐赠</a></li>
+      <li><a href="mailto:contact@wakedeck.app">联系</a></li>
+    </ul>
+  </div>
+</footer>
+</body>
+</html>

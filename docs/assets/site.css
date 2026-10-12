@@ -124,3 +124,6 @@ nav a[aria-current="page"] { color: #fff; text-decoration: underline; text-decor
 .support .btn.donate { margin-top: 4px; }
 @media (max-width: 860px) { .nav-donate { display: none; } }
 @media (max-width: 480px) { .lang summary span { display: none; } .lang summary { padding: 8px 10px; } }
+.prose h3 { font-size: 19px; margin: 32px 0 8px; color: var(--cream); }
+.prose pre { background: var(--navy-900); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; margin: 12px 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.prose code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 14px; color: var(--text); }

@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guia de configuração | WakeDeck</title>
+<meta name="description" content="Ative o Wake-on-LAN e o desligamento remoto no seu PC com Linux, Windows ou Mac para o WakeDeck ligá-lo pelo celular.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#161E56">
+<link rel="canonical" href="https://wakedeck.app/pt-br/guide">
+<link rel="alternate" hreflang="en" href="https://wakedeck.app/guide">
+<link rel="alternate" hreflang="pt-BR" href="https://wakedeck.app/pt-br/guide">
+<link rel="alternate" hreflang="pt-PT" href="https://wakedeck.app/pt-pt/guide">
+<link rel="alternate" hreflang="fr" href="https://wakedeck.app/fr/guide">
+<link rel="alternate" hreflang="de" href="https://wakedeck.app/de/guide">
+<link rel="alternate" hreflang="es" href="https://wakedeck.app/es/guide">
+<link rel="alternate" hreflang="zh-Hans" href="https://wakedeck.app/zh/guide">
+<link rel="alternate" hreflang="ja" href="https://wakedeck.app/ja/guide">
+<link rel="alternate" hreflang="x-default" href="https://wakedeck.app/guide">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Guia de configuração | WakeDeck">
+<meta property="og:description" content="Ative o Wake-on-LAN e o desligamento remoto no seu PC com Linux, Windows ou Mac para o WakeDeck ligá-lo pelo celular.">
+<meta property="og:url" content="https://wakedeck.app/pt-br/guide">
+<meta property="og:image" content="https://wakedeck.app/assets/og.png">
+<link rel="stylesheet" href="/assets/site.css?v=fdd05b2c">
+</head>
+<body>
+<a class="skip" href="#main">Ir para o conteúdo</a>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="/pt-br/" aria-label="WakeDeck"><b>Wake</b><span>Deck</span></a>
+    <nav aria-label="Main">
+      <a class="btn donate nav-donate" href="https://ko-fi.com/diegobergonsi" rel="noopener noreferrer">Fazer uma doação</a>
+      <a class="opt" href="/pt-br/#features">Recursos</a>
+      <a class="opt" href="/pt-br/#how">Como funciona</a>
+      <a href="/pt-br/guide" aria-current="page">Guia de configuração</a>
+      <a href="/pt-br/privacy">Privacidade</a>
+      <details class="lang">
+        <summary aria-label="Idioma"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 4 5.6 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.6-4-9s1.4-6.4 4-9z"/></svg><span>Português (Brasil)</span></summary>
+        <ul>
+          <li><a href="/guide" lang="en" hreflang="en">English</a></li>
+          <li><a href="/pt-br/guide" lang="pt-BR" hreflang="pt-BR" aria-current="true">Português (Brasil)</a></li>
+          <li><a href="/pt-pt/guide" lang="pt-PT" hreflang="pt-PT">Português (Portugal)</a></li>
+          <li><a href="/fr/guide" lang="fr" hreflang="fr">Français</a></li>
+          <li><a href="/de/guide" lang="de" hreflang="de">Deutsch</a></li>
+          <li><a href="/es/guide" lang="es" hreflang="es">Español</a></li>
+          <li><a href="/zh/guide" lang="zh-Hans" hreflang="zh-Hans">简体中文</a></li>
+          <li><a href="/ja/guide" lang="ja" hreflang="ja">日本語</a></li>
+        </ul>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap page-title">
+    <h1>Guia de configuração</h1>
+    <p class="meta">Guia de configuração do PC. Para ligar, use as configurações da seção 1. O desligamento remoto por SSH (seção 2) é opcional.</p>
+  </div>
+
+  <div class="wrap prose">
+    <h2 id="wol">1. Wake-on-LAN (configurações do PC)</h2>
+    <p>Um pacote mágico liga um PC desligado ou em suspensão, mas só se a placa de rede ainda tiver energia e estiver escutando. Use cabo de rede: o Wi-Fi raramente funciona para ligar.</p>
+    <h3 id="wol-linux">Linux</h3>
+    <p>Na BIOS/UEFI, ative Wake on LAN (os nomes variam: Wake on LAN, Power On By PCI-E, Resume by PCI-E). Se houver opção ErP, EuP ou deep sleep, desative, pois ela corta a energia da placa de rede.</p>
+    <p>Descubra o nome da interface de rede (por exemplo enp8s0):</p>
+    <pre><code>ip -br link</code></pre>
+    <p>Verifique a configuração Wake-on. Deve mostrar g:</p>
+    <pre><code>sudo ethtool &lt;iface&gt; | grep Wake-on</code></pre>
+    <p>Ative (volta ao padrão ao reiniciar):</p>
+    <pre><code>sudo ethtool -s &lt;iface&gt; wol g</code></pre>
+    <p>Para manter após reiniciar, com o NetworkManager (troque o nome da conexão, veja nmcli connection show):</p>
+    <pre><code>sudo nmcli connection modify &quot;&lt;connection&gt;&quot; 802-3-ethernet.wake-on-lan magic</code></pre>
+    <h3 id="wol-windows">Windows</h3>
+    <p>Na BIOS/UEFI, ative Wake on LAN (os nomes variam: Wake on LAN, Power On By PCI-E, Resume by PCI-E). Se houver opção ErP, EuP ou deep sleep, desative, pois ela corta a energia da placa de rede.</p>
+    <p>Abra o Gerenciador de Dispositivos, clique duas vezes no adaptador de rede, aba Gerenciamento de Energia: marque “Permitir que este dispositivo ative o computador” e “Permitir somente que um pacote mágico ative o computador”.</p>
+    <p>Na mesma janela, aba Avançado: defina “Wake on Magic Packet” como Habilitado (se estiver na lista).</p>
+    <p>Desative a Inicialização Rápida: Painel de Controle → Opções de Energia → Escolher a função dos botões de energia → Alterar configurações indisponíveis → desmarque “Ativar inicialização rápida”. Com ela ligada, um PC desligado costuma ignorar o pacote mágico.</p>
+    <h3 id="wol-macos">macOS</h3>
+    <p>Abra Ajustes do Sistema → Bateria (MacBook) ou Economia de Energia (Mac de mesa) → Opções e ative “Ativar para acesso à rede”. Ligar funciona melhor por cabo: no MacBook, use um adaptador Ethernet USB-C ou Thunderbolt e deixe na tomada. Um Mac em suspensão no Wi-Fi costuma ignorar o pacote mágico.</p>
+    <p>No Wi-Fi, desative também “Endereço Wi-Fi privado” da sua rede (Ajustes do Sistema → Wi-Fi → Detalhes), senão o Mac recebe outro endereço MAC. Na lista abaixo, “Ethernet Address” é o endereço MAC de cada porta.</p>
+    <p>No WakeDeck, adicione o dispositivo com o endereço MAC do PC. Para descobrir:</p>
+    <p><strong>Linux</strong></p>
+    <pre><code>ip -br link</code></pre>
+    <p><strong>Windows</strong></p>
+    <pre><code>ipconfig /all</code></pre>
+    <p><strong>macOS</strong></p>
+    <pre><code>networksetup -listallhardwareports</code></pre>
+    <p>Endereço de broadcast: o último endereço da sua rede, por exemplo 192.168.1.255 para 192.168.1.x (o padrão 255.255.255.255 também funciona na mesma rede). Porta: 9.</p>
+
+    <h2 id="ssh">2. Desligamento remoto por SSH (opcional)</h2>
+    <p class="note">Troque PASTE_KEY_LINE_FROM_APP pela linha da chave mostrada na tela Chave SSH do WakeDeck.</p>
+    <p>O app entra com a própria chave, nunca com senha. O PC precisa de um servidor SSH e a chave pública do app precisa estar nele. Os comandos abaixo já contêm a sua chave.</p>
+    <h3 id="ssh-linux">Linux</h3>
+    <p>Instale e inicie o servidor SSH (exemplo Debian/Ubuntu):</p>
+    <pre><code>sudo apt install openssh-server &amp;&amp; sudo systemctl enable --now ssh</code></pre>
+    <p>No Fedora, Arch ou SteamOS o serviço se chama sshd:</p>
+    <pre><code>sudo systemctl enable --now sshd</code></pre>
+    <p>Adicione a chave do app ao seu usuário. A linha limita a chave ao comando de desligar:</p>
+    <pre><code>mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; echo &#x27;PASTE_KEY_LINE_FROM_APP&#x27; &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys</code></pre>
+    <p>Permita desligar sem senha. Execute isto e depois adicione a linha abaixo (troque youruser e confira o caminho com: which shutdown):</p>
+    <pre><code>sudo visudo -f /etc/sudoers.d/wakedeck</code></pre>
+    <pre><code>youruser ALL=(ALL) NOPASSWD: /usr/bin/shutdown</code></pre>
+    <h3 id="ssh-windows">Windows</h3>
+    <p>No PowerShell como Administrador, instale e inicie o Servidor OpenSSH:</p>
+    <pre><code>Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0; Start-Service sshd; Set-Service -Name sshd -StartupType Automatic</code></pre>
+    <p>Conta de administrador: adicione a chave e restrinja as permissões do arquivo (senão o SSH o ignora):</p>
+    <pre><code>Add-Content -Force -Path &quot;$env:ProgramData\ssh\administrators_authorized_keys&quot; -Value &#x27;PASTE_KEY_LINE_FROM_APP&#x27;</code></pre>
+    <pre><code>icacls.exe &quot;$env:ProgramData\ssh\administrators_authorized_keys&quot; /inheritance:r /grant &quot;Administrators:F&quot; /grant &quot;SYSTEM:F&quot;</code></pre>
+    <p>Conta normal: coloque a linha da chave em C:\Users\NOME\.ssh\authorized_keys.</p>
+    <p>Se ainda recusar: veja se o firewall permite a porta TCP 22 (o recurso OpenSSH normalmente cria a regra) e se a conta não é uma conta Microsoft Entra ID, que não aceita chaves.</p>
+    <h3 id="ssh-macos">macOS</h3>
+    <p>Ative o servidor SSH: Ajustes do Sistema → Geral → Compartilhamento → Login Remoto, e permita o seu usuário.</p>
+    <p>Adicione a chave do app ao seu usuário. A linha limita a chave ao comando de desligar:</p>
+    <pre><code>mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; echo &#x27;PASTE_KEY_LINE_FROM_APP&#x27; &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys</code></pre>
+    <p>Permita desligar sem senha. Execute isto e depois adicione a linha abaixo (troque youruser):</p>
+    <pre><code>sudo visudo -f /etc/sudoers.d/wakedeck</code></pre>
+    <pre><code>youruser ALL=(ALL) NOPASSWD: /sbin/shutdown</code></pre>
+    <p>Na tela de edição do dispositivo, preencha o host (IP ou nome), o usuário SSH (nome da sua conta no PC) e a porta (22). Toque em Desligar agora. Na primeira vez, confira se a impressão digital mostrada é a do PC e toque em Confiar. A impressão digital do PC:</p>
+    <p><strong>Linux</strong></p>
+    <pre><code>ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub</code></pre>
+    <p><strong>Windows</strong></p>
+    <pre><code>ssh-keygen -lf $env:ProgramData\ssh\ssh_host_ecdsa_key.pub</code></pre>
+    <p><strong>macOS</strong></p>
+    <pre><code>ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub</code></pre>
+    <p>“O PC recusou a chave SSH”: chave ou usuário errados. “Não foi possível conectar”: o PC está desligado, ou host, porta ou firewall estão errados. “O PC respondeu com um erro”: no Linux ou macOS costuma ser a regra do sudoers. “A chave SSH do PC mudou”: o PC foi reinstalado ou as chaves SSH foram recriadas; só confie na nova se já esperava isso.</p>
+
+    <h2 id="away">3. Fora de casa (VPN)</h2>
+    <p>De fora da sua rede é preciso primeiro um caminho até ela, por exemplo uma VPN WireGuard ou Tailscale. O pacote mágico é um broadcast, e muitas VPNs não repassam broadcasts. Coloque o endereço de broadcast da sua rede (por exemplo 192.168.1.255) no dispositivo. Se ainda não ligar à distância, o usual é um pequeno aparelho sempre ligado em casa que envia o pacote por você (um roteador com Wake-on-LAN ou um Raspberry Pi). O desligamento remoto por SSH funciona pela VPN desde que o endereço do PC seja alcançável.</p>
+    <p>Problemas à distância: “sem conexão de rede ou VPN” significa que o celular não tem rota para esse endereço, então conecte a VPN primeiro. “Endereço de broadcast não encontrado” significa que o nome ou endereço do dispositivo não pôde ser resolvido. Uma VPN também pode aceitar o pacote e nunca entregá-lo: o app não consegue saber, porque o pacote mágico não tem resposta. Confira se o PC liga e veja o status dele na lista.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>&copy; 2026 Diego Bergonsi</div>
+    <ul>
+      <li><a href="/pt-br/guide">Guia de configuração</a></li>
+      <li><a href="/pt-br/privacy">Privacidade</a></li>
+      <li><a href="https://ko-fi.com/diegobergonsi" rel="noopener noreferrer">Fazer uma doação</a></li>
+      <li><a href="mailto:contact@wakedeck.app">Contato</a></li>
+    </ul>
+  </div>
+</footer>
+</body>
+</html>

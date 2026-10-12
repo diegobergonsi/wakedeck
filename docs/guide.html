@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Setup guide | WakeDeck</title>
+<meta name="description" content="Turn on Wake-on-LAN and remote shutdown on your Linux, Windows or Mac PC so WakeDeck can wake it from your phone.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#161E56">
+<link rel="canonical" href="https://wakedeck.app/guide">
+<link rel="alternate" hreflang="en" href="https://wakedeck.app/guide">
+<link rel="alternate" hreflang="pt-BR" href="https://wakedeck.app/pt-br/guide">
+<link rel="alternate" hreflang="pt-PT" href="https://wakedeck.app/pt-pt/guide">
+<link rel="alternate" hreflang="fr" href="https://wakedeck.app/fr/guide">
+<link rel="alternate" hreflang="de" href="https://wakedeck.app/de/guide">
+<link rel="alternate" hreflang="es" href="https://wakedeck.app/es/guide">
+<link rel="alternate" hreflang="zh-Hans" href="https://wakedeck.app/zh/guide">
+<link rel="alternate" hreflang="ja" href="https://wakedeck.app/ja/guide">
+<link rel="alternate" hreflang="x-default" href="https://wakedeck.app/guide">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Setup guide | WakeDeck">
+<meta property="og:description" content="Turn on Wake-on-LAN and remote shutdown on your Linux, Windows or Mac PC so WakeDeck can wake it from your phone.">
+<meta property="og:url" content="https://wakedeck.app/guide">
+<meta property="og:image" content="https://wakedeck.app/assets/og.png">
+<link rel="stylesheet" href="/assets/site.css?v=fdd05b2c">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="WakeDeck"><b>Wake</b><span>Deck</span></a>
+    <nav aria-label="Main">
+      <a class="btn donate nav-donate" href="https://ko-fi.com/diegobergonsi" rel="noopener noreferrer">Make a donation</a>
+      <a class="opt" href="/#features">Features</a>
+      <a class="opt" href="/#how">How it works</a>
+      <a href="/guide" aria-current="page">Setup guide</a>
+      <a href="/privacy">Privacy</a>
+      <details class="lang">
+        <summary aria-label="Language"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 4 5.6 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.6-4-9s1.4-6.4 4-9z"/></svg><span>English</span></summary>
+        <ul>
+          <li><a href="/guide" lang="en" hreflang="en" aria-current="true">English</a></li>
+          <li><a href="/pt-br/guide" lang="pt-BR" hreflang="pt-BR">Português (Brasil)</a></li>
+          <li><a href="/pt-pt/guide" lang="pt-PT" hreflang="pt-PT">Português (Portugal)</a></li>
+          <li><a href="/fr/guide" lang="fr" hreflang="fr">Français</a></li>
+          <li><a href="/de/guide" lang="de" hreflang="de">Deutsch</a></li>
+          <li><a href="/es/guide" lang="es" hreflang="es">Español</a></li>
+          <li><a href="/zh/guide" lang="zh-Hans" hreflang="zh-Hans">简体中文</a></li>
+          <li><a href="/ja/guide" lang="ja" hreflang="ja">日本語</a></li>
+        </ul>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap page-title">
+    <h1>Setup guide</h1>
+    <p class="meta">Setup guide for the PC. Waking needs the settings in section 1. Remote shutdown over SSH (section 2) is optional.</p>
+  </div>
+
+  <div class="wrap prose">
+    <h2 id="wol">1. Wake-on-LAN (PC settings)</h2>
+    <p>A magic packet wakes a PC that is off or asleep, but only if its network card still has power and is listening. Use a network cable: Wi-Fi rarely works for wake-up.</p>
+    <h3 id="wol-linux">Linux</h3>
+    <p>In the BIOS/UEFI, turn on Wake on LAN (names vary: Wake on LAN, Power On By PCI-E, Resume by PCI-E). If there is an ErP, EuP or deep-sleep option, turn it off, because it cuts power to the network card.</p>
+    <p>Find the network interface name (for example enp8s0):</p>
+    <pre><code>ip -br link</code></pre>
+    <p>Check the Wake-on setting. It must show g:</p>
+    <pre><code>sudo ethtool &lt;iface&gt; | grep Wake-on</code></pre>
+    <p>Turn it on (this resets at reboot):</p>
+    <pre><code>sudo ethtool -s &lt;iface&gt; wol g</code></pre>
+    <p>To keep it after reboots with NetworkManager (replace the connection name, see nmcli connection show):</p>
+    <pre><code>sudo nmcli connection modify &quot;&lt;connection&gt;&quot; 802-3-ethernet.wake-on-lan magic</code></pre>
+    <h3 id="wol-windows">Windows</h3>
+    <p>In the BIOS/UEFI, turn on Wake on LAN (names vary: Wake on LAN, Power On By PCI-E, Resume by PCI-E). If there is an ErP, EuP or deep-sleep option, turn it off, because it cuts power to the network card.</p>
+    <p>Open Device Manager, double-click your network adapter, tab Power Management: tick “Allow this device to wake the computer” and “Only allow a magic packet to wake the computer”.</p>
+    <p>Same window, tab Advanced: set “Wake on Magic Packet” to Enabled (if it is listed).</p>
+    <p>Turn off Fast Startup: Control Panel → Power Options → Choose what the power buttons do → Change settings that are currently unavailable → untick “Turn on fast startup”. With Fast Startup on, a PC that was shut down often ignores the magic packet.</p>
+    <h3 id="wol-macos">macOS</h3>
+    <p>Open System Settings → Battery (MacBook) or Energy (desktop Mac) → Options, and turn on “Wake for network access”. Waking works best over Ethernet: on a MacBook use a USB-C or Thunderbolt Ethernet adapter, and keep it plugged into power. A sleeping Mac on Wi-Fi often ignores the magic packet.</p>
+    <p>On Wi-Fi, also turn off “Private Wi-Fi address” for your network (System Settings → Wi-Fi → Details), or the Mac gets a different MAC address. In the list below, “Ethernet Address” is the MAC address of each port.</p>
+    <p>In WakeDeck, add the device with the PC’s MAC address. Find it here:</p>
+    <p><strong>Linux</strong></p>
+    <pre><code>ip -br link</code></pre>
+    <p><strong>Windows</strong></p>
+    <pre><code>ipconfig /all</code></pre>
+    <p><strong>macOS</strong></p>
+    <pre><code>networksetup -listallhardwareports</code></pre>
+    <p>Broadcast address: the last address of your network, for example 192.168.1.255 for 192.168.1.x (the default 255.255.255.255 also works on the same network). Port: 9.</p>
+
+    <h2 id="ssh">2. Remote shutdown over SSH (optional)</h2>
+    <p class="note">Replace PASTE_KEY_LINE_FROM_APP with the key line shown in WakeDeck’s SSH key screen.</p>
+    <p>The app logs in with its own key, never a password. The PC needs an SSH server, and the app’s public key must be added to it. The commands below already contain your key.</p>
+    <h3 id="ssh-linux">Linux</h3>
+    <p>Install and start the SSH server (Debian/Ubuntu shown):</p>
+    <pre><code>sudo apt install openssh-server &amp;&amp; sudo systemctl enable --now ssh</code></pre>
+    <p>On Fedora, Arch or SteamOS the service is called sshd instead:</p>
+    <pre><code>sudo systemctl enable --now sshd</code></pre>
+    <p>Add the app’s key to your user. The line limits the key to the shutdown command:</p>
+    <pre><code>mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; echo &#x27;PASTE_KEY_LINE_FROM_APP&#x27; &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys</code></pre>
+    <p>Allow shutdown without a password. Run this, then add the line below it (replace youruser, and check the path with: which shutdown):</p>
+    <pre><code>sudo visudo -f /etc/sudoers.d/wakedeck</code></pre>
+    <pre><code>youruser ALL=(ALL) NOPASSWD: /usr/bin/shutdown</code></pre>
+    <h3 id="ssh-windows">Windows</h3>
+    <p>In PowerShell as Administrator, install and start OpenSSH Server:</p>
+    <pre><code>Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0; Start-Service sshd; Set-Service -Name sshd -StartupType Automatic</code></pre>
+    <p>Administrator account: add the key and lock down the file permissions (SSH ignores the file otherwise):</p>
+    <pre><code>Add-Content -Force -Path &quot;$env:ProgramData\ssh\administrators_authorized_keys&quot; -Value &#x27;PASTE_KEY_LINE_FROM_APP&#x27;</code></pre>
+    <pre><code>icacls.exe &quot;$env:ProgramData\ssh\administrators_authorized_keys&quot; /inheritance:r /grant &quot;Administrators:F&quot; /grant &quot;SYSTEM:F&quot;</code></pre>
+    <p>A normal account instead: put the key line in C:\Users\NAME\.ssh\authorized_keys.</p>
+    <p>If it still refuses: check that the firewall allows TCP port 22 (the OpenSSH feature normally adds the rule), and that the account is not a Microsoft Entra ID account, which cannot use keys.</p>
+    <h3 id="ssh-macos">macOS</h3>
+    <p>Turn on the SSH server: System Settings → General → Sharing → Remote Login, and allow your user.</p>
+    <p>Add the app’s key to your user. The line limits the key to the shutdown command:</p>
+    <pre><code>mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; echo &#x27;PASTE_KEY_LINE_FROM_APP&#x27; &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys</code></pre>
+    <p>Allow shutdown without a password. Run this, then add the line below it (replace youruser):</p>
+    <pre><code>sudo visudo -f /etc/sudoers.d/wakedeck</code></pre>
+    <pre><code>youruser ALL=(ALL) NOPASSWD: /sbin/shutdown</code></pre>
+    <p>In the device’s edit screen fill in the host (IP or name), the SSH user (your PC account name) and the port (22). Tap Shut down now. The first time, check that the fingerprint shown matches the PC’s, then tap Trust. The PC’s fingerprint:</p>
+    <p><strong>Linux</strong></p>
+    <pre><code>ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub</code></pre>
+    <p><strong>Windows</strong></p>
+    <pre><code>ssh-keygen -lf $env:ProgramData\ssh\ssh_host_ecdsa_key.pub</code></pre>
+    <p><strong>macOS</strong></p>
+    <pre><code>ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub</code></pre>
+    <p>“The PC refused the SSH key”: wrong key or user name. “Could not connect”: the PC is off, or the host, port or firewall is wrong. “The PC replied with an error”: on Linux or macOS usually the sudoers rule. “The PC’s SSH key changed”: the PC was reinstalled or its SSH keys were regenerated; trust the new key only if you expect that.</p>
+
+    <h2 id="away">3. Away from home (VPN)</h2>
+    <p>From outside your home network you first need a way into it, for example a WireGuard or Tailscale VPN. A magic packet is a broadcast, and many VPNs do not forward broadcasts. Put your network’s broadcast address (for example 192.168.1.255) in the device. If waking still does not work remotely, a small always-on device at home that sends the packet for you (a router with Wake-on-LAN, or a Raspberry Pi) is the usual solution. Remote shutdown over SSH works over a VPN as long as the PC’s address is reachable.</p>
+    <p>Remote problems: “no network or VPN connection” means the phone has no route to that address, so connect the VPN first. “Broadcast address not found” means the name or address in the device cannot be resolved. A VPN may also accept the packet but never deliver it: the app cannot tell, because a magic packet has no reply. Check that the PC turns on, and look at its status in the list.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>&copy; 2026 Diego Bergonsi</div>
+    <ul>
+      <li><a href="/guide">Setup guide</a></li>
+      <li><a href="/privacy">Privacy</a></li>
+      <li><a href="https://ko-fi.com/diegobergonsi" rel="noopener noreferrer">Make a donation</a></li>
+      <li><a href="mailto:contact@wakedeck.app">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+</body>
+</html>

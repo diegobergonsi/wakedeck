@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guide de configuration | WakeDeck</title>
+<meta name="description" content="Activez Wake-on-LAN et l’extinction à distance sur votre PC Linux, Windows ou Mac pour que WakeDeck puisse l’allumer depuis votre téléphone.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#161E56">
+<link rel="canonical" href="https://wakedeck.app/fr/guide">
+<link rel="alternate" hreflang="en" href="https://wakedeck.app/guide">
+<link rel="alternate" hreflang="pt-BR" href="https://wakedeck.app/pt-br/guide">
+<link rel="alternate" hreflang="pt-PT" href="https://wakedeck.app/pt-pt/guide">
+<link rel="alternate" hreflang="fr" href="https://wakedeck.app/fr/guide">
+<link rel="alternate" hreflang="de" href="https://wakedeck.app/de/guide">
+<link rel="alternate" hreflang="es" href="https://wakedeck.app/es/guide">
+<link rel="alternate" hreflang="zh-Hans" href="https://wakedeck.app/zh/guide">
+<link rel="alternate" hreflang="ja" href="https://wakedeck.app/ja/guide">
+<link rel="alternate" hreflang="x-default" href="https://wakedeck.app/guide">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Guide de configuration | WakeDeck">
+<meta property="og:description" content="Activez Wake-on-LAN et l’extinction à distance sur votre PC Linux, Windows ou Mac pour que WakeDeck puisse l’allumer depuis votre téléphone.">
+<meta property="og:url" content="https://wakedeck.app/fr/guide">
+<meta property="og:image" content="https://wakedeck.app/assets/og.png">
+<link rel="stylesheet" href="/assets/site.css?v=fdd05b2c">
+</head>
+<body>
+<a class="skip" href="#main">Aller au contenu</a>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="/fr/" aria-label="WakeDeck"><b>Wake</b><span>Deck</span></a>
+    <nav aria-label="Main">
+      <a class="btn donate nav-donate" href="https://ko-fi.com/diegobergonsi" rel="noopener noreferrer">Faire un don</a>
+      <a class="opt" href="/fr/#features">Fonctionnalités</a>
+      <a class="opt" href="/fr/#how">Comment ça marche</a>
+      <a href="/fr/guide" aria-current="page">Guide de configuration</a>
+      <a href="/fr/privacy">Confidentialité</a>
+      <details class="lang">
+        <summary aria-label="Langue"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 4 5.6 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.6-4-9s1.4-6.4 4-9z"/></svg><span>Français</span></summary>
+        <ul>
+          <li><a href="/guide" lang="en" hreflang="en">English</a></li>
+          <li><a href="/pt-br/guide" lang="pt-BR" hreflang="pt-BR">Português (Brasil)</a></li>
+          <li><a href="/pt-pt/guide" lang="pt-PT" hreflang="pt-PT">Português (Portugal)</a></li>
+          <li><a href="/fr/guide" lang="fr" hreflang="fr" aria-current="true">Français</a></li>
+          <li><a href="/de/guide" lang="de" hreflang="de">Deutsch</a></li>
+          <li><a href="/es/guide" lang="es" hreflang="es">Español</a></li>
+          <li><a href="/zh/guide" lang="zh-Hans" hreflang="zh-Hans">简体中文</a></li>
+          <li><a href="/ja/guide" lang="ja" hreflang="ja">日本語</a></li>
+        </ul>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap page-title">
+    <h1>Guide de configuration</h1>
+    <p class="meta">Guide de configuration du PC. L’allumage nécessite les réglages de la section 1. L’extinction à distance par SSH (section 2) est facultative.</p>
+  </div>
+
+  <div class="wrap prose">
+    <h2 id="wol">1. Wake-on-LAN (réglages du PC)</h2>
+    <p>Un paquet magique allume un PC éteint ou en veille, mais seulement si sa carte réseau est encore alimentée et à l’écoute. Utilisez un câble réseau : le Wi-Fi fonctionne rarement pour l’allumage à distance.</p>
+    <h3 id="wol-linux">Linux</h3>
+    <p>Dans le BIOS/UEFI, activez Wake on LAN (les noms varient : Wake on LAN, Power On By PCI-E, Resume by PCI-E). S’il existe une option ErP, EuP ou deep sleep, désactivez-la, car elle coupe l’alimentation de la carte réseau.</p>
+    <p>Trouvez le nom de l’interface réseau (par exemple enp8s0) :</p>
+    <pre><code>ip -br link</code></pre>
+    <p>Vérifiez le réglage Wake-on. Il doit afficher g :</p>
+    <pre><code>sudo ethtool &lt;iface&gt; | grep Wake-on</code></pre>
+    <p>Activez-le (cela se réinitialise au redémarrage) :</p>
+    <pre><code>sudo ethtool -s &lt;iface&gt; wol g</code></pre>
+    <p>Pour le conserver après les redémarrages avec NetworkManager (remplacez le nom de la connexion, voir nmcli connection show) :</p>
+    <pre><code>sudo nmcli connection modify &quot;&lt;connection&gt;&quot; 802-3-ethernet.wake-on-lan magic</code></pre>
+    <h3 id="wol-windows">Windows</h3>
+    <p>Dans le BIOS/UEFI, activez Wake on LAN (les noms varient : Wake on LAN, Power On By PCI-E, Resume by PCI-E). S’il existe une option ErP, EuP ou deep sleep, désactivez-la, car elle coupe l’alimentation de la carte réseau.</p>
+    <p>Ouvrez le Gestionnaire de périphériques, double-cliquez sur votre carte réseau, onglet Gestion de l’alimentation : cochez « Autoriser ce périphérique à sortir l’ordinateur du mode veille » et « Autoriser uniquement un paquet magique à sortir l’ordinateur du mode veille ».</p>
+    <p>Dans la même fenêtre, onglet Avancé : réglez « Wake on Magic Packet » sur Activé (s’il est présent).</p>
+    <p>Désactivez le démarrage rapide : Panneau de configuration → Options d’alimentation → Choisir l’action des boutons d’alimentation → Modifier des paramètres actuellement non disponibles → décochez « Activer le démarrage rapide ». Lorsque le démarrage rapide est activé, un PC éteint ignore souvent le paquet magique.</p>
+    <h3 id="wol-macos">macOS</h3>
+    <p>Ouvrez Réglages Système → Batterie (MacBook) ou Énergie (Mac de bureau) → Options, et activez « Réactiver pour l’accès au réseau ». Le réveil fonctionne mieux en Ethernet : sur un MacBook, utilisez un adaptateur Ethernet USB-C ou Thunderbolt et laissez-le branché sur le secteur. Un Mac en veille sur Wi-Fi ignore souvent le paquet magique.</p>
+    <p>En Wi-Fi, désactivez aussi « Adresse Wi-Fi privée » pour votre réseau (Réglages Système → Wi-Fi → Détails), sinon le Mac reçoit une autre adresse MAC. Dans la liste ci-dessous, « Ethernet Address » est l’adresse MAC de chaque port.</p>
+    <p>Dans WakeDeck, ajoutez l’appareil avec l’adresse MAC du PC. Pour la trouver :</p>
+    <p><strong>Linux</strong></p>
+    <pre><code>ip -br link</code></pre>
+    <p><strong>Windows</strong></p>
+    <pre><code>ipconfig /all</code></pre>
+    <p><strong>macOS</strong></p>
+    <pre><code>networksetup -listallhardwareports</code></pre>
+    <p>Adresse de diffusion : la dernière adresse de votre réseau, par exemple 192.168.1.255 pour 192.168.1.x (la valeur par défaut 255.255.255.255 fonctionne aussi sur le même réseau). Port : 9.</p>
+
+    <h2 id="ssh">2. Extinction à distance par SSH (facultatif)</h2>
+    <p class="note">Remplacez PASTE_KEY_LINE_FROM_APP par la ligne de clé affichée dans l’écran Clé SSH de WakeDeck.</p>
+    <p>L’app se connecte avec sa propre clé, jamais avec un mot de passe. Le PC doit disposer d’un serveur SSH et la clé publique de l’app doit y être ajoutée. Les commandes ci-dessous contiennent déjà votre clé.</p>
+    <h3 id="ssh-linux">Linux</h3>
+    <p>Installez et démarrez le serveur SSH (exemple pour Debian/Ubuntu) :</p>
+    <pre><code>sudo apt install openssh-server &amp;&amp; sudo systemctl enable --now ssh</code></pre>
+    <p>Sous Fedora, Arch ou SteamOS, le service s’appelle plutôt sshd :</p>
+    <pre><code>sudo systemctl enable --now sshd</code></pre>
+    <p>Ajoutez la clé de l’app à votre utilisateur. La ligne limite la clé à la commande d’extinction :</p>
+    <pre><code>mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; echo &#x27;PASTE_KEY_LINE_FROM_APP&#x27; &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys</code></pre>
+    <p>Autorisez l’extinction sans mot de passe. Exécutez ceci, puis ajoutez la ligne en dessous (remplacez youruser et vérifiez le chemin avec : which shutdown) :</p>
+    <pre><code>sudo visudo -f /etc/sudoers.d/wakedeck</code></pre>
+    <pre><code>youruser ALL=(ALL) NOPASSWD: /usr/bin/shutdown</code></pre>
+    <h3 id="ssh-windows">Windows</h3>
+    <p>Dans PowerShell en tant qu’administrateur, installez et démarrez le serveur OpenSSH :</p>
+    <pre><code>Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0; Start-Service sshd; Set-Service -Name sshd -StartupType Automatic</code></pre>
+    <p>Compte administrateur : ajoutez la clé et verrouillez les autorisations du fichier (sinon SSH l’ignore) :</p>
+    <pre><code>Add-Content -Force -Path &quot;$env:ProgramData\ssh\administrators_authorized_keys&quot; -Value &#x27;PASTE_KEY_LINE_FROM_APP&#x27;</code></pre>
+    <pre><code>icacls.exe &quot;$env:ProgramData\ssh\administrators_authorized_keys&quot; /inheritance:r /grant &quot;Administrators:F&quot; /grant &quot;SYSTEM:F&quot;</code></pre>
+    <p>Pour un compte normal : placez la ligne de la clé dans C:\Users\NAME\.ssh\authorized_keys.</p>
+    <p>Si l’accès est toujours refusé : vérifiez que le pare-feu autorise le port TCP 22 (la fonctionnalité OpenSSH ajoute normalement la règle) et que le compte n’est pas un compte Microsoft Entra ID, qui ne peut pas utiliser de clés.</p>
+    <h3 id="ssh-macos">macOS</h3>
+    <p>Activez le serveur SSH : Réglages Système → Général → Partage → Session à distance, et autorisez votre utilisateur.</p>
+    <p>Ajoutez la clé de l’app à votre utilisateur. La ligne limite la clé à la commande d’extinction :</p>
+    <pre><code>mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; echo &#x27;PASTE_KEY_LINE_FROM_APP&#x27; &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys</code></pre>
+    <p>Autorisez l’extinction sans mot de passe. Exécutez ceci, puis ajoutez la ligne en dessous (remplacez youruser) :</p>
+    <pre><code>sudo visudo -f /etc/sudoers.d/wakedeck</code></pre>
+    <pre><code>youruser ALL=(ALL) NOPASSWD: /sbin/shutdown</code></pre>
+    <p>Dans l’écran de modification de l’appareil, renseignez l’hôte (IP ou nom), l’utilisateur SSH (le nom de votre compte sur le PC) et le port (22). Touchez Éteindre maintenant. La première fois, vérifiez que l’empreinte affichée correspond à celle du PC, puis touchez Faire confiance. L’empreinte du PC :</p>
+    <p><strong>Linux</strong></p>
+    <pre><code>ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub</code></pre>
+    <p><strong>Windows</strong></p>
+    <pre><code>ssh-keygen -lf $env:ProgramData\ssh\ssh_host_ecdsa_key.pub</code></pre>
+    <p><strong>macOS</strong></p>
+    <pre><code>ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub</code></pre>
+    <p>« Le PC a refusé la clé SSH » : clé ou nom d’utilisateur incorrect. « Connexion impossible » : le PC est éteint, ou l’hôte, le port ou le pare-feu est incorrect. « Le PC a répondu par une erreur » : sous Linux ou macOS, c’est généralement la règle sudoers. « La clé SSH du PC a changé » : le PC a été réinstallé ou ses clés SSH ont été régénérées ; n’acceptez la nouvelle clé que si vous vous y attendiez.</p>
+
+    <h2 id="away">3. Hors de chez vous (VPN)</h2>
+    <p>Depuis l’extérieur de votre réseau domestique, il vous faut d’abord un moyen d’y accéder, par exemple un VPN WireGuard ou Tailscale. Un paquet magique est une diffusion, et de nombreux VPN ne transmettent pas les diffusions. Indiquez l’adresse de diffusion de votre réseau (par exemple 192.168.1.255) dans l’appareil. Si l’allumage à distance ne fonctionne toujours pas, la solution habituelle est un petit appareil toujours allumé chez vous qui envoie le paquet à votre place (un routeur avec Wake-on-LAN, ou un Raspberry Pi). L’extinction à distance par SSH fonctionne via un VPN tant que l’adresse du PC est joignable.</p>
+    <p>Problèmes à distance : « pas de connexion réseau ou VPN » signifie que le téléphone n’a pas de route vers cette adresse ; connectez d’abord le VPN. « Adresse de diffusion introuvable » signifie que le nom ou l’adresse saisi dans l’appareil ne peut pas être résolu. Un VPN peut aussi accepter le paquet sans jamais le transmettre : l’app ne peut pas le savoir, car un paquet magique n’a pas de réponse. Vérifiez que le PC s’allume et consultez son état dans la liste.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>&copy; 2026 Diego Bergonsi</div>
+    <ul>
+      <li><a href="/fr/guide">Guide de configuration</a></li>
+      <li><a href="/fr/privacy">Confidentialité</a></li>
+      <li><a href="https://ko-fi.com/diegobergonsi" rel="noopener noreferrer">Faire un don</a></li>
+      <li><a href="mailto:contact@wakedeck.app">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+</body>
+</html>
