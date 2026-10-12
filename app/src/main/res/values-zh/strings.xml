@@ -233,7 +233,7 @@
     <string name="help_ssh_w3">普通账户则：把密钥行放到 C:\\Users\\NAME\\.ssh\\authorized_keys。</string>
     <string name="help_ssh_w4">如果仍被拒绝：请检查防火墙是否允许 TCP 端口 22（OpenSSH 功能通常会自动添加规则），以及该账户不是 Microsoft Entra ID 账户，此类账户无法使用密钥。</string>
     <string name="help_ssh_app">在设备的编辑界面中填写主机（IP 或名称）、SSH 用户（你在电脑上的账户名）和端口（22）。点按“立即关机”。第一次连接时，请确认显示的指纹与电脑的一致，然后点按“信任”。电脑的指纹：</string>
-    <string name="help_ssh_trouble">“电脑拒绝了该 SSH 密钥”：密钥或用户名有误。“无法连接”：电脑已关机，或主机、端口、防火墙有误。“电脑返回了错误”：在 Linux 上通常是 sudoers 规则的问题。“电脑的 SSH 密钥已更改”：电脑被重新安装，或其 SSH 密钥被重新生成；只有在你预料到这一点时才信任新密钥。</string>
+    <string name="help_ssh_trouble">“电脑拒绝了该 SSH 密钥”：密钥或用户名有误。“无法连接”：电脑已关机，或主机、端口、防火墙有误。“电脑返回了错误”：在 Linux 或 macOS 上通常是 sudoers 规则的问题。“电脑的 SSH 密钥已更改”：电脑被重新安装，或其 SSH 密钥被重新生成；只有在你预料到这一点时才信任新密钥。</string>
     <string name="help_s3">3. 离家在外（VPN）</string>
     <string name="help_remote">在家庭网络之外，你首先需要一种进入家庭网络的方式，例如 WireGuard 或 Tailscale VPN。魔术包是广播，而许多 VPN 不会转发广播。请在设备中填写你网络的广播地址（例如 192.168.1.255）。如果远程唤醒仍然不起作用，通常的解决办法是在家里放一台常开的小设备，由它代你发送数据包（支持 Wake-on-LAN 的路由器，或树莓派）。只要电脑的地址可以访问，通过 SSH 远程关机就可以在 VPN 下使用。</string>
     <string name="help_s4">4. 手机使用提示（Honor / MagicOS）</string>
