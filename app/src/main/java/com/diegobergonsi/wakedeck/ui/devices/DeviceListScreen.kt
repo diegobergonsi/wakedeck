@@ -53,6 +53,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -166,47 +168,53 @@ fun DeviceListScreen(
             alpha = 0.10f,
         )
         if (!hasDevices) {
+            val muted = MaterialTheme.colorScheme.onSurfaceVariant
             Column(
-                Modifier.fillMaxSize().padding(padding).padding(contentSidePadding(32.dp), 32.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
+                Modifier.fillMaxSize().padding(padding).padding(start = contentSidePadding(32.dp), end = contentSidePadding(32.dp), bottom = 36.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                val muted = MaterialTheme.colorScheme.onSurfaceVariant
-                val center = TextAlign.Center
-                Image(painterResource(R.drawable.bg_power_ring), contentDescription = null, modifier = Modifier.size(160.dp), alpha = 0.5f)
-                Text(stringResource(R.string.empty_devices_title), style = MaterialTheme.typography.headlineSmall, textAlign = center)
-                FilledTonalButton(onClick = onAdd, modifier = Modifier.padding(top = 8.dp)) { Text(stringResource(R.string.add_device)) }
+                Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
+                    Column(
+                        Modifier.verticalScroll(rememberScrollState()),
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Image(painterResource(R.drawable.bg_power_ring), contentDescription = null, modifier = Modifier.size(160.dp), alpha = 0.5f)
+                        Text(stringResource(R.string.empty_devices_title), style = MaterialTheme.typography.headlineSmall, textAlign = TextAlign.Center)
+                        FilledTonalButton(onClick = onAdd, modifier = Modifier.padding(top = 8.dp)) { Text(stringResource(R.string.add_device)) }
+                    }
+                }
                 Surface(
                     color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
                     shape = MaterialTheme.shapes.large,
                     modifier = Modifier.padding(top = 24.dp).fillMaxWidth(),
                 ) {
-                    Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                        Text(stringResource(R.string.empty_helper_title), style = MaterialTheme.typography.titleSmall, color = muted)
-                        HelperStep(1) {
-                            val link = stringResource(R.string.empty_devices_help)
-                            val text = stringResource(R.string.empty_devices_prereq, link)
-                            val primary = MaterialTheme.colorScheme.primary
-                            Text(
-                                buildAnnotatedString {
-                                    append(text)
-                                    val start = text.indexOf(link)
-                                    if (start >= 0) addLink(
-                                        LinkAnnotation.Clickable(
-                                            "help",
-                                            TextLinkStyles(SpanStyle(color = primary, textDecoration = TextDecoration.Underline)),
-                                        ) { onOpenHelp() },
-                                        start, start + link.length,
-                                    )
-                                },
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = muted,
-                            )
+                        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                            Text(stringResource(R.string.empty_helper_title), style = MaterialTheme.typography.titleSmall, color = muted)
+                            HelperStep(1) {
+                                val link = stringResource(R.string.empty_devices_help)
+                                val text = stringResource(R.string.empty_devices_prereq, link)
+                                val primary = MaterialTheme.colorScheme.primary
+                                Text(
+                                    buildAnnotatedString {
+                                        append(text)
+                                        val start = text.indexOf(link)
+                                        if (start >= 0) addLink(
+                                            LinkAnnotation.Clickable(
+                                                "help",
+                                                TextLinkStyles(SpanStyle(color = primary, textDecoration = TextDecoration.Underline)),
+                                            ) { onOpenHelp() },
+                                            start, start + link.length,
+                                        )
+                                    },
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = muted,
+                                )
+                            }
+                            HelperStep(2) {
+                                Text(stringResource(R.string.empty_devices_widgets), style = MaterialTheme.typography.bodyMedium, color = muted)
+                            }
                         }
-                        HelperStep(2) {
-                            Text(stringResource(R.string.empty_devices_widgets), style = MaterialTheme.typography.bodyMedium, color = muted)
-                        }
-                    }
                 }
             }
         } else {
