@@ -334,8 +334,40 @@ private fun ColumnLayout(name: String, state: SingleWidgetState, button: WakeBut
             Box(GlanceModifier.defaultWeight()) { NameAndStatus(name, state, palette, scale) }
             state.config?.let { RefreshButton(button.deviceId, palette, it) }
         }
-        Spacer(GlanceModifier.defaultWeight())
-        WakeButton(button, GlanceModifier.fillMaxWidth())
+        Spacer(GlanceModifier.height(4.dp))
+        WakeBlock(button, scale, GlanceModifier.fillMaxWidth().defaultWeight())
+    }
+}
+
+/** The Wake action for a tall widget: it fills the space under the header, so the tap area is the widget. */
+@Composable
+private fun WakeBlock(spec: WakeButtonSpec, scale: Float, modifier: GlanceModifier) {
+    val context = LocalContext.current
+    val label = when (spec.feedback) {
+        WakeFeedback.SENT -> R.string.widget_sent
+        WakeFeedback.FAILED -> R.string.widget_failed
+        WakeFeedback.NONE -> R.string.wake
+    }
+    val color = buttonTextColor(spec)
+    Box(
+        modifier
+            .roundedBackground((spec.config.cornerRadiusDp - 8).coerceAtLeast(4), buttonColor(spec))
+            .clickable(actionRunCallback<WakeAction>(actionParametersOf(DeviceIdKey to spec.deviceId)), R.drawable.ripple_rounded),
+        contentAlignment = Alignment.Center,
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Image(
+                provider = ImageProvider(spec.config.icon.drawableRes()),
+                contentDescription = null,
+                modifier = GlanceModifier.size((28 * scale).dp),
+                colorFilter = ColorFilter.tint(color),
+            )
+            Spacer(GlanceModifier.height(2.dp))
+            Text(
+                context.getString(label),
+                style = TextStyle(color = color, fontSize = (14 * scale).sp, fontWeight = FontWeight.Bold),
+            )
+        }
     }
 }
 
@@ -368,10 +400,11 @@ private fun CompactLayout(
         }
         Spacer(GlanceModifier.width(8.dp))
         Column(GlanceModifier.defaultWeight()) {
+            // Without the refresh icon the text column is only about 40 dp wide: let the name wrap instead of cutting it to "Dum…".
             Text(
                 name,
-                maxLines = 1,
-                style = TextStyle(color = palette.text, fontSize = (14 * scale).sp, fontWeight = FontWeight.Bold),
+                maxLines = if (withRefresh) 1 else 2,
+                style = TextStyle(color = palette.text, fontSize = ((if (withRefresh) 14 else 13) * scale).sp, fontWeight = FontWeight.Bold),
             )
             when (button.feedback) {
                 WakeFeedback.SENT -> Text(
