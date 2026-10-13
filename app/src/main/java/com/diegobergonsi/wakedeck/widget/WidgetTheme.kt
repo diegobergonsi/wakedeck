@@ -33,6 +33,8 @@ class WidgetPalette(
     /** Readable text on the solid [sent] and [offline] fills. */
     val onSent: ColorProvider,
     val onOffline: ColorProvider,
+    /** True when the user made the background see-through; the tinted drawable cannot show that, see [roundedBackground]. */
+    val translucent: Boolean,
 )
 
 private val OnlineGreen = Color(0xFF2E9E4F)
@@ -77,11 +79,12 @@ fun widgetPalette(config: WidgetConfig): WidgetPalette {
         neutral = theme.outline,
         sent = ColorProvider(sentColor),
         border = config.borderColor?.let { ColorProvider(Color(it)) } ?: theme.outline,
-        card = ColorProvider(cardColor),
+        card = ColorProvider(cardColor.copy(alpha = config.backgroundAlpha)),
         accentSoft = ColorProvider(softColor),
         onAccentSoft = ColorProvider(if (contrast(softColor, accentColor) >= MIN_TEXT_CONTRAST) accentColor else bestOn(softColor)),
         onSent = ColorProvider(bestOn(sentColor)),
         onOffline = ColorProvider(bestOn(offlineColor)),
+        translucent = config.backgroundAlpha < 1f,
     )
 }
 

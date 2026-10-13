@@ -92,7 +92,7 @@ fun DeviceListContent(state: MultiWidgetState, preview: Boolean = false) {
         Box(
             GlanceModifier
                 .fillMaxSize()
-                .roundedBackground(config.cornerRadiusDp, palette.background)
+                .roundedBackground(config.cornerRadiusDp, palette.background, palette.translucent)
                 .clickable(openApp, R.drawable.ripple_none),
         ) {
             BorderOverlay(config, palette)
@@ -107,7 +107,7 @@ fun DeviceListContent(state: MultiWidgetState, preview: Boolean = false) {
                 val rowHeight = ListLayout.rowHeightDp(cardHeight - CARD_PADDING_DP * 2, state.rows.size, config.density)
                 val cardModifier = GlanceModifier
                     .fillMaxWidth()
-                    .roundedBackground((config.cornerRadiusDp - 8).coerceAtLeast(4), palette.card)
+                    .roundedBackground((config.cornerRadiusDp - 8).coerceAtLeast(4), palette.card, palette.translucent)
                     .padding(horizontal = 4.dp, vertical = CARD_PADDING_DP.dp)
                 MultiBody(config, state, palette, scale, refreshInColumn = false, centerContent = false, preview = preview, headerIcon = true) {
                     // LocalSize can read smaller than the drawn widget, so the card fills the space rather than hugging rows.

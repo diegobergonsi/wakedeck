@@ -102,7 +102,7 @@ fun DeviceGridContent(state: MultiWidgetState, preview: Boolean = false) {
         Box(
             GlanceModifier
                 .fillMaxSize()
-                .roundedBackground(config.cornerRadiusDp, palette.background)
+                .roundedBackground(config.cornerRadiusDp, palette.background, palette.translucent)
                 .clickable(openApp, R.drawable.ripple_none),
         ) {
             BorderOverlay(config, palette)
@@ -136,7 +136,7 @@ fun DeviceGridContent(state: MultiWidgetState, preview: Boolean = false) {
                 ) {
                     val card = GlanceModifier
                         .fillMaxWidth()
-                        .roundedBackground((config.cornerRadiusDp - 8).coerceAtLeast(4), palette.card)
+                        .roundedBackground((config.cornerRadiusDp - 8).coerceAtLeast(4), palette.card, palette.translucent)
                         .padding(4.dp)
                     Box(if (preview) card else card.fillMaxSize(), contentAlignment = Alignment.Center) {
                         if (preview) {

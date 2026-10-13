@@ -154,7 +154,7 @@ fun SingleDeviceContent(state: SingleWidgetState) {
         } else {
             GlanceModifier
                 .fillMaxSize()
-                .roundedBackground(config.cornerRadiusDp, palette.background)
+                .roundedBackground(config.cornerRadiusDp, palette.background, palette.translucent)
                 .clickable(openApp, R.drawable.ripple_none)
         }
 
